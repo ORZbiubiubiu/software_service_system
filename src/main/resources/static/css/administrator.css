@@ -1,0 +1,571 @@
+.header_top {
+    width: 100%;
+    height: 83px;
+    position: absolute;
+    background-color: #88cccc;
+}
+
+#userHead {
+    float: right;
+    margin-right: 20px;
+    margin-top: 30px;
+    height: 60px;
+}
+
+#head_icon {
+    /*float: right;*/
+    left: 20px;
+    display: inline;
+    /*  margin-right: 80px;*/
+}
+
+#serAvatar {
+    /*float: right;*/
+    display: inline;
+}
+
+#userName {
+    display: inline;
+    /* margin-left: 10px;*/
+    /*float: right;*/
+    display: inline;
+}
+
+#logout {
+    /*float: right;*/
+    display: inline;
+}
+
+#logout:hover {
+    color: #ffd04b;
+    cursor: pointer;
+}
+
+.header {
+    position: relative;
+    width: 1500px;
+    left: 10%;
+}
+
+.header_bottom {
+    position: absolute;
+    height: 240px;
+    top: 83px;
+    width: 100%;
+}
+
+/*header*/
+
+#versionInf {
+    float: left;
+    margin-left: 20px;
+}
+
+.v-center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.clearfix::after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+#avatar {
+    position: absolute;
+    left: 20%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#avatar>img {
+    height: 170px;
+    border: 1px solid black;
+    border-radius: 100%;
+}
+
+#balabala {
+    position: absolute;
+    font-size: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#user-information {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+}
+
+#username {
+    margin: 10px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#role {
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#jy {
+    float: right;
+    margin-right: 100px;
+}
+
+#jy>img {
+    height: 200px;
+}
+
+#title {
+    float: left;
+    margin-left: 50px;
+    color: #fff;
+}
+
+#search {
+    left: 30%;
+    width: 550px;
+}
+
+#search-bar {
+    float: left;
+    border: none;
+    border-radius: 10px;
+    padding-left: 10px;
+    height: 34px;
+    width: 380px;
+    background: url(../img/search.png);
+}
+
+#btn-search {
+    float: right;
+    width: 100px;
+    margin-right: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #fff;
+    color: #aaaaaa;
+    text-decoration: none;
+}
+
+/*center*/
+
+.center {
+    color: #000;
+    width: 1500px;
+    left: 10%;
+    top: 83px;
+    background-color: #88cccc;
+    position: relative;
+    height: 972px;
+}
+
+#funcmenu {
+    background-color: #fff;
+    position: absolute;
+    left: 0px;
+    width: 340px;
+    top: 100px;
+}
+
+#el_funcmenu {
+    height: 872px;
+}
+
+.selectedfunction {
+    background-color: rgba(39, 110, 81, 1);
+    color: #fff;
+}
+
+.function_area {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.selected_area {
+    display: inline;
+}
+
+.functions {
+    cursor: pointer;
+    text-rendering: optimizelegibility;
+    font-feature-settings: "kern";
+    font-kerning: normal;
+    overflow-wrap: break-word;
+    text-transform: none;
+    font-size: 20px;
+    font-family: "Arial Normal", Arial;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+    border: 0px solid;
+}
+
+#functions_area {
+    position: absolute;
+    top: 100px;
+    left: 500px;
+    width: 820px;
+    height: 800px;
+    background-color: #88cccc;
+    border: #000 0px solid;
+}
+
+/*底部*/
+
+.footer {
+    font-size: 16px;
+    color: #FFFFFF;
+    font-family: 'Arial Normal', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    width: 1500px;
+    left: 10%;
+    height: 115px;
+    position: relative;
+    background-color: #88cccc;
+    top: 20px;
+}
+
+#versionInf {
+    float: left;
+    margin-left: 20px;
+}
+
+.details {
+    float: right;
+    margin-right: 100px;
+}
+
+/*service_processing*/
+
+/*异常服务*/
+
+#service_table_holder {
+    background-color: #545c64;
+}
+
+#service_table {
+    background-color: #545c64;
+}
+
+.samebgc {
+    background-color: #545c64;
+}
+
+/*分页器*/
+
+.paging {
+    position: relative;
+    top: 100px;
+    left: 270px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.currentpage {
+    text-decoration: underline;
+    color: aqua;
+}
+
+.accessCommitBtn {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/*faq*/
+
+#faqhead {
+    border: 1px #000 solid;
+    width: 300px;
+    height: 50px;
+    position: relative;
+    left: 260px;
+    top: 30px;
+    color: #169BD5;
+}
+
+#modifyfaq {
+    margin-left: 50px;
+    display: inline;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.selectedfaqfunction {
+    border-bottom: 1px #000 solid;
+}
+
+#addfaq {
+    cursor: pointer;
+    display: inline;
+    margin-left: 210px;
+    padding-bottom: 5px;
+}
+
+#faqsearch {
+    left: 180px;
+    position: relative;
+    width: 550px;
+    top: 50px;
+}
+
+#faqsearch-bar {
+    border: 1px #000 solid;
+    padding-left: 10px;
+    height: 34px;
+    width: 380px;
+    background: url(../img/search.png);
+}
+
+#faqbtn-search {
+    width: 150px;
+    margin-right: 20px;
+    border: none;
+    border-radius: 15px;
+    height: 70px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #169BD5;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px 10px 20px;
+}
+
+.faqarea {
+    display: none;
+}
+
+.faqshow {
+    display: inline;
+}
+
+#modifylist {
+    width: 95%;
+    position: relative;
+    left: 22px;
+    top: 70px;
+}
+
+.modifyitem {
+    height: 190px;
+    border: 0.5px #000 solid;
+}
+
+.faqinfoarea {
+    position: relative;
+}
+
+.faqtype {
+    float: right;
+    margin-right: 10px;
+}
+
+.faqmodifyimg {
+    position: relative;
+    left: 2px;
+}
+
+#modifylist img {
+    height: 98%;
+    width: 165px;
+}
+
+.faqbuttons button {
+    color: #169BD5;
+}
+
+.faqtitle {
+    margin-bottom: 3px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.faqdate {
+    position: relative;
+    left: 20px;
+    margin: 0;
+}
+
+.faqbuttons {
+    position: relative;
+    top: -27px;
+    left: 600px;
+}
+
+.faqdetaile {
+    width: 771px;
+    height: 120px;
+    position: relative;
+    left:1px;
+
+}
+.faqbuttons button {
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+#modifyitem2 {
+    border-bottom: 0;
+    border-top: 0;
+}
+
+.faqbuttons button {
+    cursor: pointer;
+}
+
+/*addfaq*/
+
+#addarea {
+    position: relative;
+    top: 50px
+}
+
+#addform div {
+    margin-bottom: 25px;
+    position: relative;
+    left: 200px
+}
+
+#addform div span {
+    text-align: right;
+    position: absolute;
+    right: 775px;
+    width: 100px;
+}
+
+#addform div input {
+    position: relative;
+    left: 65px;
+    width: 300px;
+}
+
+#addform div select {
+    position: relative;
+    left: 65px;
+    width: 300px;
+}
+
+.addfaqinfinput {
+    position: relative;
+    left: 65px;
+    width: 300px;
+}
+
+#submitbtn {
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    left: 500px;
+    background-color: #169BD5;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 5px;
+    border: 0;
+    width: 100px;
+    height: 30px;
+}
+
+#aboutsoftwarehead {
+    border-bottom: 1px #000 solid;
+    height: 50px;
+    position: relative;
+    color: #169BD5;
+}
+
+.selectedversionfunction {
+    border-bottom: 1px #000 solid;
+}
+
+#versioninf {
+    left: 80px;
+}
+
+#versioninfchange {
+    left: 380px;
+}
+
+#update {
+    left: 680px;
+}
+
+.versionarea {
+    display: none;
+}
+
+.selected_versionarea {
+    display: inline;
+}
+
+.versionfunction {
+    cursor: pointer;
+}
+
+/*软件更新*/
+
+.softwaredownload {
+    position: relative;
+    left: 50px;
+    margin-top: 70px;
+}
+
+.downloadlinks {
+    margin-top: 45px;
+}
+
+.Download_link {
+    position: absolute;
+    left: 300px;
+    color: #169BD5;
+}
+
+.downloadlink {
+    margin-top: 25px;
+}
+
+.downloadlink span {
+    margin-right: 20px;
+}
+
+/**adduser*/
+
+.adduser_text {
+    color: rgb(102, 102, 102);
+    font-size: 14px;
+}
+
+#adduser_el-button_submit {
+    position: relative;
+    left: 140px;
+}
+
+#adduser_el-button_cancel {
+    position: relative;
+    left: 260px;
+}
+
+#adduser_message {
+    position: relative;
+    top: -60px;
+    left: 180px;
+}
