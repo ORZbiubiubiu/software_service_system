@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">       
+    <script src="../js/jquery-1.12.4.js"></script>
+   
+    <script src="../js/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/login.js"></script>
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="header_top">
+            <h1 id="title">
+                软件售后服务系统
+            </h1>
+            
+        </div>
+      
+    </div>
+    <div class="center">
+       <div id="loginblock">
+            <el-form     label-width="80px" id="loginform"> 
+                    <el-form-item label="用户名">
+                        <el-input v-model="userName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户密码">
+                        <el-input v-model="passWord" show-password></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户类型">
+                        <el-select v-model="Character" placeholder="请选择" clearable>
+                            <el-option v-for="item in type" :key="item.key" :label="item.key" :value="item.key">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-button type="primary" @click="onSubmit" id="login_btn">登录</el-button>
+                    <span id="message">{{message}}</span>
+            </el-form>
+
+
+
+          
+            
+       </div>
+    </div>
+    <div class="footer">
+        <span id="versionInf">
+            <p>版本号v1.0</p>
+            <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
+        </span>
+        <span class="details">咨询电话:8888-8888</span>
+        <span class="details">技术说明</span>
+        <pspan class="details">帮助中心</pspan>
+        <span class="details">关于我们</span>
+
+
+
+    </div>
+</body>
+
+</html>

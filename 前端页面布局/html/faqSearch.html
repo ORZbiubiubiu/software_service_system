@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>faq搜索</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" type="text/css" href="../css/faqSearch.css">
+
+    <!-- import Vue before Element -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <script src="../js/jquery-1.12.4.js"></script>
+    
+    <script src="../js/faq.js"></script>
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="header_top">
+            <h1 id="title">
+                软件售后服务系统
+            </h1>
+            <h1 id="faq">FAQ检索</h1>
+
+        </div>
+
+    </div>
+    <div class="center">
+        <div id="search" >
+            <input type="text" id="search-bar" maxlength="40">
+            <a href="#" id="btn-search">搜索</a>
+        </div>
+        <div id="faqlist">
+            <div class="faqitem" v-for="item in items">
+                <h2 class="faqtitle">{{item.title}}</h2>
+                <p class="faqdetails">{{item.detail}}</p>
+                <span class="faqauthor"> {{item.author}}</span>/<span class="faqdata">{{item.date}}</span>
+            </div>
+            <!--
+            <div class="faqitem">
+                <h2 class="faqtitle">{{titles[0]}}</h2>
+                <p class="faqdetails">{{details[0]}}</p>
+                <span class="faqauthor"> {{authors[0]}}</span>/<span class="faqdata">{{dates[0]}}</span>
+            </div>
+            <div class="faqitem">
+                <h2 class="faqtitle">{{titles[1]}}</h2>
+                <p class="faqdetails">{{details[1]}}</p>
+                <span class="faqauthor"> {{authors[1]}}</span>/<span class="faqdata">{{dates[1]}}</span>
+            </div>
+            <div class="faqitem">
+                <h2 class="faqtitle">{{titles[2]}}</h2>
+                <p class="faqdetails">{{details[2]}}</p>
+                <span class="faqauthor"> {{authors[2]}}</span>/<span class="faqdata">{{dates[2]}}</span>
+            </div>
+            <div class="faqitem">
+                <h2 class="faqtitle">{{titles[3]}}</h2>
+                <p class="faqdetails">{{details[3]}}</p>
+                <span class="faqauthor"> {{authors[3]}}</span>/<span class="faqdata">{{dates[3]}}</span>
+            </div>
+            <div class="faqitem">
+                <h2 class="faqtitle">{{titles[4]}}</h2>
+                <p class="faqdetails">{{details[4]}}</p>
+                <span class="faqauthor"> {{authors[4]}}</span>/<span class="faqdata">{{dates[4]}}</span>
+            </div>
+            <div class="faqitem">
+                <h2 class="faqtitle">{{titles[5]}}</h2>
+                <p class="faqdetails">{{details[5]}}</p>
+                <span class="faqauthor"> {{authors[5]}}</span>/<span class="faqdata">{{dates[5]}}</span>
+            </div>
+            -->
+        </div>
+        <div id="pagination">
+            <el-pagination id="paper" background layout="prev, pager, next" v-bind:total="total" v-bind:current-page="current_page" v-bind:page-size="page_size" @current-change="handleCurrentChange" @prev-click="prev_click" @next-click="next_click">
+            </el-pagination>
+        </div>
+    </div>
+    <div class="footer">
+        <span id="versionInf">
+            <p>版本号v1.0</p>
+            <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
+        </span>
+        <span class="details">咨询电话:8888-8888</span>
+        <span class="details">技术说明</span>
+        <pspan class="details">帮助中心</pspan>
+        <span class="details">关于我们</span>
+
+
+
+    </div>
+</body>
+
+</html>

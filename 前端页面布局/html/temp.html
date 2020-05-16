@@ -1,0 +1,79 @@
+<table id="servicetable">
+    <tr id="service_top">
+        <td v-for="item in  top_items">
+            <p class="serviceidinf">
+                <span>
+                    软件售后服务编号：
+                </span>
+                <span class="serviceid">
+                    {{item.serviceId}}
+                </span>
+            </p>
+            <p class="processinf">
+                <span>
+                    当前状态：
+                </span>
+                <span class="process">
+                    {{item.serviceState}}
+                </span>
+            </p>
+            <p class="applicantinf">
+                <span>申请人：</span><span class="applicant">{{item.Applicants}}</span></p>
+            <p class="reasoninf"><span>申请原因：</span><span class="reason">{{item.Application_reason}}
+                </span></p>
+            <p class="solutioninf">
+                <span>处理方式：</span> <select class="solution ">
+                    <option value="反馈消息">反馈消息</option>
+                    <option value="换人">换人</option>
+                    <option value="改变状态">改变状态</option>
+
+                </select></p>
+            <p class="commit"><button class="commitbtn">提交</button></p>
+        </td>
+
+    </tr>
+    <tr>
+        <td v-for="item in  bottom_items">
+            <p class="serviceidinf">
+                <span>
+                    软件售后服务编号：
+                </span>
+                <span class="serviceid">
+                    {{item.serviceId}}
+                </span>
+            </p>
+            <p class="processinf">
+                <span>
+                    当前状态：
+                </span>
+                <span class="process">
+                    {{item.serviceState}}
+                </span>
+            </p>
+            <p class="applicantinf">
+                <span>申请人：
+
+                </span>
+                <span class="applicant">
+                    {{item.Applicants}}
+
+                </span>
+            </p>
+            <p class="reasoninf">
+                <span>申请原因：</span>
+                <span class="reason">{{item.Application_reason}}
+                </span>
+            </p>
+            <p class="solutioninf">
+                <span>处理方式：</span> <select class="solution ">
+                    <option value="反馈消息">反馈消息</option>
+                    <option value="换人">换人</option>
+                    <option value="改变状态">改变状态</option>
+
+                </select>
+            </p>
+            <p class="commit"><button class="commitbtn">提交</button></p>
+        </td>
+    </tr>
+
+</table>
