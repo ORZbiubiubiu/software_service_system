@@ -1,19 +1,19 @@
-var username = "";
-var token = "";
-const uname = new Vue({
-    el: "#username",
-
-    data:{
-        uname:""
-    },
-    mounted:function(){
-        console.log(sessionStorage.getItem(name))
-        username = sessionStorage.getItem("name");
-        token = sessionStorage.getItem("token");
-        console.log(username + token);
-        this.uname=username;
-    }
-})
+// var username = "";
+// var token = "";
+// const uname = new Vue({
+//     el: "#username",
+//
+//     data:{
+//         uname:""
+//     },
+//     mounted:function(){
+//         console.log(sessionStorage.getItem(name))
+//         username = sessionStorage.getItem("name");
+//         token = sessionStorage.getItem("token");
+//         console.log(username + token);
+//         this.uname=username;
+//     }
+// })
 const server_func = new Vue({
     el: '.center',
     data:{
@@ -51,13 +51,14 @@ const server_func = new Vue({
                 msg: ''
          },
          index : 0,
-         getOrderUrl: "/user_show_software",
-         applyServiceUrl: "/apply_service",
-         sendMsgUrl: "/send_user_message",
-         getMsgUrl: "/show_user_messages",
-         getServiceUrl: "/user_search",
-         getUpdateInfoUrl: "/show_update_info",
-         userName:"userhhy",
+         getOrderUrl: "/client/user_show_software",
+         applyServiceUrl: "/client/apply_service",
+         sendMsgUrl: "/client/send_user_message",
+         getMsgUrl: "/client/show_user_messages",
+         getServiceUrl: "/client/user_search",
+         getUpdateInfoUrl: "/client/show_update_info",
+         userName:sessionStorage.getItem("name"),
+        token :sessionStorage.getItem("token"),
          activeName: ''
     },
     mounted:function(){

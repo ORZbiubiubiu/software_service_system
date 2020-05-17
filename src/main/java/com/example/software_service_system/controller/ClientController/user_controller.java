@@ -24,7 +24,7 @@ public class user_controller {
     @Autowired
     private type_find_faq type_find_faq;
 
-    @RequestMapping(value = "/client/user_show_software", method = RequestMethod.POST)
+    @RequestMapping(value = "/client/user_show_software")
     @ResponseBody
     public String user_show_software(@RequestBody JSONObject jsonParam){
         String userName=(String)jsonParam.get("serverName");
@@ -34,7 +34,7 @@ public class user_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "/client/apply_service", method = RequestMethod.POST)
+    @RequestMapping(value = "/client/apply_service")
     @ResponseBody
     public String user_apply_service(@RequestBody JSONObject jsonParam){
         String userName=(String)jsonParam.get("userName");
@@ -49,7 +49,7 @@ public class user_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "/client/user_search",method = RequestMethod.POST)
+    @RequestMapping(value = "/client/user_search")
     @ResponseBody
     public String search_user(@RequestBody JSONObject jsonParam) {
         String userName = (String)jsonParam.get("userName");
@@ -59,7 +59,7 @@ public class user_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "/client/send_user_message", method = RequestMethod.POST)
+    @RequestMapping(value = "/client/send_user_message")
     @ResponseBody
     public String user_send_message(@RequestBody JSONObject jsonParam) {
         System.out.println(jsonParam.toJSONString());
@@ -76,7 +76,7 @@ public class user_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "/client/show_user_messages",method = RequestMethod.POST)
+    @RequestMapping(value = "/client/show_user_messages")
     @ResponseBody
     public String user_get_message(@RequestBody JSONObject jsonParam) {
         String getname = (String)jsonParam.get("getName");
@@ -86,7 +86,7 @@ public class user_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "/client/user_search_faq",method = RequestMethod.POST)
+    @RequestMapping(value = "/client/user_search_faq")
     @ResponseBody
     public String search_faq(@RequestBody JSONObject jsonParam) {
         String faqInfo = (String)jsonParam.get("faqInfo");
@@ -96,7 +96,7 @@ public class user_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "/client/show_update_info",method = RequestMethod.POST)
+    @RequestMapping(value = "/client/show_update_info")
     @ResponseBody
     public String show_update_info(@RequestBody JSONObject jsonParam) {
         String softwareName = (String)jsonParam.get("softwareName");
@@ -106,7 +106,7 @@ public class user_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "/client/type_faq",method = RequestMethod.POST)
+    @RequestMapping(value = "/client/type_faq")
     @ResponseBody
     public String show_stype_faq(@RequestBody JSONObject jsonParam){
         String faqType = (String)jsonParam.get("faqType");

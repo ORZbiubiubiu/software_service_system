@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping("admin")
 public class messageController {
     @Autowired
     messageService messageService;
 
-    @RequestMapping("/admin/ServiceInfList")//异常服务列表
-    public return_json getex(@RequestBody JSONObject jsonObject,@RequestHeader("token") String token){
-        System.out.println(token);
-        System.out.println("/admin/abc)//异常服务列表");
+    @RequestMapping("/ServiceInfList")//异常服务列表
+    public return_json getex(@RequestBody JSONObject jsonObject){
         int a ,b;
         a=jsonObject.getIntValue("pageNo");
         b=jsonObject.getIntValue("pageSize");

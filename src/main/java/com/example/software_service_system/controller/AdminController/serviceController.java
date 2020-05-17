@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 
 @RestController
+@RequestMapping("admin")
 public class serviceController {
 
     @Autowired
     serviceService serviceService;
 
-    @RequestMapping("/admin/huanren")  // 异常服务换人
+    @RequestMapping("/huanren")  // 异常服务换人
     public return_json serviceUpdateServer(@RequestBody JSONObject jsonObject) throws ParseException {
 
         System.out.println(" // 异常服务换人"+jsonObject.getIntValue("msgid"));

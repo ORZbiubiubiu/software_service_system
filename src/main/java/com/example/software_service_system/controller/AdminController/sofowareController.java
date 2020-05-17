@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("admin")
 public class sofowareController {
     @Autowired
     softwareService softwareService;
 
-    @RequestMapping("/admin/GetSoftWareList")  // 软件表
+    @RequestMapping("/GetSoftWareList")  // 软件表
     public return_json getPds(){
         return_data<software>  rs= new return_data<software>();
         List<software> list = softwareService.getSoftwares();
@@ -25,7 +26,7 @@ public class sofowareController {
         return returnJson;
     }
 
-    @RequestMapping("/admin/getRedistributableSsoftware") //还可以再分配人员的软件表
+    @RequestMapping("/getRedistributableSsoftware") //还可以再分配人员的软件表
     public return_json getSwCount(){
         List<Map<String,String>> list= softwareService.getSoftwareName_num();
         return_data<Map<String,String>> rs = new return_data<Map<String,String>>();

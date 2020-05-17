@@ -13,11 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("admin")
 public class serverController {
     @Autowired
     serverService serverService;
 
-    @RequestMapping("/admin/getReplaceName")
+    @RequestMapping("/getReplaceName")
     public return_json rpNameList(@RequestBody JSONObject jsonObject) {
         return_data<String> rs = serverService.getrpName(jsonObject.getString("serverName"));
         return_json returnJson = new return_json();
@@ -25,7 +26,7 @@ public class serverController {
         return returnJson;
     }
 
-    @RequestMapping("/admin/getServerList" ) //权限设置界面服务人员名单
+    @RequestMapping("/getServerList" ) //权限设置界面服务人员名单
     public return_data<Map<String,String>>   queryFaqDbList(@RequestBody JSONObject jsonObject){
         //System.out.println("前端来取数据了");
         List<Map<String,String>> userList = serverService.queryUserList(jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
@@ -37,7 +38,7 @@ public class serverController {
         return userreturn_data;
     }
 
-    @RequestMapping("/admin/permissionSettingserverRequest")  //提交权限设置-服务人员
+    @RequestMapping("/permissionSettingserverRequest")  //提交权限设置-服务人员
     public  return_json updateuser(@RequestBody JSONObject json) throws IOException {
         int id = json.getIntValue("id");
         String serverState = json.getString("serverState");

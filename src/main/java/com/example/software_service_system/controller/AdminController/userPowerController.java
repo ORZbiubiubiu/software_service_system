@@ -14,13 +14,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("admin")
 public class userPowerController {
 
     @Autowired
     userPowerService userPowerService;
 
     //,method = {RequestMethod.GET}
-    @RequestMapping("/admin/getCustomerList" )   //权限设置界面  返回客户列表
+    @RequestMapping("getCustomerList" )   //权限设置界面  返回客户列表
     public return_data<Map<String,String>>   queryFaqDbList(@RequestBody JSONObject jsonObject){
         //System.out.println("前端来取数据了");
         List<Map<String,String>> userList = userPowerService.queryUserList(jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
@@ -32,7 +33,7 @@ public class userPowerController {
         return userreturn_data;
     }
 
-    @RequestMapping("/admin/CustomerPermissionSettingRequest")  //更改客户权限
+    @RequestMapping("/CustomerPermissionSettingRequest")  //更改客户权限
     public  return_json updateuser(@RequestBody JSONObject json) throws IOException{
         int id = json.getIntValue("id");
         String userState = json.getString("userState");
@@ -42,7 +43,7 @@ public class userPowerController {
         return updatereturnjson;
     }
 
-    @RequestMapping("/admin/adduser")
+    @RequestMapping("/adduser")
     public return_json adduser(@RequestBody JSONObject jsonObject){  //添加用户
         //System.out.println("来加人了");
         if(jsonObject.getString("usertype").equals("客户")){

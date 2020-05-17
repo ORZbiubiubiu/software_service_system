@@ -13,12 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("admin")
 public class faqController {
 
     @Autowired
     faqService faqService;
 
-    @RequestMapping("/admin/getFaqList")
+    @RequestMapping("/getFaqList")
     public return_json queryFaqDbList(@RequestBody JSONObject jsonObject) throws ParseException {//返回faqlist
         //System.out.println("来咯");
         List<Map<String,String>> faqList = faqService.queryFaqDbList(jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
@@ -34,7 +35,7 @@ public class faqController {
     }
 
 
-    @RequestMapping("/admin/Faqadd")
+    @RequestMapping("/Faqadd")
     public return_json addFaq(@RequestBody faq json) throws ParseException {
         faq f = new faq(json.getId(),json.getFaqName(),json.getFaqType(),json.getFaqDescription(),json.getFaqInfo(),json.getFaqSoftware());
         // 设置新的faq id比当前的faq 最大id  大 1
@@ -50,7 +51,7 @@ public class faqController {
         return addreturnjson;
     }
 
-    @RequestMapping("/admin/FaqModify")
+    @RequestMapping("/FaqModify")
     public  return_json updateFaq(@RequestBody JSONObject jsonObject){
         int id = jsonObject.getIntValue("id");
         String faqInfo = jsonObject.getString("faqInfo");
@@ -60,7 +61,7 @@ public class faqController {
         return updatereturnjson;
     }
 
-    @RequestMapping("/admin/FaqDelete")
+    @RequestMapping("/FaqDelete")
     public return_json deleteFaq(@RequestBody JSONObject jsonObject){
         int id = jsonObject.getIntValue("id");
         return_data<faq> deleteresoult = faqService.delete(id);
