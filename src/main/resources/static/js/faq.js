@@ -20,6 +20,7 @@ var vm = new Vue({
                 },
                ],
          faqData:[],
+         nodata:false,
          index: 0,
          faqType:null,
          faqInfo:"",
@@ -43,13 +44,19 @@ var vm = new Vue({
 
                    },
             getFaq(){
+                 if (sessionStorage.getItem("searchInfo")!=null){
+                    this.faqInfo=window.sessionStorage.getItem("searchInfo");
+                    window.sessionStorage.removeItem("searchInfo");
+                    }
                  axios.post(this.getFaqUrl, {
                                          faqType:this.faqType,
                                          faqInfo:this.faqInfo
                                          })
                                          .then((response) => {
                                              this.faqData = response.data.data.list ;
-
+                                             if(this.faqData.length==0){
+                                                this.nodata=true;
+                                             }
                                          })
                                          .catch(function (error) {
                                              console.log(error);

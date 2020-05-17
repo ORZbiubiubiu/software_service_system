@@ -2,15 +2,27 @@
     width:500px;
 }
 
-#nav{
+#type-nav{
     margin-top:50px;
     width:1000px;
     padding-left:400px;
 }
 
+#result{
+    color:#909399;
+    margin-bottom:20px;
+    font-size:30px;
+}
+
+#nodata{
+    color:#909399;
+    margin:50px;
+    font-size:24px;
+}
+
 #posts{
     padding:50px;
-    margin-top:20px;
+    margin:20px 100px;
     width:1000px;
     min-height:600px;
     background-color:#fff;
