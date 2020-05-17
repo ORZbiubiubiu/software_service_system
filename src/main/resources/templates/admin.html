@@ -50,7 +50,7 @@
         <el-col :span="24">
 
             <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen"
-                     @close="handleClose" background-color="#88cccc" text-color="#666" active-text-color="#ffd04b"
+                     @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b"
                      id="el_funcmenu" style="border: 0;">
                 <el-menu-item v-bind:index="item.index" v-for="(item, index) in funcs">
                     <i class="el-icon-setting"></i>
@@ -247,32 +247,47 @@
         </div>
         <div class="function_area" id="faq">
             <div id="faqhead">
-                <div id="modifyfaq" class="v-center selectedfaqfunction faqfunction">
-                    修改&删除
-                </div>
-                <div id="addfaq" class="v-center faqfunction">
-                    新增
-                </div>
+
+                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+
+                    <el-menu-item index="0">修改&删除</el-menu-item>
+                    <el-menu-item index="1">添加</el-menu-item>
+                </el-menu>
+                <!--
+
+
+
+            <div id="modifyfaq" class="v-center selectedfaqfunction faqfunction">
+                修改&删除
+            </div>
+            <div id="addfaq" class="v-center faqfunction">
+                新增
+            </div>-->
             </div>
             <div id="faqcenter">
                 <div id="modifyfaqarea" class="faqarea faqshow">
 
+
                     <div id="modifylist">
+
+                        <div  style="color: #ffffff;">
+                            1
+                        </div>
                         <div class="modifyitem" v-for="item in items">
 
 
-                            <div class="faqinfoarea">
 
-                                <p class="faqtitle">{{item.faqtitle}}<span class="faqtype">{{item.faqType}}</span></p>
-                                <textarea class="faqdetaile" name="" id="" cols="70" rows="6"
-                                          v-model="item.faqdetails"></textarea>
-                                <span class="faqdate">发布日期：{{item.faqdate}}</span>
-                                <div class="faqbuttons">
-                                    <button class="faqmodifybtn"
-                                            @click="modify(item.id,item.faqdetails)">修改</button>
-                                    <button class="faqdelbtn" @click="del(item.id)">删除</button>
-                                </div>
+
+                            <span class="faqtitle">{{item.faqtitle}}</span><span class="faqtype">{{item.faqType}}</span>
+                            <textarea class="faqdetaile" name="" id="" cols="70" rows="6"
+                                      v-model="item.faqdetails"></textarea>
+                            <span class="faqdate">发布日期：{{item.faqdate}}</span>
+                            <div class="faqbuttons">
+                                <button class="faqmodifybtn"
+                                        @click="modify(item.id,item.faqdetails)">修改</button>
+                                <button class="faqdelbtn" @click="del(item.id)">删除</button>
                             </div>
+
                         </div>
 
                     </div>
@@ -284,7 +299,41 @@
                     </div>
                 </div>
                 <div id="addarea" class="faqarea">
-                    <div   method="post" id="addform">
+                    <el-form    id="faqForm" label-width="80px">
+                        <span style="color: #ffffff;">12</span>
+                        <el-form-item label="目标软件" id="faqtarget"  >
+                            <el-select v-model="faqSoftware" placeholder="请选择目标软件">
+                                <el-option v-bind:label="item.targetsoftware"  v-bind:value="item.targetsoftware" v-for="item in items"></el-option>
+
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="标题">
+                            <el-input  v-model="faqName"></el-input>
+                        </el-form-item>
+                        <el-form-item label="类型">
+                            <el-select v-model="faqType" placeholder="请选择类型">
+                                <el-option label="type1" value="type1"></el-option>
+                                <el-option label="type2" value="type2"></el-option>
+                                <el-option label="type3" value="type3"></el-option>
+                                <el-option label="type4" value="type4"></el-option>
+
+                            </el-select>
+                        </el-form-item>
+
+                        <el-form-item label="问题描述">
+                            <el-input type="textarea" v-model="faqDescription"></el-input>
+                        </el-form-item>
+                        <el-form-item label="解决方法">
+                            <el-input type="textarea" v-model="faqInfo"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="commit">立即创建</el-button>
+                            <el-button type="primary" @click="cancel">取消</el-button>
+                        </el-form-item>
+
+
+                    </el-form>
+                    <div    id="addform" style="display: none;">
 
                         <div id="addauthor">
                             <span>目标软件：</span>
@@ -326,18 +375,19 @@
         </div>
         <div class="function_area" id="aboutsoftware">
             <div id="aboutsoftwarehead">
-                <div id="versioninf" class="v-center selectedversionfunction versionfunction">
-                    版本信息
-                </div>
-                <div id="versioninfchange" class="v-center versionfunction">
-                    版本信息修改
-                </div>
-                <div id="update" class="v-center versionfunction">
-                    软件更新
-                </div>
+                <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+
+                    <el-menu-item index="0">版本信息</el-menu-item>
+                    <el-menu-item index="1">售后服务软件信息</el-menu-item>
+                </el-menu>
+
+
             </div>
-            <div id="versioninfarea" class="versionarea selected_versionarea">版本信息</div>
-            <div id="versioninfchangearea" class="versionarea">版本信息修改</div>
+            <div id="versioninfarea" class="versionarea selected_versionarea">
+                <p class="version">version：1.0.0</p>
+                <p class="version">date：2020/5/17</p>
+            </div>
+
             <div id="updatearea" class="versionarea">
                 <el-table :data="tableData" height="750" style="width: 100%">
                     <el-table-column prop="id" label="软件ID" width="180">
@@ -353,7 +403,8 @@
         </div>
         <div class="function_area" id="addUser">
 
-            <el-form label-width="140px">
+            <el-form label-width="140px" id="user_add_form">
+                <div id="addheight"></div>
                 <el-form-item label="用户名称">
                     <el-input v-model="username" clearable></el-input>
                 </el-form-item>
@@ -369,9 +420,14 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-button type="primary" @click="onSubmit" id="adduser_el-button_submit">立即添加</el-button>
-                <el-button id="adduser_el-button_cancel" @click="cancel">取消</el-button>
-                <span id="adduser_message">{{message}}</span>
+                <el-form-item  >
+                    <el-button type="primary" @click="onSubmit"  >立即添加</el-button>
+                    <el-button   @click="cancel">取消</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <span id="adduser_message">{{message}}</span>
+                </el-form-item>
+
             </el-form>
 
 
@@ -383,7 +439,7 @@
 <div class="footer">
         <span id="versionInfo">
             <p>版本号v1.0</p>
-            <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
+            <p>版本说明：XXXXXXXXXXXXXXXXXX</p>
         </span>
     <span class="details">咨询电话:8888-8888</span>
     <span class="details">技术说明</span>
