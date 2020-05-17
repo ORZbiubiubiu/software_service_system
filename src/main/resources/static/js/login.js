@@ -75,12 +75,13 @@ $(document).ready(function () {
                                     var session = response.data.session_id;
                                     console.log(type + "    " + session)
                                     if (type=="1") {
-
                                         sessionStorage.setItem("name", log_vm.userName);
                                         sessionStorage.setItem("token", session);
                                         window.location.href = "client";
                                     } else if (type =="2") {
-                                        alert("售后服务人员")
+                                        sessionStorage.setItem("name", log_vm.userName);
+                                        sessionStorage.setItem("token", session);
+                                        window.location.href = "server";
                                     } else if (type == "3"){
                                         sessionStorage.setItem("name", log_vm.userName);
                                         sessionStorage.setItem("token", session);

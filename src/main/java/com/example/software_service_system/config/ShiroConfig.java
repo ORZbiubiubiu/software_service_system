@@ -35,6 +35,7 @@ public class ShiroConfig {
 
         filterChainDefinitionMap.put("/client/**","roles[client]");
         filterChainDefinitionMap.put("/admin/**","roles[admin]");
+        filterChainDefinitionMap.put("/server/**","roles[server]");
 //        filterChainDefinitionMap.put("/not_permit","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController    //相当于@Controller+@RequestBody
-
+@RequestMapping("server")
 public class server_search_controller {
     //每个service都要申明一次@Autowired
     @Autowired
@@ -22,7 +22,7 @@ public class server_search_controller {
     @Autowired
     private send_server_message send_server_message;
 
-    @RequestMapping(value = "server/search",method = RequestMethod.POST)
+    @RequestMapping(value = "/search",method = RequestMethod.POST)
     @ResponseBody
     public String search_server(@RequestBody JSONObject jsonParam) {
         String servername = (String)jsonParam.get("servername");
@@ -31,7 +31,7 @@ public class server_search_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "server/update_state",method = RequestMethod.POST)
+    @RequestMapping(value = "/update_state",method = RequestMethod.POST)
     @ResponseBody
     public String update_service(@RequestBody JSONObject jsonParam) {
 //        String servername = (String)jsonParam.get("servername");
@@ -60,7 +60,7 @@ public class server_search_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "server/show_messages",method = RequestMethod.POST)
+    @RequestMapping(value = "/show_messages",method = RequestMethod.POST)
     @ResponseBody
     public String get_message(@RequestBody JSONObject jsonParam) {
         String getname = (String)jsonParam.get("getName");
@@ -69,7 +69,7 @@ public class server_search_controller {
         return return_json_string;
     }
 
-    @RequestMapping(value = "server/send_server_message", method = RequestMethod.POST)
+    @RequestMapping(value = "/send_server_message", method = RequestMethod.POST)
     @ResponseBody
     public String send_message(@RequestBody JSONObject jsonParam) {
         System.out.println(jsonParam.toJSONString());

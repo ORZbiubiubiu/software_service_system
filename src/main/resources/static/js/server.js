@@ -16,13 +16,14 @@ const server_func = new Vue({
                   },
                 ],
          flag : 0,
-         getMsgUrl: "/show_messages",
-         getServiceUrl: "/search",
-         sendMsgUrl: "send_server_message",
-         updateUrl:"/update_state",
+         getMsgUrl: "/server/show_messages",
+         getServiceUrl: "/server/search",
+         sendMsgUrl: "/serversend_server_message",
+         updateUrl:"/server/update_state",
          msgItems:[],
          serviceItems:[],
-         serverName:"hzq",
+        userName:sessionStorage.getItem("name"),
+        token :sessionStorage.getItem("token"),
          sendName:"",
          justMessage:""
     },
@@ -32,14 +33,21 @@ const server_func = new Vue({
     methods: {
         getMsg(){
             axios.post(this.getMsgUrl, {
-                getName:this.serverName
-              })
-              .then((response) => {
+                getName:this.serverName,
+            },{
+                headers:{
+                    'Access-Control-Allow-Origin':'*',  //解决cors头问题
+                    'Access-Control-Allow-Credentials':'true', //解决session问题
+                    'token':sessionStorage.getItem('token')
+                },
+                withCredentials : true
+            })
+                .then((response) => {
                     this.msgItems = response.data.data.list ;
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         },
         getService(){
              axios.post(this.getServiceUrl, {
