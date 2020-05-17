@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/faq.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/faq.css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -23,7 +23,7 @@
                 <i class="el-icon-s-custom"></i>
             </div>
             <span id="username">
-                用户
+                {{username}}
             </span>
             <div id="logout">
                 <a href="" id="btn-logout" >退出</a>
@@ -49,7 +49,7 @@
         </div>
         <div id="posts" >
             <div id="result">搜索结果:</div>
-            <div id="nodata" v-if="nodata">很抱歉,暂时没有与{{faqInfo}}相匹配的搜索结果。</div>
+            <div class="nodata" v-if="nodata">很抱歉,暂时没有与{{searchHistory}}相匹配的搜索结果。</div>
             <div class="post" v-for="item in faqData">
                 <el-card class="box-card" >
                     <div slot="header" class="clearfix">
@@ -80,6 +80,6 @@
 </div>
 
 
-<script src="../js/faq.js"></script>
+<script src="../static/js/faq.js"></script>
 </body>
 </html>

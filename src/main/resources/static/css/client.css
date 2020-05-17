@@ -1,4 +1,3 @@
-
 #left-side{
     float:left;
     width:300px;
@@ -96,6 +95,7 @@
 
 #collapse{
     padding:10px;
+    position:relative;
 }
 
 .updateDate{
@@ -109,4 +109,10 @@
 .updateInfo{
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
     color:#909399;
+}
+
+.nodata{
+    color:#909399;
+    margin:20px 0;
+    font-size:24px;
 }

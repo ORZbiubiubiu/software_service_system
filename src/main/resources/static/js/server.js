@@ -1,3 +1,17 @@
+var username;
+
+const name = new Vue({
+    el: '#username',
+    data:{
+        username:''
+    },
+    mounted:function(){
+        username = sessionStorage.getItem("name");
+        this.username = sessionStorage.getItem("name");
+    }
+})
+
+
 const server_func = new Vue({
     el: '.center',
     data:{
@@ -22,8 +36,8 @@ const server_func = new Vue({
          updateUrl:"/server/update_state",
          msgItems:[],
          serviceItems:[],
-        userName:sessionStorage.getItem("name"),
-        token :sessionStorage.getItem("token"),
+         userName:sessionStorage.getItem("name"),
+         token :sessionStorage.getItem("token"),
          sendName:"",
          justMessage:""
     },
@@ -36,9 +50,8 @@ const server_func = new Vue({
                 getName:this.serverName,
             },{
                 headers:{
-                    'Access-Control-Allow-Origin':'*',  //解决cors头问题
-                    'Access-Control-Allow-Credentials':'true', //解决session问题
-                    'token':sessionStorage.getItem('token')
+
+                    'token':this.token
                 },
                 withCredentials : true
             })
@@ -52,6 +65,11 @@ const server_func = new Vue({
         getService(){
              axios.post(this.getServiceUrl, {
                     servername:this.serverName
+                },{
+                         headers:{
+                                     'token':sessionStorage.getItem('token')
+                                 },
+                         withCredentials : true
                 })
                 .then((response) => {
                     this.serviceItems = response.data.data.list ;
@@ -71,6 +89,11 @@ const server_func = new Vue({
                     sendName:this.serverName,
                     justMessage:this.justMessage,
                     messageDate:now
+                    },{
+                         headers:{
+                                    'token':sessionStorage.getItem('token')
+                                 },
+                         withCredentials : true
                     })
                     .then((response) => {
 
@@ -79,18 +102,68 @@ const server_func = new Vue({
                         console.log(error);
                      });
         },
-        update(){
-            axios.post(this.updateUrl, {
-                    servername:this.serverName,
-                    serverstate:"已经完成",
-                    sid:"aaa"
-                })
-                .then((response) => {
-                    this.serviceItems = response.data.data.list ;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+        finish(sname){
+                this.$confirm('确定要修改该服务状态为完成吗?', '提示', {
+                          confirmButtonText: '确定',
+                          cancelButtonText: '取消',
+                          type: 'warning'
+                        }).then(() => {
+                            axios.post(this.updateUrl, {
+                                                servername:this.serverName,
+                                                serverstate:"已完成",
+                                                softwareName:sname
+                                            },{
+                                                    headers:{
+                                                               'token':sessionStorage.getItem('token')
+                                                    },
+                                                    withCredentials : true
+                                             })
+                                            .then((response) => {
+                                                 if(response.data.data.message == 'success') ;
+                                                 this.$message({
+                                                       type: 'success',
+                                                       message: '修改成功!'
+                                                 });
+                                            })
+                                            .catch(function (error) {
+                                                console.log(error);
+                                            });
+
+                        }).catch(() => {
+                          this.$message({
+                            type: 'info',
+                            message: '修改请求已取消'
+                          });
+                        });
+
+        },
+        change(sname){
+             this.$confirm('确定提交换人申请吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+             }).then(() => {
+                      axios.post(this.updateUrl, {
+                            servername:this.serverName,
+                            serverstate:"异常",
+                            softwareName:sname
+                      }).then((response) => {
+                            if(response.data.data.message == 'success'){
+                                this.$message({
+                                    type: 'success',
+                                    message: '申请成功,请等待管理员审核!'
+                             });
+                            }
+                      }).catch(function (error) {
+                              console.log(error);
+                         });
+
+             }).catch(() => {
+                  this.$message({
+                        type: 'info',
+                        message: '请求已取消'
+                  });
+             });
         },
         handleSelect(key, keyPath) {
 

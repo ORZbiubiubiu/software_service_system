@@ -1,19 +1,31 @@
-// var username = "";
-// var token = "";
-// const uname = new Vue({
-//     el: "#username",
-//
-//     data:{
-//         uname:""
-//     },
-//     mounted:function(){
-//         console.log(sessionStorage.getItem(name))
-//         username = sessionStorage.getItem("name");
-//         token = sessionStorage.getItem("token");
-//         console.log(username + token);
-//         this.uname=username;
-//     }
-// })
+
+var username;
+
+const name = new Vue({
+    el: '#username',
+    data:{
+        username:''
+    },
+    mounted:function(){
+        username = sessionStorage.getItem("name");
+        this.username = sessionStorage.getItem("name");
+    }
+})
+
+const search_bar = new Vue({
+    el: '#search',
+    data:{
+        searchInfo:"",
+    },
+    methods:{
+        search(){
+            sessionStorage.setItem("searchInfo",this.searchInfo);
+            window.location.href = "/faq";
+        }
+    }
+});
+
+
 const server_func = new Vue({
     el: '.center',
     data:{
@@ -58,8 +70,9 @@ const server_func = new Vue({
          getServiceUrl: "/client/user_search",
          getUpdateInfoUrl: "/client/show_update_info",
          userName:sessionStorage.getItem("name"),
-        token :sessionStorage.getItem("token"),
-         activeName: ''
+         token :sessionStorage.getItem("token"),
+         activeName: '',
+         nodata:false
     },
     mounted:function(){
         this.getOrder();
@@ -68,10 +81,14 @@ const server_func = new Vue({
         getOrder(){
              axios.post(this.getOrderUrl, {
                     serverName:this.userName
-                })
+                },{
+                      headers:{
+                          'token':this.token
+                      },
+                   withCredentials : true
+                 })
                 .then((response) => {
                     var data = response.data.data.list;
-
                     var msg = response.data.data.message.split('#');
                     console.log(msg);
                    this.orderData = data.filter(function(item,index){
@@ -86,6 +103,11 @@ const server_func = new Vue({
 
                         return item;
                    })
+                   if(this.orderData.length == 0 ){
+                        this.nodata = true;
+                   }else{
+                        this.nodata =false;
+                   }
                     console.log(this.orderData);
                 })
                 .catch(function (error) {
@@ -98,12 +120,30 @@ const server_func = new Vue({
                                     softwareName:this.form.softwareName,
                                     serviceKind:this.form.kind,
                                     serviceInfo:this.form.desc
+                                },{
+                                      headers:{
+                                                'token':sessionStorage.getItem('token')
+                                              },
+                                      withCredentials : true
                                 })
                                 .then((response) => {
 
-                                    console.log(response.data.data.list);
-                                    console.log(typeof(response.data.data.list));
+                                    console.log(response.data.data.message);
+                                    if(response.data.data.message=="success"){
+                                        this.$message({
+                                             type: 'success',
+                                             message: '申请成功,请耐心等待维护!'
+                                        });
+                                        this.form.softwareName = "";
+                                        this.form.desc = "";
+                                        this.form.kind = "";
 
+                                    }else{
+                                        this.$message({
+                                             type: 'failed',
+                                             message: '服务器发生异常，请稍后再试!'
+                                        });
+                                    }
                                 })
                                 .catch(function (error) {
                                     console.log(error);
@@ -120,9 +160,27 @@ const server_func = new Vue({
                             sendName:this.userName,
                             justMessage:this.msg.msg,
                             messageDate:now
+                            },{
+                                headers:{
+                                           'token':sessionStorage.getItem('token')
+                                        },
+                                withCredentials : true
                             })
                             .then((response) => {
-
+                                    console.log(response.data.data.message);
+                                    if(response.data.data.message=="success"){
+                                        this.$message({
+                                             type: 'success',
+                                             message: '发送成功'
+                                        });
+                                        this.msg.receiver ="";
+                                        this.msg.msg = ""
+                                    }else{
+                                        this.$message({
+                                             type: 'failed',
+                                             message: '发送失败，请稍后再试!'
+                                        });
+                                    }
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -131,6 +189,11 @@ const server_func = new Vue({
         getMsg(){
                      axios.post(this.getMsgUrl, {
                          getName:this.userName
+                         },{
+                                headers:{
+                                           'token':sessionStorage.getItem('token')
+                                        },
+                                withCredentials : true
                          })
                          .then((response) => {
                              this.receiveMsg = response.data.data.list ;
@@ -142,6 +205,11 @@ const server_func = new Vue({
         getService(){
                      axios.post(this.getServiceUrl, {
                          userName:this.userName
+                         },{
+                                headers:{
+                                           'token':sessionStorage.getItem('token')
+                                        },
+                                withCredentials : true
                          })
                          .then((response) => {
                              this.serviceData = response.data.data.list ;
