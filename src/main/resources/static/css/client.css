@@ -1,0 +1,112 @@
+
+#left-side{
+    float:left;
+    width:300px;
+}
+
+#nav{
+    width:400px;
+    float:left;
+}
+
+#right-side{
+    float:right;
+    width:1000px;
+    height:800px;
+    background-color:#fff;
+}
+
+#apply-btn{
+    margin-left: 450px;
+}
+
+#query-btn{
+    margin-left: 1000px;
+}
+
+.el-header{
+    background-color: #B3C0D1;
+    color: #fff;
+    font-size:24px;
+    line-height: 60px;
+}
+
+#card{
+    width:100%;
+    height:300px;
+    position:relative;
+}
+
+.box-card{
+    width:500px;
+    margin-top:50px;
+}
+
+#apply-form{
+    width:400px;
+    padding-left:200px;
+}
+
+#sendMsg{
+    width:500px;
+    position:relative;
+    top:100px;
+    left:200px;
+    }
+
+#receiveMsg{
+    width:800px;
+    margin-left:100px;
+    margin-top:100px;
+    height:600px;
+    padding:10px;
+    }
+
+
+.demo-table-expand{
+    font-size:0;
+}
+
+.demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+
+.demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+
+.el-tooltip__popper{
+    display:none;
+  }
+
+.headline{
+    height:60px;
+    font-size:24px;
+    line-height:60px;
+    color:#fff;
+    background-color:#B3C0D1;
+}
+
+.title{
+    padding:0 20px;
+}
+
+#collapse{
+    padding:10px;
+}
+
+.updateDate{
+    margin-right:20px;
+}
+
+.updateDetail{
+    margin-top:30px;
+}
+
+.updateInfo{
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    color:#909399;
+}

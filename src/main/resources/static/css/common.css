@@ -1,0 +1,135 @@
+/*************header**************/
+.header {
+    margin:0;
+    position: relative;
+    width: 1500px;
+    background-color: rgba(39, 110, 81, 1);
+    left: 10%;
+    height: 83px;
+}
+
+#title{
+    margin:0;
+    left:10%;
+    color: #fff;
+}
+
+#search{
+    left:40%;
+    width: 550px;
+}
+
+#search-bar{
+    float: left;
+    border: none;
+    border-radius: 10px;
+    padding-left: 10px;
+    height: 34px;
+    width: 380px;
+    background: url(../img/search.png);
+}
+
+#btn-search{
+    float: right;
+    width: 100px;
+    margin-right: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #fff;
+    color: #aaaaaa;
+    text-decoration: none;
+}
+
+#userinfo{
+    right: 5%;
+}
+
+#username{
+    color: white;
+}
+
+#avatar{
+    display: inline-block;
+    font-size: 40px;
+    padding: 5px;
+    color: white;
+}
+
+#logout{
+    display: inline-block;
+    margin-left: 20px;
+}
+
+#btn-logout{
+    text-decoration: none;
+    color: white;
+}
+
+/*************center**************/
+
+.center {
+    padding:100px;
+    width: 1300px;
+    left: 10%;
+    background-color: #545c64;
+    position: relative;
+    min-height: 800px;
+}
+
+/*************footer**************/
+
+.footer {
+    font-size: 16px;
+    color: #FFFFFF;
+    font-family: 'Arial Normal', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    width: 1500px;
+    left: 10%;
+    height: 115px;
+    position: relative;
+    background-color: rgba(39, 110, 81, 1);
+}
+
+#versionInf {
+    float: left;
+    margin-left: 20px;
+}
+
+.details {
+    float: right;
+    margin-right: 100px;
+    margin-top: 50px;
+}
+
+.details > a {
+    text-decoration: none;
+    color:white;
+}
+
+.v-center{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.h-center{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.clearfix{
+    *zoom: 1;
+}
+
+.clearfix::after{
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}

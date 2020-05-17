@@ -1,10 +1,10 @@
-package com.example.software_service_system.service;
+package com.example.software_service_system.service.LoginService;
 
-import com.example.software_service_system.Entity.JsnoResult;
-import com.example.software_service_system.Entity.Order;
-import com.example.software_service_system.Entity.OrderData;
+import com.example.software_service_system.Entity.LoginEntity.JsnoResult;
+import com.example.software_service_system.Entity.LoginEntity.Order;
+import com.example.software_service_system.Entity.LoginEntity.OrderData;
+import com.example.software_service_system.mapper.LoginMapper.OrderMapper;
 import org.springframework.stereotype.Service;
-import com.example.software_service_system.mapper.OrderMapper;
 
 import javax.annotation.Resource;
 import java.util.List;

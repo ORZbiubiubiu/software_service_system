@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" href="../static/css/server.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+    <div class="header">
+            <h1 id="title" class="v-center">
+                软件售后服务系统
+            </h1>
+            <div id="search" class="v-center">
+                <input type="text" id="search-bar" maxlength="40">
+                <a href="#" id="btn-search">搜索</a>
+            </div>
+            <div id="userinfo" class="v-center">
+                <div id="avatar">
+                    <i class="el-icon-s-custom"></i>
+                </div>
+                <span id="username">
+                        用户
+                    </span>
+                <div id="logout">
+                    <a href="" id="btn-logout" >退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="center">
+
+        <div id="nav" class="clearfix">
+                <el-col :span="12">
+
+                    <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen" @close="handleClose"
+                             background-color="#545c64" text-color="#fff" active-text-color="#dddddd">
+                        <el-menu-item v-bind:index="item.index" v-for="(item, index) in funcs">
+                            <i class="el-icon-menu"></i>
+                            <span slot="title">{{item.fncname}}</span>
+                        </el-menu-item>
+                    </el-menu>
+
+                </el-col>
+        </div>
+
+            <div id="functions_area">
+                <div class="function_area" v-if ="flag == 0">
+                    <div id="server-details">
+                        <div class="server-detail" v-for="(item,index) in serviceItems">
+                            <div id="software1" class="sid">
+                                软件标签: {{item.softwareName}}
+                            </div>
+                            <div id="status1" class="status">
+                                当前状态: {{item.serviceState}}
+                            </div>
+                            <div id="problem1-type" class="p-type">
+                                问题类型: {{item.serviceKind}}
+                            </div>
+                            <div id="problem1-description" class="p-description">
+                                问题描述: {{item.serviceInfo}}
+                            </div>
+                            <div class="servername">
+                                维护人员: {{item.serverName}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function_area" v-if ="flag == 1">
+                    <div id="emails">
+                        <div class="email" v-for = "(item,index) in msgItems"  >
+                            <div class="email-icon ">
+                                <img class="icon" src="../icon/email-icon.jpg" alt="邮件">
+                            </div>
+                            <div class="msg-overview">
+                                <div class="sender">
+                                    发信人: {{item.sendName}}
+                                </div>
+                                <div class="date">
+                                    发送日期: {{item.messageDate}}
+                                </div>
+                                <div class="message">
+                                    内容: {{item.justMessage}}
+                                </div>
+                                <div class="view"><a href="">点击浏览</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="function_area" v-if ="flag == 2">
+                    <ul id="services">
+                        <li class="service">
+                            <ul id="service-title" class="clearfix">
+                                <li class="s-id">软件编号</li>
+                                <li class="username">申请用户</li>
+                                <li class="servername">服务人员</li>
+                                <li class="type">问题类型</li>
+                                <li class="info">具体描述</li>
+                                <li class="servicestatus">服务状态</li>
+                                <li class="operate">操作</li>
+                            </ul>
+                        </li>
+                        <li class="service" v-for="(item,index) in serviceItems">
+                            <ul class="clearfix">
+                                <li class="s-id">{{item.softwareName}}</li>
+                                <li class="username">{{item.userName}}</li>
+                                <li class="servername">{{item.serverName}}</li>
+                                <li class="type">{{item.serviceKind}}</li>
+                                <li class="info">{{item.serviceInfo}}</li>
+                                <li class="servicestatus">{{item.serviceState}}</li>
+                                <li class="operate"><a class="finish" href="" @click="update">完成</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="function_area" v-if ="flag == 3">
+                    <div id="sendmsg">
+                        <div id="address">
+                            <span>收件人:</span>
+                            <input name="address" type="text" id="address-text" v-model="sendName">
+                        </div>
+                        <div id="headline">
+                            <span>主题:</span>
+                            <input name="headline" type="text" id="headline-text">
+                        </div>
+                        <div id="msg">
+                            <span>内容:</span>
+                            <textarea name="msg" id="msg-text" cols="60" rows="20" v-model="justMessage"></textarea>
+                        </div>
+                        <div id="btn-send">
+                            <a href="" @click="sendMsg" >发送</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+            <span id="versionInf">
+                <p>版本号v1.0</p>
+                <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
+            </span>
+            <span class="details"><a href="">咨询电话:8888-8888</a></span>
+            <span class="details"><a href="">技术说明</a></span>
+            <span class="details"><a href="">帮助中心</a></span>
+            <span class="details"><a href="">关于我们</a></span>
+    </div>
+
+    <script src="../static/js/server.js"></script>
+
+</body>
+</html>

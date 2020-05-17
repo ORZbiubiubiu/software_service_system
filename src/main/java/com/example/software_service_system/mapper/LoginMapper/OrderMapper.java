@@ -1,7 +1,7 @@
-package com.example.software_service_system.mapper;
+package com.example.software_service_system.mapper.LoginMapper;
 
 import java.util.List;
-import com.example.software_service_system.Entity.Order;
+import com.example.software_service_system.Entity.LoginEntity.Order;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

@@ -1,4 +1,4 @@
-package com.example.software_service_system.Entity;
+package com.example.software_service_system.Entity.LoginEntity;
 
 import lombok.Getter;
 import lombok.Setter;

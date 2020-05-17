@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/client.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="header_top">
+            <h1 id="title" class="v-center" >
+                软件售后服务系统
+            </h1>
+            <div id="search" class="v-center">
+                <input type="text" id="search-bar" maxlength="40">
+                <a href="#" id="btn-search">搜索</a>
+            </div>
+            <div id="userinfo" class="v-center">
+                <div id="avatar">
+                    <i class="el-icon-s-custom"></i>
+                </div>
+                <span id="username">
+                        用户
+                    </span>
+                <div id="logout">
+                    <a href="" id="btn-logout" >退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="center">
+        <div id="left-side">
+            <div id="nav" class="clearfix">
+                <el-col :span="12">
+                    <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect"
+                             background-color="#545c64" text-color="#fff" active-text-color="#dddddd">
+                        <el-menu-item v-bind:index="item.index" v-for="(item, index) in funcs">
+                            <i class="el-icon-menu"></i>
+                            <span slot="title">{{item.fncname}}</span>
+                        </el-menu-item>
+                    </el-menu>
+
+                </el-col>
+            </div>
+        </div>
+        <div id="right-side">
+            <div id="purchased" v-if="index == 0">
+                <el-container>
+                    <el-header>您购买过的产品有:</el-header>
+                    <el-main>
+                        <el-table :data="orderData">
+                            <el-table-column prop="buyDate" label="购买日期" width="140">
+                            </el-table-column>
+                            <el-table-column prop="softwareName" label="产品名称" width="200">
+                            </el-table-column>
+                            <el-table-column prop="orderId" label="订单号">
+                            </el-table-column>
+                            <el-table-column label="当前状态">
+                                <template slot-scope="scope">
+                                    <span v-if="scope.row.serviceState==1">正在进行售后处理</span>
+                                    <span v-if="scope.row.serviceState==0">正常</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="操作">
+                                <template slot-scope="scope">
+                                    <el-button type="text" size="medium" v-if="scope.row.serviceState==0">申请售后服务</el-button>
+                                    <el-button type="text" size="medium" v-if="scope.row.serviceState==1">查看详情</el-button>
+                                </template>
+
+                            </el-table-column>
+                        </el-table>
+                    </el-main>
+                </el-container>
+            </div>
+            <div id="service" v-if="index == 1">
+                <div class="headline">
+                    <span class="title">您正在申请售后的产品有:</span>
+                </div>
+                <el-table :data="serviceData">
+                    <el-table-column type="expand">
+                        <template slot-scope="props">
+                            <el-form label-position="left" inline class="demo-table-expand">
+                                <el-form-item label="产品名称" width="300px">
+                                    <span>{{ props.row.softwareName }}</span>
+                                </el-form-item>
+                                <el-form-item label="服务人员">
+                                    <span>{{ props.row.serverName }}</span>
+                                </el-form-item>
+                                <el-form-item label="问题类型">
+                                    <span>{{ props.row.serviceKind }}</span>
+                                </el-form-item>
+                                <el-form-item label="问题描述">
+                                    <span>{{ props.row.serviceInfo }}</span>
+                                </el-form-item>
+                                <el-form-item label="当前状态">
+                                    <span v-if="isService(props.row.serviceState)">正在进行售后处理</span>
+                                    <span v-if="!isService(props.row.serviceState)">异常</span>
+                                </el-form-item>
+                            </el-form>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="softwareName" label="产品名称" width="200">
+                    </el-table-column>
+                    <el-table-column prop="serverName" label="服务人员" width="100">
+                    </el-table-column>
+                    </el-table-column>
+                    <el-table-column label="当前状态">
+                        <template slot-scope="scope">
+                            <span v-if="isService(scope.row.serviceState)">正在进行售后处理</span>
+                            <span v-if="!isService(scope.row.serviceState)">异常</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="text" size="medium" v-if="isService(scope.row.serviceState)">查看详情</el-button>
+                            <el-button type="text" size="medium" v-if="!isService(scope.row.serviceState)">申诉</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+            <div id="apply-service" v-if="index == 2">
+                <div id="card">
+                    <el-card class="box-card h-center">
+                        <span>亲爱的用户:</span>
+                        <el-divider></el-divider>
+                        <p>
+                            &nbsp;&nbsp;&nbsp;十分感谢您使用我们的产品，但是感到抱歉的是您现在准备申请售后服务！balabala
+                        </p>
+                    </el-card>
+                </div>
+                <div id="apply-form">
+                    <el-form ref="form" :model="form" label-width="80px">
+
+                        <el-form-item label="软件名称">
+                            <el-input v-model="form.softwareName"></el-input>
+                        </el-form-item>
+                        <el-form-item label="问题类型">
+                            <el-select v-model="form.kind" placeholder="请选择问题类型" >
+                                <el-option label="数据库" value="database"></el-option>
+                                <el-option label="balabala" value="beijing"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="问题描述">
+                            <el-input type="textarea" v-model="form.desc"></el-input>
+                        </el-form-item>
+
+                        <el-form-item>
+                            <el-button type="primary" @click="applyforService">提交</el-button>
+                            <el-button>取消</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
+            <div id="sendMsg" v-if="index == 3">
+                <el-form ref="form" :model="msg" label-width="80px" size="mini">
+
+                    <el-form-item label="收件人">
+                        <el-input v-model="msg.receiver"></el-input>
+                    </el-form-item>
+                    <el-form-item label="内容">
+                        <el-input type="textarea" v-model="msg.msg"></el-input>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="sendMsg">提交</el-button>
+                        <el-button>取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <div id="receiveMsg" v-if="index == 4">
+                <el-table :data="receiveMsg">
+                    <el-table-column type="expand">
+                        <template slot-scope="props">
+                            <el-form label-position="left" inline class="demo-table-expand">
+                                <el-form-item label="内容" width="300px">
+                                    <span>{{ props.row.justMessage }}</span>
+                                </el-form-item>
+                                <el-form-item label="发件人">
+                                    <span>{{ props.row.sendName }}</span>
+                                </el-form-item>
+                                <el-form-item label="发送日期">
+                                    <span>{{ props.row.messageDate }}</span>
+                                </el-form-item>
+                            </el-form>
+                        </template>
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip prop="justMessage" label="内容" width="300">
+                    </el-table-column>
+                    <el-table-column prop="sendName"  label="发件人"  width="100">
+                    </el-table-column>
+                    <el-table-column prop="messageDate" label="发送日期" >
+                    </el-table-column>
+                </el-table>
+            </div>
+            <div id="software-update-info" v-if="index == 5">
+                <div class="headline">
+                    <span class="title">您将在此处看到您购买过的软件更新信息:</span>
+                </div>
+                <div id="collapse">
+                    <el-collapse  v-model="activeName"  @change="handleChange" accordion>
+                        <el-collapse-item  v-for="(item,index) in orderData" :name="item.softwareName">
+                            <template slot="title">
+                                {{item.softwareName}}
+                            </template>
+                            <div class="updateInfo" v-for="upd in updateData">
+                                <span class="updateDate">更新时间:</span>
+                                <span>{{upd.updateDate}}</span>
+                                </br>
+                                <span class="updateDetail">更新内容:</span>
+                                <p>{{upd.softwareInfo}}</p>
+                                <el-divider></el-divider>
+                            </div>
+
+                        </el-collapse-item>
+                    </el-collapse>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+            <span id="versionInf">
+                <p>版本号v1.0</p>
+                <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
+            </span>
+            <span class="details"><a href="">咨询电话:8888-8888</a></span>
+            <span class="details"><a href="">技术说明</a></span>
+            <pspan class="details"><a href="">帮助中心</a></pspan>
+            <span class="details"><a href="">关于我们</a></span>
+    </div>
+
+
+    <script src="../static/js/client.js"></script>
+</body>
+</html>

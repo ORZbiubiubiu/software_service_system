@@ -1,0 +1,195 @@
+
+
+#nav{
+    width:300px;
+    float:left;
+}
+
+#functions_area {
+    float:right;
+    width: 900px;
+    height: 800px;
+    background-color: #fff;
+}
+
+.function_area {
+    width: 100%;
+    height: 100%;
+}
+
+
+#server-details{
+    margin: 50px;
+}
+
+.server-detail{
+    margin-top: 20px;
+    border: 1px solid black;
+    border-radius: 30px;
+    padding: 20px;
+    background-color: #D7D7D7;
+}
+
+.sid{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.status{
+    display: inline-block;
+    position: absolute;
+    right: 30%;
+}
+
+.p-type{
+    margin-bottom: 10px;
+}
+
+.p-description{
+    margin-bottom: 10px;
+}
+
+.email{
+    border-bottom:1px solid black;
+    height: 200px;
+}
+
+.email-icon{
+    width: 200px;
+    float: left;
+}
+
+.icon{
+    margin: 25px;
+    height: 100px;
+    width: 120px;
+}
+
+.msg-overview{
+    float: left;
+    height: 100%;
+    width: 620px;
+}
+
+.sender{
+    margin: 10px;
+    margin-top: 30px;
+    display: inline-block;
+}
+
+.date{
+    margin:10px;
+    margin-top: 30px;
+    margin-left: 200px;
+    display: inline-block;
+}
+
+.message{
+    margin-left:10px;
+    height:100px;
+}
+
+.view{
+    float: right;
+    margin-right:50px;
+}
+
+.view a{
+    text-decoration: none;
+    color: #169BD5;
+}
+
+ul,li{
+    list-style-type: none;
+    padding: 0;
+}
+
+
+.service ul li{
+    float: left;
+    padding: 12px 5px;
+
+}
+
+.service {
+    border-bottom: 1px solid #EBEEF5;
+}
+
+#service-title{
+    color: #909399;
+}
+
+.s-id{
+    width: 120px;
+}
+
+
+.username,.servername{
+    width: 70px;
+}
+
+.servicestatus{
+    width: 90px;
+}
+
+.type{
+    width: 100px;
+}
+
+.info{
+    width: 200px;
+}
+
+.operate{
+    width: 70px;
+}
+
+.operate a {
+    text-decoration: none;
+    color:white;
+    padding: 8px;
+    background-color:#409EFF;
+    border-radius: 5px;
+}
+
+#sendmsg{
+    margin: 50px;
+}
+
+#sendmsg span,#headline span{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+#address-text,#headline-text{
+    width: 500px;
+}
+
+#headline{
+    margin-top: 20px;
+}
+
+#msg{
+    margin-top: 20px;
+}
+
+#msg-text{
+    vertical-align: top;
+}
+
+#btn-send {
+    margin-left: 500px;
+    margin-top: 50px;
+}
+
+#btn-send a{
+    text-decoration: none;
+    color:white;
+    padding: 8px;
+    background-color:#409EFF;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+    width: 100px;
+}

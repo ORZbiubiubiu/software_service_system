@@ -1,0 +1,89 @@
+package com.example.software_service_system.controller.ServerController;
+
+import com.alibaba.fastjson.JSONObject;
+import com.example.software_service_system.service.ServerService.Sservice;
+import com.example.software_service_system.service.ServerService.get_server_message;
+import com.example.software_service_system.service.ServerService.send_server_message;
+import com.example.software_service_system.service.ServerService.update_service_state;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+
+@RestController    //相当于@Controller+@RequestBody
+
+public class server_search_controller {
+    //每个service都要申明一次@Autowired
+    @Autowired
+    private update_service_state update_service_state;
+    @Autowired
+    private Sservice ServerService;
+    @Autowired
+    private get_server_message get_server_message;
+    @Autowired
+    private send_server_message send_server_message;
+
+    @RequestMapping(value = "server/search",method = RequestMethod.POST)
+    @ResponseBody
+    public String search_server(@RequestBody JSONObject jsonParam) {
+        String servername = (String)jsonParam.get("servername");
+        System.out.println(servername);
+        String return_json_string = JSONObject.toJSONString(ServerService.server_search_service(servername));
+        return return_json_string;
+    }
+
+    @RequestMapping(value = "server/update_state",method = RequestMethod.POST)
+    @ResponseBody
+    public String update_service(@RequestBody JSONObject jsonParam) {
+//        String servername = (String)jsonParam.get("servername");
+//        String serverstate = (String)jsonParam.get("serverstate");
+//        int id = Integer.parseInt((String)jsonParam.get("id"));
+        String return_json_string;
+//        System.out.println(serverstate+"--->"+id);
+//        if(serverstate.equals("change")){
+//            Date d = new Date();
+//            System.out.println(d);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            String dateNowStr = sdf.format(d);
+//            System.out.println("格式化后的日期：" + dateNowStr);
+//            send_server_message._send_server_message("admin",servername,id+"+change",dateNowStr);
+//            return_json_string = JSONObject.toJSONString(update_service_state.update_service_now_state(id,serverstate,servername));
+//            return return_json_string;
+//        }else {
+//            return_json_string = JSONObject.toJSONString(update_service_state.update_service_now_state(id,serverstate,servername));
+//            return return_json_string;
+//        }
+        String servername = (String)jsonParam.get("servername");
+        String serverstate = (String)jsonParam.get("serverstate");
+        String softwareId = (String)jsonParam.get("sid");
+        System.out.println(servername+"----"+serverstate+"----"+softwareId);
+        return_json_string = JSONObject.toJSONString(update_service_state.update_service_now_state(softwareId,serverstate,servername));
+        return return_json_string;
+    }
+
+    @RequestMapping(value = "server/show_messages",method = RequestMethod.POST)
+    @ResponseBody
+    public String get_message(@RequestBody JSONObject jsonParam) {
+        String getname = (String)jsonParam.get("getName");
+        System.out.println(getname);
+        String return_json_string = JSONObject.toJSONString(get_server_message._get_server_message(getname));
+        return return_json_string;
+    }
+
+    @RequestMapping(value = "server/send_server_message", method = RequestMethod.POST)
+    @ResponseBody
+    public String send_message(@RequestBody JSONObject jsonParam) {
+        System.out.println(jsonParam.toJSONString());
+        String getName = (String)jsonParam.get("getName");
+        String sendName = (String)jsonParam.get("sendName");
+        String justMessage = (String)jsonParam.get("justMessage");
+        String messageDate = (String)jsonParam.get("messageDate");
+        System.out.println(justMessage);
+        System.out.println(messageDate);
+        String return_json_string = JSONObject.toJSONString(send_server_message._send_server_message(getName,sendName,justMessage,messageDate));
+        System.out.println("return:"+return_json_string);
+        return return_json_string;
+    }
+
+
+
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/faq.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div class="header">
+    <div class="header_top">
+        <h1 id="title" class="v-center" >
+            软件售后服务系统
+        </h1>
+        <div id="userinfo" class="v-center">
+            <div id="avatar">
+                <i class="el-icon-s-custom"></i>
+            </div>
+            <span id="username">
+                用户
+            </span>
+            <div id="logout">
+                <a href="" id="btn-logout" >退出</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="center">
+        <div id="search-bar-content" class="h-center">
+            <el-row :gutter="20">
+                <el-col :span="16"><el-input v-model="faqInfo" placeholder="请输入内容"></el-input></el-col>
+                <el-col :span="6"><el-button type="primary" icon="el-icon-search">搜索</el-button></el-col>
+            </el-row>
+
+        </div>
+        <div id="nav" class="clearfix">
+            <el-col :span="10">
+                <el-menu default-active="0" class="el-menu-demo" @select="handleSelect" mode="horizontal">
+
+                    <el-menu-item v-bind:index="item.index" v-for="(item, index) in types">
+                        {{item.name}}
+                    </el-menu-item>
+                </el-menu>
+
+            </el-col>
+        </div>
+        <div id="posts" class="h-center">
+            <div class="post" v-for="item in faqData">
+                <el-card class="box-card" >
+                    <div slot="header" class="clearfix">
+                        <span>标题:{{item.faqName}}</span>
+                        <span class="date">发布日期:{{item.faqDate}}</span>
+                        <span class="sname">软件名称:{{item.faqSoftware}}</span>
+                    </div>
+                    <div>
+                        解决方法:
+                    </div>
+                    </br>
+                    <div>
+                        {{item.faqInfo}}
+                    </div>
+                </el-card>
+            </div>
+        </div>
+
+</div>
+<div class="footer">
+            <span id="versionInf">
+                <p>版本号v1.0</p>
+                <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
+            </span>
+    <span class="details"><a href="">咨询电话:8888-8888</a></span>
+    <span class="details"><a href="">技术说明</a></span>
+    <pspan class="details"><a href="">帮助中心</a></pspan>
+    <span class="details"><a href="">关于我们</a></span>
+</div>
+
+
+<script src="../static/js/faq.js"></script>
+</body>
+</html>
