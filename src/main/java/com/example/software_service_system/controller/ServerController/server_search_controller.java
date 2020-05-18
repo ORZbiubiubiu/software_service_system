@@ -1,6 +1,7 @@
 package com.example.software_service_system.controller.ServerController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.software_service_system.service.ClientService.type_find_faq;
 import com.example.software_service_system.service.ServerService.Sservice;
 import com.example.software_service_system.service.ServerService.get_server_message;
 import com.example.software_service_system.service.ServerService.send_server_message;
@@ -21,6 +22,8 @@ public class server_search_controller {
     private get_server_message get_server_message;
     @Autowired
     private send_server_message send_server_message;
+    @Autowired
+    private com.example.software_service_system.service.ClientService.type_find_faq type_find_faq;
 
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     @ResponseBody
@@ -80,6 +83,16 @@ public class server_search_controller {
         System.out.println(justMessage);
         System.out.println(messageDate);
         String return_json_string = JSONObject.toJSONString(send_server_message._send_server_message(getName,sendName,justMessage,messageDate));
+        System.out.println("return:"+return_json_string);
+        return return_json_string;
+    }
+    @RequestMapping(value = "/type_faq")
+    @ResponseBody
+    public String show_stype_faq(@RequestBody JSONObject jsonParam){
+        String faqType = (String)jsonParam.get("faqType");
+        String faqInfo = (String)jsonParam.get("faqInfo");
+        System.out.println(faqType+"/"+faqInfo);
+        String return_json_string = JSONObject.toJSONString(type_find_faq._type_find_faq(faqType,faqInfo));
         System.out.println("return:"+return_json_string);
         return return_json_string;
     }

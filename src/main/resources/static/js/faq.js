@@ -39,7 +39,7 @@ var vm = new Vue({
          index: 0,
          faqType:null,
          faqInfo:"",
-         getFaqUrl:"/client/type_faq"
+         getFaqUrl:"/server/type_faq"
     },
     mounted:function(){
             this.getFaq();

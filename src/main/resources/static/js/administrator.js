@@ -3,8 +3,8 @@ $(document).ready(function () {
     var name = sessionStorage.getItem("name");
     $("#userName").text(name);
     var session_id = sessionStorage.getItem("token");
-    console.log(name+session_id)
 
+ 
     var service_dialog_vm = new Vue({
         el: '#service_dialog',
         data: {
@@ -35,15 +35,22 @@ $(document).ready(function () {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     url: "/admin/huanren",
-                    headers:{"token":sessionStorage.getItem("token")},
+                    headers: {
+                        "token": sessionStorage.getItem("token")
+                    },
                     data: tmp,
                     success: function (response) {
 
 
                         if (response.data.message == "更新成功") {
-                            alert("更换售后服务人员" + service_dialog_vm.change_name + "成功!")
+                            this.$message({
+                                message: "更换售后服务人员" + service_dialog_vm.change_name + "成功!",
+                                type: 'success'
+                            });
+
                         } else {
-                            alert("更换售后服务人员" + service_dialog_vm.change_name + "失败!")
+                            this.$message.error("更换售后服务人员" + service_dialog_vm.change_name + "失败!");
+
                         }
                         service_dialog_vm.dialogFormVisible = false;
 
@@ -150,7 +157,11 @@ $(document).ready(function () {
                 service_dialog_vm.msgid = mesid;
 
                 if (solution == "") {
-                    alert("请选择解决方式！");
+
+                    this.$message({
+                        message: '请选择解决方式！',
+                        type: 'warning'
+                    });
                 } else {
                     service_dialog_vm.serviceId = serviceId;
                     service_dialog_vm.solution = solution;
@@ -170,7 +181,9 @@ $(document).ready(function () {
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         url: "/admin/getReplaceName",
-                        headers:{"token":sessionStorage.getItem("token")},
+                        headers: {
+                            "token": sessionStorage.getItem("token")
+                        },
                         data: tmp,
                         success: function (response) {
                             console.log(response)
@@ -225,7 +238,7 @@ $(document).ready(function () {
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
-                        url: "/api/CustomerPermissionSettingRequest",
+                        url: "/admin/CustomerPermissionSettingRequest",
                         data: JSON.stringify({
 
                             "id": access_dialog_vm.id,
@@ -236,10 +249,18 @@ $(document).ready(function () {
 
                             if (response.data.message == "用户权限修改成功！") {
                                 access_dialog_vm.dialogFormVisible = false;
-                                alert("客户权限修改成功！");
+                                this.$message({
+                                    message: '客户权限修改成功！',
+                                    type: 'success'
+                                });
+
                                 access_setting_page_getdata1(access_page_vm.current_page);
                             } else {
-                                alert("客户权限修改失败！");
+
+                                this.$message({
+                                    message: '客户权限修改失败！',
+                                    type: 'error'
+                                });
                             }
                         }
                     });
@@ -250,7 +271,9 @@ $(document).ready(function () {
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         url: "/admin/permissionSettingserverRequest",
-                        headers:{"token":sessionStorage.getItem("token")},
+                        headers: {
+                            "token": sessionStorage.getItem("token")
+                        },
                         data: JSON.stringify({
 
                             "id": access_dialog_vm.id,
@@ -261,10 +284,18 @@ $(document).ready(function () {
 
                             if (response.data.message == "维护人员权限修改成功！") {
                                 access_dialog_vm.dialogFormVisible = false;
-                                alert("售后服务人员权限修改成功！");
+                                this.$message({
+                                    message: '售后服务人员权限修改成功',
+                                    type: 'success'
+                                });
+
                                 access_setting_page_getdata(access_page_vm.current_page);
                             } else {
-                                alert("售后服务人员权限修改失败！");
+                                this.$message({
+                                    message: '售后服务人员权限修改失败！',
+                                    type: 'error'
+                                });
+
                             }
                         }
                     });
@@ -279,7 +310,7 @@ $(document).ready(function () {
         }
     });
 
-//权限设置菜单导航
+    //权限设置菜单导航
     var access_navMenu = new Vue({
         el: "#accessHead",
         data: {
@@ -289,14 +320,15 @@ $(document).ready(function () {
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key + " " + access_navMenu.activeIndex);
-                access_navMenu.currentIndx=key;
+                access_navMenu.currentIndx = key;
                 console.log(access_navMenu.currentIndx)
-                if (access_navMenu.currentIndx=='1') {
+                if (access_navMenu.currentIndx == '1') {
                     access_table_vm.current = "售后服务人员";
                     access_setting_page_getdata(1);
 
                 } else if (access_navMenu.currentIndx == '2') {
                     access_table_vm.current = "客户";
+                    console.log("客户导航栏")
                     access_setting_page_getdata1(1);
                 }
             }
@@ -309,7 +341,7 @@ $(document).ready(function () {
     var access_table_vm = new Vue({
         el: '#access_setting_holder',
         data: {
-            current:"售后服务人员",
+            current: "售后服务人员",
             tableData: [{
                 id: "",
                 "userId": "韭菜卷大葱7",
@@ -394,10 +426,18 @@ $(document).ready(function () {
                 access_dialog_vm.way3 = true;
 
                 if (way == accountStatus) {
-                    alert(userId + " 已处于" + accountStatus +"   中！");
-                } else if (way== "") {
-                    alert("请选择解决方式！")
-                }else{
+
+                    this.$message({
+                        message: userId + " 已处于" + accountStatus + "   中！",
+                        type: 'warning'
+                    });
+                } else if (way == "") {
+                    this.$message({
+                        message: "请选择解决方式！",
+                        type: 'warning'
+                    });
+
+                } else {
                     access_dialog_vm.dialogFormVisible = true;
                 }
 
@@ -439,7 +479,9 @@ $(document).ready(function () {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     url: "/admin/FaqModify",
-                    headers:{"token":sessionStorage.getItem("token")},
+                    headers: {
+                        "token": sessionStorage.getItem("token")
+                    },
                     data: JSON.stringify({
                         "id": id,
                         "faqInfo": faqInfo
@@ -447,7 +489,13 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response.data.code != 500) {
                             faq_page_getdata(faq_page_vm.current_page);
-                            alert("修改成功！");
+
+                            this.$message({
+                                message: '修改成功！',
+                                type: 'success'
+                            });
+
+
                         }
 
                     }
@@ -459,7 +507,9 @@ $(document).ready(function () {
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     url: "/admin/FaqDelete",
-                    headers:{"token":sessionStorage.getItem("token")},
+                    headers: {
+                        "token": sessionStorage.getItem("token")
+                    },
                     data: JSON.stringify({
                         "id": id,
 
@@ -467,7 +517,11 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response.data.code != 500) {
                             faq_page_getdata(faq_page_vm.current_page);
-                            alert("删除成功！");
+                            this.$message({
+                                message: '删除成功！',
+                                type: 'success'
+                            });
+
                         }
 
                     }
@@ -484,13 +538,13 @@ $(document).ready(function () {
         },
         methods: {
             handleSelect(key, keyPath) {
-                key= Number(key);
+                key = Number(key);
                 console.log(key);
                 $(".faqarea").removeClass("faqshow");
                 $(".faqarea").eq(key).addClass("faqshow");
-                if (key=="0") {
-                    //faq_page_getdata(faq_page_vm.current_page);
-                }else if (key=="1") {
+                if (key == "0") {
+                    faq_page_getdata(faq_page_vm.current_page);
+                } else if (key == "1") {
                     //加载软件列表供选择
                     $.ajax({
                         type: "POST",
@@ -534,6 +588,11 @@ $(document).ready(function () {
             password_check: "",
             message: "",
             usertype: "",
+            list: [{
+                name: 123
+
+            }],
+            serverSoftware: "",
             usertypes: [{
                 type: "客户"
             }, {
@@ -552,7 +611,10 @@ $(document).ready(function () {
                     adduser_vm.message = "请确认密码！";
                 } else if (adduser_vm.usertype == "") {
                     adduser_vm.message = "请选择用户类型";
+                } else if (adduser_vm.serverSoftware == "" && adduser_vm.usertype == "售后服务人员") {
+                    adduser_vm.message = "请选择负责软件";
                 }
+
                 for (const iterator of adduser_vm.username) {
                     if (iterator == " ") {
                         adduser_vm.message = "用户名称不可包含空格！";
@@ -568,10 +630,15 @@ $(document).ready(function () {
                     }
                 }
                 if (adduser_vm.message == "") {
+                    // console.log(adduser_vm.username + adduser_vm.password + adduser_vm.usertype + adduser_vm.serverSoftware)
+                    var pwd = adduser_vm.password;
+                    pwd = hex_md5(pwd);
+                    pwd = hex_md5(pwd);
                     var tmp = JSON.stringify({
                         username: adduser_vm.username,
-                        password: adduser_vm.password,
-                        usertype: adduser_vm.usertype
+                        password: pwd,
+                        usertype: adduser_vm.usertype,
+                        software: adduser_vm.serverSoftware
                     });
 
                     $.ajax({
@@ -579,12 +646,18 @@ $(document).ready(function () {
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         url: "/admin/adduser",
-                        headers:{"token":sessionStorage.getItem("token")},
+                        headers: {
+                            "token": sessionStorage.getItem("token")
+                        },
                         data: tmp,
                         success: function (response) {
                             console.log(response)
                             if (response.data.message == "success") {
-                                alert(adduser_vm.username + "  " + "添加成功!");
+                                this.$message({
+                                    message: adduser_vm.username + "  " + "添加成功!",
+                                    type: 'success'
+                                });
+
                             }
 
                         }
@@ -671,7 +744,7 @@ $(document).ready(function () {
                 "targetsoftware": "targetsoftware3",
 
             }],
-            faqType:"",
+            faqType: "",
             id: 1,
             faqName: "",
             faqDescription: "",
@@ -682,8 +755,12 @@ $(document).ready(function () {
             commit: function () {
                 //alert(targetsoftware_vm.faqSoftware + targetsoftware_vm.faqName + targetsoftware_vm.faqType + targetsoftware_vm.faqInfo + targetsoftware_vm.faqDescription);
                 if (targetsoftware_vm.faqSoftware == "" || targetsoftware_vm.faqName == "" || targetsoftware_vm.faqInfo == "" || targetsoftware_vm.faqDescription == "" || targetsoftware_vm.faqType == "") {
-                    alert("请完善所有信息！")
-                }else{
+
+                    this.$message({
+                        message: '请完善所有信息！',
+                        type: 'warning'
+                    });
+                } else {
                     var data = JSON.stringify({
                         id: targetsoftware_vm.id,
                         faqName: targetsoftware_vm.faqName,
@@ -706,21 +783,26 @@ $(document).ready(function () {
                             console.log(response.data);
                             if (response.data.message == "success") {
                                 console.log(response.data);
-                                alert("添加成功！");
+                                this.$message({
+                                    message: '添加成功！',
+                                    type: 'success'
+                                });
+
                             } else {
-                                alert("添加失败！");
+                                this.$message.error('添加失败');
                             }
                         }
                     });
                 }
 
 
-            },cancel:function () {
-                targetsoftware_vm.faqName="";
-                targetsoftware_vm.faqDescription="";
-                targetsoftware_vm.faqInfo="";
-                targetsoftware_vm.faqSoftware="";
-                targetsoftware_vm.faqType="";
+            },
+            cancel: function () {
+                targetsoftware_vm.faqName = "";
+                targetsoftware_vm.faqDescription = "";
+                targetsoftware_vm.faqInfo = "";
+                targetsoftware_vm.faqSoftware = "";
+                targetsoftware_vm.faqType = "";
             }
 
         }
@@ -738,7 +820,7 @@ $(document).ready(function () {
         methods: {
             handleCurrentChange: function (p) {
                 service_error_page_getdata(p);
-                alert("handleCurrentChange" + p);
+                // alert("handleCurrentChange" + p);
             },
             prev_click: function (p) {
                 // alert(p);
@@ -760,9 +842,9 @@ $(document).ready(function () {
         },
         methods: {
             handleCurrentChange: function (p) {
-                if (access_table_vm.current=="客户") {
+                if (access_table_vm.current == "客户") {
                     access_setting_page_getdata1(p);
-                }else{
+                } else {
                     access_setting_page_getdata(p);
                 }
 
@@ -787,14 +869,14 @@ $(document).ready(function () {
         },
         methods: {
             handleCurrentChange: function (p) {
-
+            faq_page_vm.current_page=p;
                 faq_page_getdata(p);
             },
             prev_click: function (p) {
-                // alert(p);
+                
             },
             next_click: function (p) {
-                //alert(p);
+                
             }
         }
     })
@@ -818,7 +900,9 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 url: "/admin/GetSoftWareList",
-                headers:{"token":sessionStorage.getItem("token")},
+                headers: {
+                    "token": sessionStorage.getItem("token")
+                },
                 data: "data",
                 success: function (response) {
                     console.log(response.data);
@@ -845,9 +929,9 @@ $(document).ready(function () {
             el: "#funcmenu",
             data: {
                 funcs: [{
-                    fncname: "售后服务异常处理",
-                    index: "0"
-                },
+                        fncname: "售后服务异常处理",
+                        index: "0"
+                    },
                     {
                         fncname: "权限设置",
                         index: "1"
@@ -870,10 +954,11 @@ $(document).ready(function () {
                     menuSelect(Number(key));
                 },
                 handleOpen(key, keyPath) {
-
+                    console.log(" handleOpe");
                     menuSelect(Number(key));
                 },
                 handleClose(key, keyPath) {
+                    console.log(" handleClose");
                     menuSelect(Number(key));
                 }
             }
@@ -882,9 +967,7 @@ $(document).ready(function () {
     );
 
     function menuSelect(index) {
-        /* $(".functions").removeClass("selectedfunction");
-         $(this).addClass("selectedfunction");*/
-        /* var index = $(this).index(); //被点击元素在父元素中的位置顺序*/
+
 
         $("#functions_area").children().removeClass("selected_area");
         $("#functions_area").children().eq(index).addClass("selected_area");
@@ -892,36 +975,57 @@ $(document).ready(function () {
 
         //根据被点击元素在父元素中的位置顺序判断要跳转到哪个页面去
         if (index == 0) { //售后服务异常处理页面加载数据
-            //将从数据库里获得数据并且加载到 service_vm 中
 
-            //数组改值用这个  Vue.set
-            // Vue.set(service_vm.serviceId, 0, "newword");
-            //或者下面这个
-            // Array.prototype.splice
-
-            //service_vm.serviceId.splice(0, 1, "newword");
-            //
-            // service_error_page_getdata(1);
-            console.log("  service_error_page_getdata(1);(1)");
             service_error_page_getdata(1);
 
 
         } else if (index == 1) { //权限设置界面
             //将从数据库里获得数据并且加载到 access_vm 中
             // access_setting_page_getdata(1);
-            access_setting_page_getdata(1);
-            console.log("access_setting_page_getdata(1)");
+            if (access_table_vm.current=="客户") {
+                 console.log("access_table_vm.current==客户");
+                  access_setting_page_getdata1(1);
+            }else{
+                   console.log("access_table_vm.current==售后服务人员");
+                 access_setting_page_getdata(1);
+            }
+           
+           // console.log("access_setting_page_getdata(1)");
         } else if (index == 2) {
             //faq数据库管理界面
             console.log("faq_page_getdata(1)");
             faq_page_getdata(1);
 
         } else { //
+               console.log("新增用户-售后服务人员-可先服务软件");
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "/admin/GetSoftWareList",
+                headers: {
+                    "token": sessionStorage.getItem("token")
+                },
+                data: "data",
+                success: function (response) {
+                    console.log(response.data);
+                    var list = response.data.list;
+                    for (let index = 0; index < list.length; index++) {
+                        const element = list[index];
+                        Vue.set(adduser_vm.list, index, {
+                            name: element.softwareName,
+
+                        })
+                    }
+
+
+
+                }
+            });
 
 
         }
-        //这里还应该向数据库获取数据
-        //.......................
+
 
     }
 
@@ -930,18 +1034,18 @@ $(document).ready(function () {
 
     var versioninf_nav_vm = new Vue({
         el: "#aboutsoftwarehead",
-        data:{
-            activeIndex:"0",
+        data: {
+            activeIndex: "0",
         },
-        methods:{
-            handleSelect: function  (key,keyPath){
-                var i  = Number(key);
+        methods: {
+            handleSelect: function (key, keyPath) {
+                var i = Number(key);
                 console.log(i);
                 $(".versionarea").removeClass("selected_versionarea");
                 $(".versionarea").eq(i).addClass("selected_versionarea");
 
                 if (i == 1) {
-
+                    console.log("售后服务软件信息")
                     $.ajax({
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
@@ -950,11 +1054,13 @@ $(document).ready(function () {
                         headers: {
                             "token": sessionStorage.getItem("token")
                         },
-                        data: {},
+                        data: {},   
                         success: function (response) {
                             var list = response.data.list;
 
                             softwareinf_vm.tableData = [];
+                            console.log("售后服务软件信息：");
+                              console.log(list );
                             for (let index = 0; index < list.length; index++) {
                                 const element = list[index];
                                 Vue.set(softwareinf_vm.tableData, index, {
@@ -975,45 +1081,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".versionfunction").click(function () {
-        $(".versionfunction").removeClass("selectedversionfunction");
-        $(this).addClass("selectedversionfunction");
-        var i = $(this).index();
-        $(".versionarea").removeClass("selected_versionarea");
-        $(".versionarea").eq(i).addClass("selected_versionarea");
-
-        if (i == 2) {
-
-            $.ajax({
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                url: "/admin/GetSoftWareList",
-                headers:{"token":sessionStorage.getItem("token")},
-                data: {},
-                success: function (response) {
-                    var list = response.data.list;
-
-                    softwareinf_vm.tableData = [];
-                    for (let index = 0; index < list.length; index++) {
-                        const element = list[index];
-                        Vue.set(softwareinf_vm.tableData, index, {
-                            id: element.id,
-                            softwareName: element.softwareName,
-                            softwareInfo: element.softwareInfo,
-                            updateDate: element.updateDate
-
-                        })
-
-                    }
-                }
-            });
-
-        }
-        //这里还应该向数据库获取数据
-        //.......................
-    });
-
+   
     function service_error_page_getdata(i) { // //根据页数获取售后服务人员信息
         //参数i ：用户点击下方分页器的页数
         //从服务器获取数据
@@ -1027,7 +1095,9 @@ $(document).ready(function () {
             type: "post",
             url: "/admin/ServiceInfList",
             dataType: "json", //预期返回的数据的类型
-            headers:{"token":sessionStorage.getItem("token")},
+            headers: {
+                "token": sessionStorage.getItem("token")
+            },
             data: JSON.stringify(data_temp),
 
             contentType: "application/json;charset=UTF-8",
@@ -1040,6 +1110,7 @@ $(document).ready(function () {
                 service_page_vm.total = total;
                 service_page_vm.current_page = i;
                 service_table_vm.tableData = [];
+                
                 for (var index = 0; index < list.length; index++) {
                     var element = list[index];
 
@@ -1057,7 +1128,9 @@ $(document).ready(function () {
             },
             complete: function (XMLHttpRequest, textStatus) {},
             error: function () {
-                alert("请求数据错误");
+
+                 
+
             }
         });
 
@@ -1065,7 +1138,7 @@ $(document).ready(function () {
 
     };
 
-    function access_setting_page_getdata1(i){    //根据页数获取客户信息
+    function access_setting_page_getdata1(i) { //根据页数获取客户信息
 
         var data_temp = {
             pageNo: i,
@@ -1077,7 +1150,9 @@ $(document).ready(function () {
         $.ajax({
             type: "post",
             url: "/admin/getCustomerList",
-            headers:{"token":sessionStorage.getItem("token")},
+            headers: {
+                "token": sessionStorage.getItem("token")
+            },
             dataType: "json", //预期返回的数据的类型
             data: JSON.stringify(data_temp),
             contentType: "application/json;charset=UTF-8",
@@ -1085,6 +1160,8 @@ $(document).ready(function () {
                 var list = data.list;
                 access_page_vm.total = Number(data.message);
                 access_table_vm.tableData = [];
+                 console.log("客户列表：");
+
                 for (var index = 0; index < list.length; index++) {
                     var element = list[index];
                     // var totalPage = data.totalPage;
@@ -1098,12 +1175,13 @@ $(document).ready(function () {
                     });
                     console.log(access_table_vm.tableData[index]);
 
-                }
+                };
 
             },
             complete: function (XMLHttpRequest, textStatus) {},
             error: function () {
-                alert("请求数据错误");
+
+                
             }
         });
         //将数据加载到 access_vm 中
@@ -1111,7 +1189,7 @@ $(document).ready(function () {
 
     }
 
-    function access_setting_page_getdata(i) {
+    function access_setting_page_getdata(i) { //根据页数获取售后服务人员信息
         //参数i ：用户点击下方分页器的页数
         //从服务器获取数据
         var data_temp = {
@@ -1125,13 +1203,16 @@ $(document).ready(function () {
             type: "post",
             url: "/admin/getServerList",
             dataType: "json", //预期返回的数据的类型
-            headers:{"token":sessionStorage.getItem("token")},
+            headers: {
+                "token": sessionStorage.getItem("token")
+            },
             data: JSON.stringify(data_temp),
             contentType: "application/json;charset=UTF-8",
             success: function (data, textStatus) {
                 var list = data.list;
                 access_page_vm.total = Number(data.message);
                 access_table_vm.tableData = [];
+                 console.log("售后服务人员列表：");
                 for (var index = 0; index < list.length; index++) {
                     var element = list[index];
                     // var totalPage = data.totalPage;
@@ -1150,7 +1231,8 @@ $(document).ready(function () {
             },
             complete: function (XMLHttpRequest, textStatus) {},
             error: function () {
-                alert("请求数据错误");
+
+                 
             }
         });
         //将数据加载到 access_vm 中
@@ -1163,12 +1245,14 @@ $(document).ready(function () {
             pageNo: i,
             pageSize: faq_page_vm.page_size
         });
-
+        faq_page_vm.current_page=i;
         $.ajax({
             type: "post",
             url: "/admin/getFaqList", //"/api/GetAbnormalServiceInfList",
             dataType: "json", //预期返回的数据的类型
-            headers:{"token":sessionStorage.getItem("token")},
+            headers: {
+                "token": sessionStorage.getItem("token")
+            },
             data: data,
             contentType: "application/json;charset=UTF-8",
             success: function (data, textStatus) {
@@ -1177,28 +1261,27 @@ $(document).ready(function () {
                 console.log(Number(data.data.message));
                 faq_page_vm.total = Number(data.data.message);
                 console.log(list.length);
-                if (list.length < 3) {
 
-                } else {
-                    faq_vm.items = [];
-                    $.each(list, function (indexInArray, element) {
+                faq_vm.items = [];
+                $.each(list, function (indexInArray, element) {
 
-                        Vue.set(faq_vm.items, indexInArray, {
-                            id: element.id,
-                            "faqtitle": element.faqName,
-                            faqType: element.faqType,
-                            "faqdetails": element.faqInfo,
-                            "faqdate": element.faqDate
-                        });
-
-
+                    Vue.set(faq_vm.items, indexInArray, {
+                        id: element.id,
+                        "faqtitle": element.faqName,
+                        faqType: element.faqType,
+                        "faqdetails": element.faqInfo,
+                        "faqdate": element.faqDate
                     });
-                }
+
+
+                });
+
 
             },
             complete: function (XMLHttpRequest, textStatus) {},
             error: function () {
-                alert("请求数据错误");
+
+                
             }
         });
 
@@ -1211,23 +1294,21 @@ $(document).ready(function () {
             // contentType: "application/json; charset=utf-8",
             // dataType: "json",
             url: "/logout",
-            headers:{"token":sessionStorage.getItem("token")},
+            headers: {
+                "token": sessionStorage.getItem("token")
+            },
             // data: JSON.stringify({
             //     username:name
             // }),
             success: function (response) {
-                location.href="login"
+                location.href = "login"
             }
         });
 
     });
     service_error_page_getdata(1); //页面初始化加载第一页数据
-    Vue.set(faq_vm.items, 0, {
-        id: "element.id",
-        "faqtitle": "25",
-        faqType:" element.faqType",
-        "faqdetails":" element.faqInfo",
-        "faqdate":" element.faqDate"
-    });
+   
+   /*  access_setting_page_getdata(1);
+    faq_page_getdata(1); */
 
 });

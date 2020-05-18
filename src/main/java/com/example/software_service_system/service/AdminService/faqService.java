@@ -112,4 +112,35 @@ public class faqService {
         return result;
     }
 
+    public List<Map<String,String>> querysearchFaqDbList(String faqInfo,int page,int size) throws ParseException {
+        List<faq> faqList = faqMapper.searchfaq(faqInfo,(page-1)*size,size*page);
+        System.out.println(faqList);
+        DateFormat sdf = new SimpleDateFormat(" yyyy-MM-dd");
+        int i = faqList.size();
+        List<Map<String,String>> maps = new ArrayList<Map<String,String>>();
+        for(int j=0;j<i;j++){
+            String nowTime = sdf.format(faqList.get(j).getFaqDate());
+            Date time = sdf.parse(nowTime);
+            faqList.get(j).setFaqDate(time);
+            System.out.println(sdf.format(faqList.get(j).getFaqDate()));
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("id",String.valueOf(faqList.get(j).getId()));
+            map.put("faqName",faqList.get(j).getFaqName());
+            map.put("faqType",faqList.get(j).getFaqType());
+            map.put("faqDescription",faqList.get(j).getFaqDescription());
+            map.put("faqInfo",faqList.get(j).getFaqInfo());
+            map.put("faqSoftware",faqList.get(j).getFaqSoftware());
+            map.put("faqDate",sdf.format(faqList.get(j).getFaqDate()));
+            maps.add(map);
+        }
+
+        return maps;
+    }
+    //得到搜索总数
+    public int getsearchNum(String faqInfo){
+        int num = faqMapper.GetsearchNum(faqInfo);
+        return num;
+    }
+
+
 }
