@@ -1,4 +1,3 @@
-
 var username;
 
 const name = new Vue({
@@ -9,6 +8,27 @@ const name = new Vue({
     mounted:function(){
         username = sessionStorage.getItem("name");
         this.username = sessionStorage.getItem("name");
+    }
+})
+
+const logout = new Vue({
+    el: '#logout',
+    data:{
+        url:'/logout',
+        token:sessionStorage.getItem("token")
+    },
+    methods:{
+        logout(){
+
+            axios.post(this.url,{
+                token:this.token
+            }).then( (response)=>{
+
+                window.location.href = "/login";
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 })
 
@@ -111,6 +131,32 @@ const server_func = new Vue({
                     console.log(error);
                 });
         },
+        toogleExpand(row) {
+           let table = this.$refs.serviceTable;
+           console.log(this.$refs.serviceTable);
+           this.serviceData.slice((this.currentPage-1)*this.pagesize,this.currentPage*this.pagesize).map((item) => {
+             if (row.id != item.id) {
+               table.toggleRowExpansion(item, false)
+             }
+           })
+           table.toggleRowExpansion(row)
+        },
+        viewDetail(sname){
+            this.getService();
+            this.index = 1;
+            //获取不到table
+            let table = this.$refs.serviceTable;
+            console.log(this.$refs.serviceTable);
+            this.serviceData.slice((this.currentPage-1)*this.pagesize,this.currentPage*this.pagesize).map((item) => {
+              if ( sname == item.softwareName) {
+                table.toggleRowExpansion(item, true);
+              }
+            });
+        },
+        apply(sname){
+            this.index = 2;
+            this.form.softwareName = sname;
+        },
         applyforService(){
                 axios.post(this.applyServiceUrl, {
                                     userName:this.userName,
@@ -210,13 +256,17 @@ const server_func = new Vue({
                          })
                          .then((response) => {
                              this.serviceData = response.data.data.list ;
+                             this.serviceData.map(item => {
+                                   item.expansion = false
+                                 })
+
 
                          })
                          .catch(function (error) {
                              console.log(error);
                          });
                  },
-        isService(state){
+        isServer(state){
             if (state == "yes"){
                 return true;
             }

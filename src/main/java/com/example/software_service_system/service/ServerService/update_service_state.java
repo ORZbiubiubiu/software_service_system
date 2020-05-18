@@ -30,7 +30,7 @@ public class update_service_state {
 //        }
         System.out.println(serviceState);
         System.out.println(softwareId);
-        flag=update_service_mapper.update(softwareId,serviceState);
+        flag=update_service_mapper.update(softwareId,serviceState,servername);
         if(flag==1){
             System.out.println(1);
             myData.setMessage("success");

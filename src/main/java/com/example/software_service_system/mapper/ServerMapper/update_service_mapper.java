@@ -23,7 +23,7 @@ public interface update_service_mapper {
             })
     List<find_service_List> find_service_by_server(@Param("serverName") String serverName);
 
-    @Update("UPDATE service_table SET serviceState=#{serviceState} WHERE softwareName=#{softwareName}")
-    int update(@Param("softwareName") String softwareName, @Param("serviceState") String serviceState);
+    @Update("UPDATE service_table SET serviceState=#{serviceState} WHERE softwareName=#{softwareName} and serverName = #{serverName}")
+    int update(@Param("softwareName") String softwareName, @Param("serviceState") String serviceState,@Param("serverName") String serverName);
 
 }

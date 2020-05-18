@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>软件售后服务系统</title>
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <link rel="stylesheet" type="text/css" href="../static/css/faq.css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -26,7 +26,7 @@
                 {{username}}
             </span>
             <div id="logout">
-                <a href="" id="btn-logout" >退出</a>
+                <a href="" @click="logout" id="btn-logout" >退出</a>
             </div>
         </div>
     </div>
@@ -49,8 +49,8 @@
         </div>
         <div id="posts" >
             <div id="result">搜索结果:</div>
-            <div class="nodata" v-if="nodata">很抱歉,暂时没有与{{searchHistory}}相匹配的搜索结果。</div>
-            <div class="post" v-for="item in faqData">
+            <div class="nodata" v-if="faqData.length == 0">很抱歉,暂时没有与{{searchHistory}}相匹配的搜索结果。</div>
+            <div class="post" v-for="item in faqData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
                 <el-card class="box-card" >
                     <div slot="header" class="clearfix">
                         <span>标题:{{item.faqName}}</span>
@@ -66,7 +66,18 @@
                     </div>
                 </el-card>
             </div>
+            <div  class="page h-center" v-if="faqData.length != 0">
+                <el-pagination
+                        background
+                        layout="prev, pager, next,jumper"
+                        @current-change="handleCurrentChange"
+                        :current-page="currentPage"
+                        :page-size="pagesize"
+                        :total="faqData.length">
+                </el-pagination>
+            </div>
         </div>
+
 </div>
 <div class="footer">
             <span id="versionInf">

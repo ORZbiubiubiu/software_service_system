@@ -11,6 +11,27 @@ const name = new Vue({
     }
 })
 
+const logout = new Vue({
+    el: '#logout',
+    data:{
+        url:'/logout',
+        token:sessionStorage.getItem("token")
+    },
+    methods:{
+        logout(){
+
+            axios.post(this.url,{
+                token:this.token
+            }).then( (response)=>{
+
+                window.location.href = "/login";
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+})
+
 
 var vm = new Vue({
     el: '.center',
@@ -35,11 +56,12 @@ var vm = new Vue({
                ],
          faqData:[],
          searchHistory:"",
-         nodata:false,
          index: 0,
          faqType:null,
          faqInfo:"",
-         getFaqUrl:"/client/type_faq"
+         getFaqUrl:"/client/type_faq",
+         pagesize: 4,
+         currentPage: 1
     },
     mounted:function(){
             this.getFaq();
@@ -74,17 +96,17 @@ var vm = new Vue({
                                          })
                                          .then((response) => {
                                              this.faqData = response.data.data.list ;
-                                             if(this.faqData.length==0){
-                                                this.nodata=true;
-                                             }else{
-                                                this.nodata=false;
-                                             }
+
                                              this.searchHistory=this.faqInfo;
                                          })
                                          .catch(function (error) {
                                              console.log(error);
                                          });
             },
+            handleCurrentChange: function(currentPage){
+                                    this.currentPage = currentPage;
+                                    console.log(this.currentPage)  //点击第几页
+                            },
     }
 
 })

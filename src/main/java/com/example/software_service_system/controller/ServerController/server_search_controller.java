@@ -54,7 +54,7 @@ public class server_search_controller {
 //        }
         String servername = (String)jsonParam.get("servername");
         String serverstate = (String)jsonParam.get("serverstate");
-        String softwareId = (String)jsonParam.get("sid");
+        String softwareId = (String)jsonParam.get("softwareName");
         System.out.println(servername+"----"+serverstate+"----"+softwareId);
         return_json_string = JSONObject.toJSONString(update_service_state.update_service_now_state(softwareId,serverstate,servername));
         return return_json_string;

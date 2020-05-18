@@ -122,7 +122,12 @@
     font-size:24px;
 }
 
-
 .page{
     margin-top:20px;
+}
+
+.update-data-error{
+    color:#909399;
+    margin:20px 20px;
+    font-size:18px;
 }

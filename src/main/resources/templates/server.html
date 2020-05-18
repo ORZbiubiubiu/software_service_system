@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>软件售后服务系统</title>
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/server.css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -58,10 +58,8 @@
                                 <el-col :span="5">{{item.softwareName}}</el-col>
                                 <el-col :span="3">当前状态:</el-col>
                                 <el-col :span="5">
-                                    <template slot-scope="scope">
-                                        <span v-if="isService(scope.row.serviceState)">正在进行售后处理</span>
-                                        <span v-if="!isService(scope.row.serviceState)">异常</span>
-                                    </template>
+                                        <span v-if="isServer(item.serviceState)">正在进行售后处理</span>
+                                        <span v-if="!isServer(item.serviceState)">异常</span>
                                 </el-col>
                                 <el-col :span="3">服务人员:</el-col>
                                 <el-col :span="5">{{item.serverName}}</el-col>
@@ -75,7 +73,7 @@
                             <el-row class="detail">
                                 <el-col :span="24">具体描述:</el-col>
                             </el-row>
-                            <p>{{item.serviceInfo}}</p>
+                            <div class="service-detail">{{item.serviceInfo}}</div>
                         </el-card>
                         <div  class="page h-center" v-if="serviceItems.length != 0">
                             <el-pagination
@@ -135,8 +133,8 @@
                         </el-table-column>
                         <el-table-column label="当前状态">
                             <template slot-scope="scope">
-                                <span v-if="isService(scope.row.serviceState)">正在进行售后处理</span>
-                                <span v-if="!isService(scope.row.serviceState)">异常</span>
+                                <span v-if="isServer(scope.row.serviceState)">正在进行售后处理</span>
+                                <span v-if="!isServer(scope.row.serviceState)">异常</span>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作">

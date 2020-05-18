@@ -11,6 +11,28 @@ const name = new Vue({
     }
 });
 
+const logout = new Vue({
+    el: '#logout',
+    data:{
+        url:'/logout',
+        token:sessionStorage.getItem("token")
+    },
+    methods:{
+        logout(){
+
+            axios.post(this.url,{
+                token:this.token
+            }).then( (response)=>{
+
+                window.location.href = "/login";
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+})
+
+
 const search_bar = new Vue({
     el: '#search',
     data:{
@@ -207,7 +229,7 @@ const server_func = new Vue({
                   });
              });
         },
-        isService(state){
+        isServer(state){
                     if (state == "yes"){
                         return true;
                     }

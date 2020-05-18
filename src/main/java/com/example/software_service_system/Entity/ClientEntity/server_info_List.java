@@ -3,7 +3,6 @@ package com.example.software_service_system.Entity.ClientEntity;
 public class server_info_List {
     private int id;
     private String serverName;
-    private String serverPassword;
     private String serverSoftware;
     private String serverState;
 
@@ -21,14 +20,6 @@ public class server_info_List {
 
     public String getServerName() {
         return serverName;
-    }
-
-    public String getServerPassword() {
-        return serverPassword;
-    }
-
-    public void setServerPassword(String serverPassword) {
-        this.serverPassword = serverPassword;
     }
 
     public String getServerSoftware() {

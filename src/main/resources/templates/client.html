@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>软件售后服务系统</title>
     <link rel="stylesheet" type="text/css" href="../static/css/common.css">
     <link rel="stylesheet" type="text/css" href="../static/css/client.css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -32,7 +32,7 @@
                         {{username}}
                     </span>
                 <div id="logout">
-                    <a href="" id="btn-logout" >退出</a>
+                    <a href="" @click="logout" id="btn-logout" >退出</a>
                 </div>
             </div>
         </div>
@@ -72,8 +72,8 @@
                             </el-table-column>
                             <el-table-column label="操作">
                                 <template slot-scope="scope">
-                                    <el-button type="text" size="medium" v-if="scope.row.serviceState==0">申请售后服务</el-button>
-                                    <el-button type="text" size="medium" v-if="scope.row.serviceState==1">查看详情</el-button>
+                                    <el-button type="text" size="medium" @click="apply(scope.row.softwareName)" v-if="scope.row.serviceState==0">申请售后服务</el-button>
+                                    <el-button type="text" size="medium" @click="viewDetail(scope.row.softwareName)" v-if="scope.row.serviceState==1">查看详情</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -94,8 +94,24 @@
                 <div class="headline">
                     <span class="title">您正在申请售后的产品有:</span>
                 </div>
-                <el-table :data="serviceData.slice((currentPage-1)*pagesize,currentPage*pagesize)" key="1">
-                    <el-table-column type="expand">
+                <el-table ref="serviceTable" :data="serviceData.slice((currentPage-1)*pagesize,currentPage*pagesize)" key="1">
+                    <el-table-column prop="softwareName" label="产品名称" width="200">
+                    </el-table-column>
+                    <el-table-column prop="serverName" label="服务人员" width="100">
+                    </el-table-column>
+                    </el-table-column>
+                    <el-table-column label="当前状态">
+                        <template slot-scope="scope">
+                            <span v-if="isServer(scope.row.serviceState)">正在进行售后处理</span>
+                            <span v-if="!isServer(scope.row.serviceState)">异常</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="text" size="medium" @click="toogleExpand(scope.row)">{{scope.row.expansion ? '收起' : '查看详情'}}</el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column type="expand" width="1">
                         <template slot-scope="props">
                             <el-form label-position="left" inline class="demo-table-expand">
                                 <el-form-item label="产品名称" width="300px">
@@ -111,27 +127,10 @@
                                     <span>{{ props.row.serviceInfo }}</span>
                                 </el-form-item>
                                 <el-form-item label="当前状态">
-                                    <span v-if="isService(props.row.serviceState)">正在进行售后处理</span>
-                                    <span v-if="!isService(props.row.serviceState)">异常</span>
+                                    <span v-if="isServer(props.row.serviceState)">正在进行售后处理</span>
+                                    <span v-if="!isServer(props.row.serviceState)">异常</span>
                                 </el-form-item>
                             </el-form>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop="softwareName" label="产品名称" width="200">
-                    </el-table-column>
-                    <el-table-column prop="serverName" label="服务人员" width="100">
-                    </el-table-column>
-                    </el-table-column>
-                    <el-table-column label="当前状态">
-                        <template slot-scope="scope">
-                            <span v-if="isService(scope.row.serviceState)">正在进行售后处理</span>
-                            <span v-if="!isService(scope.row.serviceState)">异常</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column label="操作">
-                        <template slot-scope="scope">
-                            <el-button type="text" size="medium" v-if="isService(scope.row.serviceState)">查看详情</el-button>
-                            <el-button type="text" size="medium" v-if="!isService(scope.row.serviceState)">申诉</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -235,11 +234,12 @@
                 </div>
                 <div id="collapse">
                     <div class="nodata h-center" v-if="orderData.length == 0">暂无数据</div>
-                    <el-collapse v-if="!nodata"  v-model="activeName"  @change="handleChange" accordion>
+                    <el-collapse v-if="orderData.length != 0"  v-model="activeName"  @change="handleChange" accordion>
                         <el-collapse-item  v-for="(item,index) in orderData.slice((currentPage-1)*pagesize,currentPage*pagesize)" :name="item.softwareName">
                             <template slot="title">
                                 {{item.softwareName}}
                             </template>
+                            <div class="update-data-error" v-if="updateData.length == 0">暂无更新信息</div>
                             <div class="updateInfo" v-for="upd in updateData">
                                 <span class="updateDate">更新时间:</span>
                                 <span>{{upd.updateDate}}</span>

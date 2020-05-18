@@ -15,7 +15,6 @@ public interface apply_service_mapper {
             (value = {
                     @Result(id=true, column = "id", property = "id"),
                     @Result(property = "serverName",column = "serverName"),
-                    @Result(property = "serverPassword",column = "serverPassword"),
                     @Result(property = "serverSoftware",column = "serverSoftware"),
                     @Result(property = "serverState",column = "serverState")
             })
