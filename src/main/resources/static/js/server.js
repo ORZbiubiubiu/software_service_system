@@ -9,7 +9,20 @@ const name = new Vue({
         username = sessionStorage.getItem("name");
         this.username = sessionStorage.getItem("name");
     }
-})
+});
+
+const search_bar = new Vue({
+    el: '#search',
+    data:{
+        searchInfo:"",
+    },
+    methods:{
+        search(){
+            sessionStorage.setItem("searchInfo",this.searchInfo);
+            window.location.href = "/faq";
+        }
+    }
+});
 
 
 const server_func = new Vue({
@@ -29,17 +42,22 @@ const server_func = new Vue({
                     fncname: "用户交互", index: "3"
                   },
                 ],
+         msg: {
+                receiver:'',
+                msg: ''
+              },
          flag : 0,
          getMsgUrl: "/server/show_messages",
          getServiceUrl: "/server/search",
-         sendMsgUrl: "/serversend_server_message",
+         sendMsgUrl: "/server/send_server_message",
          updateUrl:"/server/update_state",
          msgItems:[],
          serviceItems:[],
+         softwareName:'',
          userName:sessionStorage.getItem("name"),
          token :sessionStorage.getItem("token"),
-         sendName:"",
-         justMessage:""
+         pagesize:7,
+         currentPage:1
     },
     mounted:function(){
         this.getService();
@@ -47,11 +65,10 @@ const server_func = new Vue({
     methods: {
         getMsg(){
             axios.post(this.getMsgUrl, {
-                getName:this.serverName,
+                getName:this.userName,
             },{
                 headers:{
-
-                    'token':this.token
+                            'token':this.token
                 },
                 withCredentials : true
             })
@@ -64,7 +81,7 @@ const server_func = new Vue({
         },
         getService(){
              axios.post(this.getServiceUrl, {
-                    servername:this.serverName
+                    servername:this.userName
                 },{
                          headers:{
                                      'token':sessionStorage.getItem('token')
@@ -85,9 +102,9 @@ const server_func = new Vue({
              var day=date.getDate(); //获取当前日
              var now = year + "-" + mon + "-" +day;
                 axios.post(this.sendMsgUrl, {
-                    getName:this.sendName,
-                    sendName:this.serverName,
-                    justMessage:this.justMessage,
+                    getName:this.msg.receiver,
+                    sendName:this.userName,
+                    justMessage:this.msg.msg,
                     messageDate:now
                     },{
                          headers:{
@@ -96,22 +113,36 @@ const server_func = new Vue({
                          withCredentials : true
                     })
                     .then((response) => {
-
+                                if(response.data.data.message=="success"){
+                                        this.$message({
+                                             type: 'success',
+                                             message: '发送成功'
+                                        });
+                                        this.msg.receiver ="";
+                                        this.msg.msg = ""
+                                    }else{
+                                        this.$message({
+                                             type: 'error',
+                                             message: '发送失败，请稍后再试!'
+                                        });
+                                    }
                     })
                     .catch(function (error) {
                         console.log(error);
                      });
         },
         finish(sname){
+                this.softwareName=sname;
+                console.log(this.softwareName);
                 this.$confirm('确定要修改该服务状态为完成吗?', '提示', {
                           confirmButtonText: '确定',
                           cancelButtonText: '取消',
                           type: 'warning'
                         }).then(() => {
                             axios.post(this.updateUrl, {
-                                                servername:this.serverName,
+                                                servername:this.userName,
                                                 serverstate:"已完成",
-                                                softwareName:sname
+                                                softwareName:this.softwareName
                                             },{
                                                     headers:{
                                                                'token':sessionStorage.getItem('token')
@@ -119,16 +150,21 @@ const server_func = new Vue({
                                                     withCredentials : true
                                              })
                                             .then((response) => {
-                                                 if(response.data.data.message == 'success') ;
-                                                 this.$message({
-                                                       type: 'success',
-                                                       message: '修改成功!'
-                                                 });
+                                                 if(response.data.data.message == 'success'){
+                                                     this.$message({
+                                                           type: 'success',
+                                                           message: '修改成功!'
+                                                     });
+                                                 }else{
+                                                    this.$message({
+                                                           type: 'error',
+                                                           message: '修改失败，请稍后再试!'
+                                                    });
+                                                 }
                                             })
                                             .catch(function (error) {
                                                 console.log(error);
                                             });
-
                         }).catch(() => {
                           this.$message({
                             type: 'info',
@@ -138,21 +174,27 @@ const server_func = new Vue({
 
         },
         change(sname){
+             this.softwareName=sname;
              this.$confirm('确定提交换人申请吗?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
              }).then(() => {
                       axios.post(this.updateUrl, {
-                            servername:this.serverName,
+                            servername:this.userName,
                             serverstate:"异常",
-                            softwareName:sname
+                            softwareName:this.softwareName
                       }).then((response) => {
                             if(response.data.data.message == 'success'){
                                 this.$message({
                                     type: 'success',
                                     message: '申请成功,请等待管理员审核!'
-                             });
+                                });
+                            }else{
+                                  this.$message({
+                                    type: 'error',
+                                    message: '申请失败，请稍后再试!'
+                                  });
                             }
                       }).catch(function (error) {
                               console.log(error);
@@ -165,6 +207,12 @@ const server_func = new Vue({
                   });
              });
         },
+        isService(state){
+                    if (state == "yes"){
+                        return true;
+                    }
+                    else return false;
+                },
         handleSelect(key, keyPath) {
 
                   console.log(key, keyPath);
@@ -175,11 +223,10 @@ const server_func = new Vue({
                     this.getMsg();
                   }
                },
-        handleOpen(key, keyPath) {
 
-              },
-        handleClose(key, keyPath) {
-
-              }
+        handleCurrentChange: function(currentPage){
+                        this.currentPage = currentPage;
+                        console.log(this.currentPage)  //点击第几页
+                },
     }
 })

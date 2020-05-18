@@ -18,15 +18,17 @@
                 软件售后服务系统
             </h1>
             <div id="search" class="v-center">
-                <input type="text" id="search-bar" maxlength="40">
-                <a href="#" id="btn-search">搜索</a>
+                <el-row :gutter="20">
+                    <el-col :span="16"><el-input v-model="searchInfo"></el-input></el-col>
+                    <el-col :span="8"><el-button type="primary" @click="search" icon="el-icon-search">搜索</el-button></el-col>
+                </el-row>
             </div>
             <div id="userinfo" class="v-center">
                 <div id="avatar">
                     <i class="el-icon-s-custom"></i>
                 </div>
                 <span id="username">
-                        用户
+                        {{username}}
                     </span>
                 <div id="logout">
                     <a href="" id="btn-logout" >退出</a>
@@ -34,112 +36,143 @@
             </div>
         </div>
     </div>
-    <div class="center">
+    <div class="center clearfix">
 
         <div id="nav" class="clearfix">
                 <el-col :span="12">
-
-                    <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen" @close="handleClose"
+                    <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect"
                              background-color="#545c64" text-color="#fff" active-text-color="#dddddd">
                         <el-menu-item v-bind:index="item.index" v-for="(item, index) in funcs">
                             <i class="el-icon-menu"></i>
                             <span slot="title">{{item.fncname}}</span>
                         </el-menu-item>
                     </el-menu>
-
                 </el-col>
         </div>
+        <div id="functions_area">
+                    <div id="server-cards" v-if="flag == 0">
+                        <div class="nodata" v-if="serviceItems.length == 0 ">暂无售后服务</div>
+                        <el-card class="box-card" v-for="item in serviceItems.slice((currentPage-1)*pagesize,currentPage*pagesize)" >
+                            <el-row :gutter="20">
+                                <el-col :span="3">软件名称:</el-col>
+                                <el-col :span="5">{{item.softwareName}}</el-col>
+                                <el-col :span="3">当前状态:</el-col>
+                                <el-col :span="5">
+                                    <template slot-scope="scope">
+                                        <span v-if="isService(scope.row.serviceState)">正在进行售后处理</span>
+                                        <span v-if="!isService(scope.row.serviceState)">异常</span>
+                                    </template>
+                                </el-col>
+                                <el-col :span="3">服务人员:</el-col>
+                                <el-col :span="5">{{item.serverName}}</el-col>
+                            </el-row>
 
-            <div id="functions_area">
-                <div class="function_area" v-if ="flag == 0">
-                    <div id="server-details">
-                        <div class="server-detail" v-for="(item,index) in serviceItems">
-                            <div id="software1" class="sid">
-                                软件标签: {{item.softwareName}}
-                            </div>
-                            <div id="status1" class="status">
-                                当前状态: {{item.serviceState}}
-                            </div>
-                            <div id="problem1-type" class="p-type">
-                                问题类型: {{item.serviceKind}}
-                            </div>
-                            <div id="problem1-description" class="p-description">
-                                问题描述: {{item.serviceInfo}}
-                            </div>
-                            <div class="servername">
-                                维护人员: {{item.serverName}}
-                            </div>
+                            <el-divider></el-divider>
+                            <el-row :gutter="20">
+                                <el-col :span="3">问题类型:</el-col>
+                                <el-col :span="21">{{item.serviceKind}}</el-col>
+                            </el-row>
+                            <el-row class="detail">
+                                <el-col :span="24">具体描述:</el-col>
+                            </el-row>
+                            <p>{{item.serviceInfo}}</p>
+                        </el-card>
+                        <div  class="page h-center" v-if="serviceItems.length != 0">
+                            <el-pagination
+                                    background
+                                    layout="prev, pager, next,jumper"
+                                    @current-change="handleCurrentChange"
+                                    :current-page="currentPage"
+                                    :page-size="3"
+                                    :total="serviceItems.length">
+                            </el-pagination>
                         </div>
                     </div>
-                </div>
-                <div class="function_area" v-if ="flag == 1">
-                    <div id="emails">
-                        <div class="email" v-for = "(item,index) in msgItems"  >
-                            <div class="email-icon ">
-                                <img class="icon" src="../static/img/email-icon.jpg" alt="邮件">
-                            </div>
-                            <div class="msg-overview">
-                                <div class="sender">
-                                    发信人: {{item.sendName}}
-                                </div>
-                                <div class="date">
-                                    发送日期: {{item.messageDate}}
-                                </div>
-                                <div class="message">
-                                    内容: {{item.justMessage}}
-                                </div>
-                                <div class="view"><a href="">点击浏览</a></div>
-                            </div>
+
+                    <div id="emails" v-if ="flag == 1">
+                        <el-table :data="msgItems.slice((currentPage-1)*pagesize,currentPage*pagesize)" key="0">
+                            <el-table-column type="expand">
+                                <template slot-scope="props">
+                                    <el-form label-position="left" inline class="demo-table-expand">
+                                        <el-form-item label="内容" width="300px">
+                                            <span>{{ props.row.justMessage }}</span>
+                                        </el-form-item>
+                                        <el-form-item label="发件人" >
+                                            <span>{{ props.row.sendName }}</span>
+                                        </el-form-item>
+                                        <el-form-item label="发送日期">
+                                            <span>{{ props.row.messageDate }}</span>
+                                        </el-form-item>
+                                    </el-form>
+                                </template>
+                            </el-table-column>
+                            <el-table-column show-overflow-tooltip prop="justMessage" label="内容" width="300">
+                            </el-table-column>
+                            <el-table-column prop="sendName"  label="发件人"  width="200">
+                            </el-table-column>
+                            <el-table-column prop="messageDate" label="发送日期" >
+                            </el-table-column>
+                        </el-table>
+                        <div  class="page h-center" v-if="msgItems.length != 0">
+                            <el-pagination
+                                    background
+                                    layout="prev, pager, next,jumper"
+                                    @current-change="handleCurrentChange"
+                                    :current-page="currentPage"
+                                    :page-size="pagesize"
+                                    :total="msgItems.length">
+                            </el-pagination>
                         </div>
                     </div>
-                </div>
-                <div class="function_area" v-if ="flag == 2">
-                    <ul id="services">
-                        <li class="service">
-                            <ul id="service-title" class="clearfix">
-                                <li class="s-id">软件编号</li>
-                                <li class="username">申请用户</li>
-                                <li class="servername">服务人员</li>
-                                <li class="type">问题类型</li>
-                                <li class="info">具体描述</li>
-                                <li class="servicestatus">服务状态</li>
-                                <li class="operate">操作</li>
-                            </ul>
-                        </li>
-                        <li class="service" v-for="(item,index) in serviceItems">
-                            <ul class="clearfix">
-                                <li class="s-id">{{item.softwareName}}</li>
-                                <li class="username">{{item.userName}}</li>
-                                <li class="servername">{{item.serverName}}</li>
-                                <li class="type">{{item.serviceKind}}</li>
-                                <li class="info">{{item.serviceInfo}}</li>
-                                <li class="servicestatus">{{item.serviceState}}</li>
-                                <li class="operate"><a class="finish" href="" @click="update">完成</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="function_area" v-if ="flag == 3">
-                    <div id="sendmsg">
-                        <div id="address">
-                            <span>收件人:</span>
-                            <input name="address" type="text" id="address-text" v-model="sendName">
-                        </div>
-                        <div id="headline">
-                            <span>主题:</span>
-                            <input name="headline" type="text" id="headline-text">
-                        </div>
-                        <div id="msg">
-                            <span>内容:</span>
-                            <textarea name="msg" id="msg-text" cols="60" rows="20" v-model="justMessage"></textarea>
-                        </div>
-                        <div id="btn-send">
-                            <a href="" @click="sendMsg" >发送</a>
-                        </div>
+
+                <div id="service-management" v-if ="flag == 2">
+                    <el-table :data="serviceItems.slice((currentPage-1)*pagesize,currentPage*pagesize)"  key="1">
+                        <el-table-column show-overflow-tooltip prop="softwareName" label="软件名称" width="150">
+                        </el-table-column>
+                        <el-table-column prop="userName"  label="申请用户"  width="150">
+                        </el-table-column>
+                        <el-table-column prop="serviceKind" label="问题类型" width="100">
+                        </el-table-column>
+                        <el-table-column label="当前状态">
+                            <template slot-scope="scope">
+                                <span v-if="isService(scope.row.serviceState)">正在进行售后处理</span>
+                                <span v-if="!isService(scope.row.serviceState)">异常</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button type="primary" @click="finish(scope.row.softwareName)" size="mini">完成</el-button>
+                                <el-button type="danger" @click="change(scope.row.softwareName)" size="mini">异常申请</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div  class="page h-center" v-if="serviceItems.length != 0">
+                        <el-pagination
+                                background
+                                layout="prev, pager, next,jumper"
+                                @current-change="handleCurrentChange"
+                                :current-page="currentPage"
+                                :page-size="pagesize"
+                                :total="serviceItems.length">
+                        </el-pagination>
                     </div>
                 </div>
+                    <div id="sendmsg" v-if="flag == 3">
+                        <el-form ref="form" :model="msg" label-width="80px" size="mini">
+                            <el-form-item label="收件人">
+                                <el-input v-model="msg.receiver"></el-input>
+                            </el-form-item>
+                            <el-form-item label="内容">
+                                <el-input type="textarea" v-model="msg.msg"></el-input>
+                            </el-form-item>
+
+                            <el-form-item>
+                                <el-button type="primary" @click="sendMsg">提交</el-button>
+                                <el-button>取消</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
             </div>
-        </div>
     </div>
     <div class="footer">
             <span id="versionInf">

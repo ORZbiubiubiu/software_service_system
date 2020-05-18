@@ -72,7 +72,8 @@ const server_func = new Vue({
          userName:sessionStorage.getItem("name"),
          token :sessionStorage.getItem("token"),
          activeName: '',
-         nodata:false
+         currentPage: 1,
+         pagesize: 7
     },
     mounted:function(){
         this.getOrder();
@@ -103,11 +104,7 @@ const server_func = new Vue({
 
                         return item;
                    })
-                   if(this.orderData.length == 0 ){
-                        this.nodata = true;
-                   }else{
-                        this.nodata =false;
-                   }
+
                     console.log(this.orderData);
                 })
                 .catch(function (error) {
@@ -140,7 +137,7 @@ const server_func = new Vue({
 
                                     }else{
                                         this.$message({
-                                             type: 'failed',
+                                             type: 'error',
                                              message: '服务器发生异常，请稍后再试!'
                                         });
                                     }
@@ -177,7 +174,7 @@ const server_func = new Vue({
                                         this.msg.msg = ""
                                     }else{
                                         this.$message({
-                                             type: 'failed',
+                                             type: 'error',
                                              message: '发送失败，请稍后再试!'
                                         });
                                     }
@@ -253,6 +250,9 @@ const server_func = new Vue({
                     this.getMsg();
                   }
                },
-
+        handleCurrentChange: function(currentPage){
+                        this.currentPage = currentPage;
+                        console.log(this.currentPage)  //点击第几页
+                },
     }
 })
