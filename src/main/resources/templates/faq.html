@@ -23,7 +23,7 @@
                 <i class="el-icon-s-custom"></i>
             </div>
             <span id="username">
-                用户
+                {{username}}
             </span>
             <div id="logout">
                 <a href="" id="btn-logout" >退出</a>
@@ -31,26 +31,25 @@
         </div>
     </div>
 </div>
-<div class="center">
+<div class="center clearfix">
         <div id="search-bar-content" class="h-center">
             <el-row :gutter="20">
                 <el-col :span="16"><el-input v-model="faqInfo" placeholder="请输入内容"></el-input></el-col>
-                <el-col :span="6"><el-button type="primary" icon="el-icon-search">搜索</el-button></el-col>
+                <el-col :span="6"><el-button type="primary" @click="getFaq" icon="el-icon-search">搜索</el-button></el-col>
             </el-row>
-
         </div>
-        <div id="nav" class="clearfix">
+        <div id="type-nav" class="clearfix">
             <el-col :span="10">
                 <el-menu default-active="0" class="el-menu-demo" @select="handleSelect" mode="horizontal">
-
                     <el-menu-item v-bind:index="item.index" v-for="(item, index) in types">
                         {{item.name}}
                     </el-menu-item>
                 </el-menu>
-
             </el-col>
         </div>
-        <div id="posts" class="h-center">
+        <div id="posts" >
+            <div id="result">搜索结果:</div>
+            <div class="nodata" v-if="nodata">很抱歉,暂时没有与{{searchHistory}}相匹配的搜索结果。</div>
             <div class="post" v-for="item in faqData">
                 <el-card class="box-card" >
                     <div slot="header" class="clearfix">
@@ -68,7 +67,6 @@
                 </el-card>
             </div>
         </div>
-
 </div>
 <div class="footer">
             <span id="versionInf">

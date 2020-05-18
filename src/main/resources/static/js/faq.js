@@ -1,3 +1,17 @@
+var username;
+
+const name = new Vue({
+    el: '#username',
+    data:{
+        username:''
+    },
+    mounted:function(){
+        username = sessionStorage.getItem("name");
+        this.username = sessionStorage.getItem("name");
+    }
+})
+
+
 var vm = new Vue({
     el: '.center',
     data:{
@@ -20,10 +34,12 @@ var vm = new Vue({
                 },
                ],
          faqData:[],
+         searchHistory:"",
+         nodata:false,
          index: 0,
          faqType:null,
          faqInfo:"",
-         getFaqUrl:"/type_faq"
+         getFaqUrl:"/client/type_faq"
     },
     mounted:function(){
             this.getFaq();
@@ -43,13 +59,27 @@ var vm = new Vue({
 
                    },
             getFaq(){
+                 if (sessionStorage.getItem("searchInfo")!=null){
+                        this.faqInfo=window.sessionStorage.getItem("searchInfo");
+                        window.sessionStorage.removeItem("searchInfo");
+                    }
                  axios.post(this.getFaqUrl, {
                                          faqType:this.faqType,
                                          faqInfo:this.faqInfo
+                                         },{
+                                              headers:{
+                                                        'token':sessionStorage.getItem('token')
+                                              },
+                                              withCredentials : true
                                          })
                                          .then((response) => {
                                              this.faqData = response.data.data.list ;
-
+                                             if(this.faqData.length==0){
+                                                this.nodata=true;
+                                             }else{
+                                                this.nodata=false;
+                                             }
+                                             this.searchHistory=this.faqInfo;
                                          })
                                          .catch(function (error) {
                                              console.log(error);

@@ -1,5 +1,3 @@
-
-
 #nav{
     width:300px;
     float:left;
@@ -7,7 +5,7 @@
 
 #functions_area {
     float:right;
-    width: 900px;
+    width: 1000px;
     height: 800px;
     background-color: #fff;
 }
@@ -17,179 +15,65 @@
     height: 100%;
 }
 
-
-#server-details{
-    margin: 50px;
+.nodata{
+    color:#909399;
+    margin:20px 0;
+    font-size:24px;
 }
 
-.server-detail{
-    margin-top: 20px;
-    border: 1px solid black;
-    border-radius: 30px;
-    padding: 20px;
-    background-color: #D7D7D7;
+#server-cards{
+    margin:50px;
+    position:relative;
 }
 
-.sid{
-    display: inline-block;
-    margin-bottom: 10px;
+.box-card{
+    margin-bottom:10px;
+    font-size:18px;
 }
 
-.status{
-    display: inline-block;
-    position: absolute;
-    right: 30%;
+.detail{
+    margin:10px 0;
 }
 
-.p-type{
-    margin-bottom: 10px;
+#emails{
+    position:relative;
+    width:800px;
+    margin:50px 90px;
+    height:600px;
+    padding:10px;
 }
 
-.p-description{
-    margin-bottom: 10px;
+.demo-table-expand{
+    font-size:0;
 }
 
-.email{
-    border-bottom:1px solid black;
-    height: 200px;
-}
-
-.email-icon{
-    width: 200px;
-    float: left;
-}
-
-.icon{
-    margin: 25px;
-    height: 100px;
-    width: 120px;
-}
-
-.msg-overview{
-    float: left;
-    height: 100%;
-    width: 620px;
-}
-
-.sender{
-    margin: 10px;
-    margin-top: 30px;
-    display: inline-block;
-}
-
-.date{
-    margin:10px;
-    margin-top: 30px;
-    margin-left: 200px;
-    display: inline-block;
-}
-
-.message{
-    margin-left:10px;
-    height:100px;
-}
-
-.view{
-    float: right;
-    margin-right:50px;
-}
-
-.view a{
-    text-decoration: none;
-    color: #169BD5;
-}
-
-ul,li{
-    list-style-type: none;
-    padding: 0;
-}
-
-
-.service ul li{
-    float: left;
-    padding: 12px 5px;
-
-}
-
-.service {
-    border-bottom: 1px solid #EBEEF5;
-}
-
-#service-title{
-    color: #909399;
-}
-
-.s-id{
-    width: 120px;
-}
-
-
-.username,.servername{
-    width: 70px;
-}
-
-.servicestatus{
+.demo-table-expand label {
     width: 90px;
-}
+    color: #99a9bf;
+  }
 
-.type{
-    width: 100px;
-}
+.demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
 
-.info{
-    width: 200px;
-}
+.el-tooltip__popper{
+    display:none;
+  }
 
-.operate{
-    width: 70px;
-}
+  .page{
+      margin-top:20px;
+  }
 
-.operate a {
-    text-decoration: none;
-    color:white;
-    padding: 8px;
-    background-color:#409EFF;
-    border-radius: 5px;
-}
+  #service-management{
+    position:relative;
+  }
 
-#sendmsg{
-    margin: 50px;
-}
+  #sendmsg{
+    width:500px;
+        position:relative;
+        top:100px;
+        left:200px;
+  }
 
-#sendmsg span,#headline span{
-    display: inline-block;
-    width: 100px;
-    text-align: right;
-}
-
-#address-text,#headline-text{
-    width: 500px;
-}
-
-#headline{
-    margin-top: 20px;
-}
-
-#msg{
-    margin-top: 20px;
-}
-
-#msg-text{
-    vertical-align: top;
-}
-
-#btn-send {
-    margin-left: 500px;
-    margin-top: 50px;
-}
-
-#btn-send a{
-    text-decoration: none;
-    color:white;
-    padding: 8px;
-    background-color:#409EFF;
-    border-radius: 5px;
-    display: inline-block;
-    text-align: center;
-    width: 100px;
-}

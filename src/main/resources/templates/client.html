@@ -19,15 +19,17 @@
                 软件售后服务系统
             </h1>
             <div id="search" class="v-center">
-                <input type="text" id="search-bar" maxlength="40">
-                <a href="#" id="btn-search">搜索</a>
+                <el-row :gutter="20">
+                    <el-col :span="16"><el-input v-model="searchInfo"></el-input></el-col>
+                    <el-col :span="8"><el-button type="primary" @click="search" icon="el-icon-search">搜索</el-button></el-col>
+                </el-row>
             </div>
             <div id="userinfo" class="v-center">
                 <div id="avatar">
                     <i class="el-icon-s-custom"></i>
                 </div>
                 <span id="username">
-                        用户
+                        {{username}}
                     </span>
                 <div id="logout">
                     <a href="" id="btn-logout" >退出</a>
@@ -55,7 +57,7 @@
                 <el-container>
                     <el-header>您购买过的产品有:</el-header>
                     <el-main>
-                        <el-table :data="orderData">
+                        <el-table :data="orderData.slice((currentPage-1)*pagesize,currentPage*pagesize)" key="0">
                             <el-table-column prop="buyDate" label="购买日期" width="140">
                             </el-table-column>
                             <el-table-column prop="softwareName" label="产品名称" width="200">
@@ -73,9 +75,18 @@
                                     <el-button type="text" size="medium" v-if="scope.row.serviceState==0">申请售后服务</el-button>
                                     <el-button type="text" size="medium" v-if="scope.row.serviceState==1">查看详情</el-button>
                                 </template>
-
                             </el-table-column>
                         </el-table>
+                        <div  class="page h-center" v-if="orderData.length != 0">
+                            <el-pagination
+                                    background
+                                    layout="prev, pager, next,jumper"
+                                    @current-change="handleCurrentChange"
+                                    :current-page="currentPage"
+                                    :page-size="pagesize"
+                                    :total="orderData.length">
+                            </el-pagination>
+                        </div>
                     </el-main>
                 </el-container>
             </div>
@@ -83,7 +94,7 @@
                 <div class="headline">
                     <span class="title">您正在申请售后的产品有:</span>
                 </div>
-                <el-table :data="serviceData">
+                <el-table :data="serviceData.slice((currentPage-1)*pagesize,currentPage*pagesize)" key="1">
                     <el-table-column type="expand">
                         <template slot-scope="props">
                             <el-form label-position="left" inline class="demo-table-expand">
@@ -124,6 +135,16 @@
                         </template>
                     </el-table-column>
                 </el-table>
+                <div  class="page h-center" v-if="serviceData.length != 0">
+                    <el-pagination
+                            background
+                            layout="prev, pager, next,jumper"
+                            @current-change="handleCurrentChange"
+                            :current-page="currentPage"
+                            :page-size="pagesize"
+                            :total="serviceData.length">
+                    </el-pagination>
+                </div>
             </div>
             <div id="apply-service" v-if="index == 2">
                 <div id="card">
@@ -160,7 +181,6 @@
             </div>
             <div id="sendMsg" v-if="index == 3">
                 <el-form ref="form" :model="msg" label-width="80px" size="mini">
-
                     <el-form-item label="收件人">
                         <el-input v-model="msg.receiver"></el-input>
                     </el-form-item>
@@ -175,7 +195,7 @@
                 </el-form>
             </div>
             <div id="receiveMsg" v-if="index == 4">
-                <el-table :data="receiveMsg">
+                <el-table :data="receiveMsg.slice((currentPage-1)*pagesize,currentPage*pagesize)" key="2">
                     <el-table-column type="expand">
                         <template slot-scope="props">
                             <el-form label-position="left" inline class="demo-table-expand">
@@ -198,14 +218,25 @@
                     <el-table-column prop="messageDate" label="发送日期" >
                     </el-table-column>
                 </el-table>
+                <div  class="page h-center" v-if="receiveMsg.length != 0">
+                    <el-pagination
+                            background
+                            layout="prev, pager, next,jumper"
+                            @current-change="handleCurrentChange"
+                            :current-page="currentPage"
+                            :page-size="pagesize"
+                            :total="receiveMsg.length">
+                    </el-pagination>
+                </div>
             </div>
             <div id="software-update-info" v-if="index == 5">
                 <div class="headline">
                     <span class="title">您将在此处看到您购买过的软件更新信息:</span>
                 </div>
                 <div id="collapse">
-                    <el-collapse  v-model="activeName"  @change="handleChange" accordion>
-                        <el-collapse-item  v-for="(item,index) in orderData" :name="item.softwareName">
+                    <div class="nodata h-center" v-if="orderData.length == 0">暂无数据</div>
+                    <el-collapse v-if="!nodata"  v-model="activeName"  @change="handleChange" accordion>
+                        <el-collapse-item  v-for="(item,index) in orderData.slice((currentPage-1)*pagesize,currentPage*pagesize)" :name="item.softwareName">
                             <template slot="title">
                                 {{item.softwareName}}
                             </template>
@@ -217,9 +248,18 @@
                                 <p>{{upd.softwareInfo}}</p>
                                 <el-divider></el-divider>
                             </div>
-
                         </el-collapse-item>
                     </el-collapse>
+                    <div  class="page h-center" v-if="orderData.length != 0">
+                        <el-pagination
+                                background
+                                layout="prev, pager, next,jumper"
+                                @current-change="handleCurrentChange"
+                                :current-page="currentPage"
+                                :page-size="3"
+                                :total="orderData.length">
+                        </el-pagination>
+                    </div>
                 </div>
             </div>
         </div>
