@@ -59,9 +59,13 @@ var vm = new Vue({
          index: 0,
          faqType:null,
          faqInfo:"",
+<<<<<<< HEAD
          getFaqUrl:"/client/type_faq",
          pagesize: 4,
          currentPage: 1
+=======
+         getFaqUrl:"/server/type_faq"
+>>>>>>> origin/lyh
     },
     mounted:function(){
             this.getFaq();

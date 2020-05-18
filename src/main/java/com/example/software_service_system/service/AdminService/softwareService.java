@@ -6,10 +6,10 @@ import com.example.software_service_system.mapper.AdminMapper.softwareMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class softwareService {
@@ -19,8 +19,27 @@ public class softwareService {
     serverMapper serverMapper;
 
     //得到所有的软件信息
-    public List<software> getSoftwares(){
-        return softwareMapper.querrSoftList();
+//    public List<software> getSoftwares(){
+//        return softwareMapper.querrSoftList();
+//    }
+    public List<Map<String,String>> getSoftwares() throws ParseException {
+        List<software> softList = softwareMapper.querrSoftList();
+        //System.out.println(softList);
+        DateFormat sdf = new SimpleDateFormat(" yyyy-MM-dd");
+        int i = softList.size();
+        List<Map<String,String>> maps = new ArrayList<Map<String,String>>();
+        for(int j=0;j<i;j++){
+            String nowTime = sdf.format(softList.get(j).getUpdateDate());
+            Date time = sdf.parse(nowTime);
+            softList.get(j).setUpdateDate(time);
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("id",String.valueOf(softList.get(j).getId()));
+            map.put("softwareName",softList.get(j).getSoftwareName());
+            map.put("softwareInfo",softList.get(j).getSoftwareInfo());
+            map.put("updateDate",sdf.format(softList.get(j).getUpdateDate()));
+            maps.add(map);
+        }
+        return maps;
     }
 
     //得到软件数量

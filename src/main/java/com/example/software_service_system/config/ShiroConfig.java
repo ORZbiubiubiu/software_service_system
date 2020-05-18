@@ -54,7 +54,7 @@ public class ShiroConfig {
     @Bean
     public CustomRealm customRealm(){
         CustomRealm customRealm = new CustomRealm();
-        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+//        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return customRealm;
     }
 

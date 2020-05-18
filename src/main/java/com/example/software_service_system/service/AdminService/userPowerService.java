@@ -38,12 +38,14 @@ public class userPowerService {
     public  int getNum(){
         return userPowerMapper.getNum();
     }
+
     public return_data<user> updateUser(String userState,int id){
         return_data<user> result= new return_data<user>();
         try{
             user u1 = userPowerMapper.finduserbyId(id);
             if (result!=null){
                 userPowerMapper.updateUser(userState,id);
+                userPowerMapper.updateQUser(userState,id);
                 result.setMessage("用户权限修改成功！");
             }
             else {
@@ -55,218 +57,412 @@ public class userPowerService {
         }
         return result;
     }
-
-    /*public String addUser(String userName,String userPassword,String usertype,String software){
-        if (usertype .equals( "客户")){
-            System.out.println("开客户");
-            user u1 = userPowerMapper.finduserByName(userName);
-            if(u1!=null){
-                return "客户用户名重复！";
-            }else {
-                if (userPowerMapper.getNum()!=0){
-                    int id = userPowerMapper.getMaxId();
-                    int i = userPowerMapper.addUser(id+1, userName, userPassword, "正常");
-                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
-                    if (userPowerMapper.getuserroleNum()==0){
-                        userPowerMapper.insertuserrole(1,id+1,1);
-                    }else {
-                        int r = userPowerMapper.getuserroleNum();
-                        userPowerMapper.insertuserrole(r+1,id+1,1);
-                    }
-
-                    if (i==1){
-                        return "success";
-                    }else {
-                        return "请重试！";
-                    }
-                }else {
-                    int i = userPowerMapper.addUser(1, userName, userPassword, "正常");
-                    int j = userPowerMapper.addQuser(1,userName,userPassword);
-                    if (userPowerMapper.getuserroleNum()==0){
-                        userPowerMapper.insertuserrole(1,1,1);
-                    }else {
-                        int r = userPowerMapper.getuserroleNum();
-                        userPowerMapper.insertuserrole(r+1,1,1);
-                    }
-
-                    if (i==1){
-                        return "success";
-                    }else {
-                        return "请重试！";
-                    }
-                }
-
-
-            }
-        }else {
-            server s1 = serverMapper.findserverByName(userName);
-            if (s1!=null){
-                return "维修人员用户名重复！";
-            }else{
-                System.out.println("开维护");
-                if (serverMapper.getNum()==0){
-                    int i = serverMapper.addServer(1, userName, userPassword, software,"正常");
-                    int j = userPowerMapper.addQuser(1,userName,userPassword);
-                    if (userPowerMapper.getuserroleNum()==0){
-                        userPowerMapper.insertuserrole(1,1,2);
-                    }else {
-                        int r = userPowerMapper.getuserroleNum();
-                        userPowerMapper.insertuserrole(r+1,1,2);
-                    }
-
-                    if (i==1){
-                        return "success";
-                    }else {
-                        return "请重试！";
-                    }
-                }else {
-                    int id = serverMapper.getMaxId();
-                    int i = serverMapper.addServer(id+1, userName, userPassword, software,"正常");
-                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
-                    if (userPowerMapper.getuserroleNum()==0){
-                        userPowerMapper.insertuserrole(1,id+1,2);
-                    }else {
-                        int r = userPowerMapper.getuserroleNum();
-                        userPowerMapper.insertuserrole(r+1,id+1,2);
-                    }
-
-                    if (i==1){
-                        return "success";
-                    }else {
-                        return "请重试！";
-                    }
-                }
-
-
-
-            }
-        }
-
-    }*/
-
+//    public return_data<user> updateUser(String userState,int id){
+//        return_data<user> result= new return_data<user>();
+//        try{
+//            user u1 = userPowerMapper.finduserbyId(id);
+//            if (result!=null){
+//                userPowerMapper.updateUser(userState,id);
+//                result.setMessage("用户权限修改成功！");
+//            }
+//            else {
+//                result.setMessage("无此问题，无法提交修改");
+//            }
+//        }catch (Exception e){
+//            result.setMessage(e.getMessage());
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
     public String addUser(String userName,String userPassword,String usertype,String software){
         if (usertype .equals( "客户")){
             //System.out.println("开客户");
             user u1 = userPowerMapper.finduserByName(userName);
-            if(u1!=null){
+            server s1 = serverMapper.findserverByName(userName);
+            if(u1!=null||s1!=null){
                 return "客户用户名重复！";
             }else {
-                if (userPowerMapper.getNum()!=0){
-                    int id = userPowerMapper.getMaxId();
-                    int k=0;
-                    if(userPowerMapper.getuserNUMs()==0){
-                        k=1;
-                    }else {
-                        k = userPowerMapper.getuserNUMs();
-                    }
-                    if(id<k){
-                        id=k;
-                    }
-                    int i = userPowerMapper.addUser(id+1, userName, userPassword, "正常");
-                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
-                    if (userPowerMapper.getuserroleNum()==0){
-                        userPowerMapper.insertuserrole(1,id+1,1);
-                    }else {
-                        int r = userPowerMapper.getuserroleNum();
-                        userPowerMapper.insertuserrole(r+1,id+1,1);
-                    }
-
-                    if (i==1){
-                        return "success";
-                    }else {
-                        return "请重试！";
-                    }
+                int id = 0;
+                int ids = 0;
+                int k = 0;
+                if (userPowerMapper.getuserNUMs()==0){
+                    id = 0;
                 }else {
-
-
-                    int id = 0;
-                    int k=0;
-                    if(userPowerMapper.getuserNUMs()==0){
-                        k=1;
-                    }else {
-                        k = userPowerMapper.getuserNUMs();
-                    }
-                    if(id<k){
-                        id=k;
-                    }
-                    int i = userPowerMapper.addUser(id+1, userName, userPassword, "正常");
-                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
-                    if (userPowerMapper.getuserroleNum()==0){
-                        userPowerMapper.insertuserrole(1,1,1);
-                    }else {
-                        int r = userPowerMapper.getuserroleNum();
-                        userPowerMapper.insertuserrole(r+1,1,1);
-                    }
-
-                    if (i==1){
-                        return "success";
-                    }else {
-                        return "请重试！";
-                    }
+                    id = userPowerMapper.getMaxId();
                 }
-
-
+                if(userPowerMapper.getuserNUMs()==0){
+                    k=0;
+                }else {
+                    k = userPowerMapper.getuseruserMaxId();
+                }
+                if (serverMapper.getNum()==0){
+                    ids = 0;
+                }else {
+                    ids = serverMapper.getMaxId();
+                }
+                if (id<k){
+                    id=k;
+                }
+                if (id<ids){
+                    id = ids;
+                }
+                int i = userPowerMapper.addUser(id+1,userName,"正常");
+                int j = userPowerMapper.addQuser(id+1,userName,userPassword,"正常");
+                if (userPowerMapper.getuserroleNum()==0){
+                    userPowerMapper.insertuserrole(1,id+1,1);
+                }else {
+                    int r = userPowerMapper.getuserroleNum();
+                    userPowerMapper.insertuserrole(r+1,id+1,1);
+                }
+                if (i==1){
+                    return "success";
+                }else {
+                    return "失败！";
+                }
             }
         }else {
+            user u1 = userPowerMapper.finduserByName(userName);
             server s1 = serverMapper.findserverByName(userName);
-            if (s1!=null){
+            if(u1!=null||s1!=null){
                 return "维修人员用户名重复！";
             }else{
-                System.out.println("开维护");
-                if (serverMapper.getNum()==0){
-                    int id = 0;
-                    int k=0;
-                    if(userPowerMapper.getuserNUMs()==0){
-                        k=1;
-                    }else {
-                        k = userPowerMapper.getuserNUMs();
-                    }
-                    if(id<k){
-                        id=k;
-                    }
-                    int i = serverMapper.addServer(id+1, userName, userPassword, software,"正常");
-                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
-                    if (userPowerMapper.getuserroleNum()==0){
-                        userPowerMapper.insertuserrole(1,1,2);
-                    }else {
-                        int r = userPowerMapper.getuserroleNum();
-                        userPowerMapper.insertuserrole(r+1,1,2);
-                    }
-
-                    if (i==1){
-                        return "success";
-                    }else {
-                        return "请重试！";
-                    }
+                int id = 0;
+                int ids = 0;
+                int k = 0;
+                if (userPowerMapper.getuserNUMs()==0){
+                    id = 0;
                 }else {
-                    int id = userPowerMapper.getMaxId();
-                    int k=0;
-                    if(userPowerMapper.getuserNUMs()==0){
-                        k=1;
-                    }else {
-                        k = userPowerMapper.getuserNUMs();
-                    }
-                    if(id<k){
-                        id=k;
-                    }
-                    int i = serverMapper.addServer(id+1, userName, userPassword, software,"正常");
-                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
-                    if (userPowerMapper.getuserroleNum()==0){
-                        userPowerMapper.insertuserrole(1,id+1,2);
-                    }else {
-                        int r = userPowerMapper.getuserroleNum();
-                        userPowerMapper.insertuserrole(r+1,id+1,2);
-                    }
-
-                    if (i==1){
-                        return "success";
-                    }else {
-                        return "请重试！";
-                    }
+                    id = userPowerMapper.getMaxId();
+                }
+                if(userPowerMapper.getuserNUMs()==0){
+                    k=0;
+                }else {
+                    k = userPowerMapper.getuseruserMaxId();
+                }
+                if (serverMapper.getNum()==0){
+                    ids = 0;
+                }else {
+                    ids = serverMapper.getMaxId();
+                }
+                if (id<k){
+                    id=k;
+                }
+                if (id<ids){
+                    id = ids;
+                }
+                int i = serverMapper.addServer(id+1,userName,software,"在职");
+                int j = userPowerMapper.addQuser(id+1,userName,userPassword,"在职");
+                if (userPowerMapper.getuserroleNum()==0){
+                    userPowerMapper.insertuserrole(1,id+1,2);
+                }else {
+                    int r = userPowerMapper.getuserroleNum();
+                    userPowerMapper.insertuserrole(r+1,id+1,2);
+                }
+                if (i==1){
+                    return "success";
+                }else {
+                    return "失败！";
                 }
             }
         }
 
     }
+
+//    public String addUser(String userName,String userPassword,String usertype,String software){
+//        if (usertype .equals( "客户")){
+//            //System.out.println("开客户");
+//            user u1 = userPowerMapper.finduserByName(userName);
+//            if(u1!=null){
+//                return "客户用户名重复！";
+//            }else {
+//                int id = 0;
+//                int ids = 0;
+//                int k = 0;
+//                if (userPowerMapper.getuserNUMs()==0){
+//                    id = 0;
+//                }else {
+//                    id = userPowerMapper.getMaxId();
+//                }
+//                if(userPowerMapper.getuserNUMs()==0){
+//                    k=0;
+//                }else {
+//                    k = userPowerMapper.getuseruserMaxId();
+//                }
+//                if (serverMapper.getNum()==0){
+//                    ids = 0;
+//                }else {
+//                    ids = serverMapper.getMaxId();
+//                }
+//                if (id<k){
+//                    id=k;
+//                }
+//                if (id<ids){
+//                    id = ids;
+//                }
+//                int i = userPowerMapper.addUser(id+1,userName,userPassword,"正常");
+//                int j = userPowerMapper.addQuser(id+1,userName,userPassword);
+//                if (userPowerMapper.getuserroleNum()==0){
+//                    userPowerMapper.insertuserrole(1,id+1,1);
+//                }else {
+//                    int r = userPowerMapper.getuserroleNum();
+//                    userPowerMapper.insertuserrole(r+1,id+1,1);
+//                }
+//                if (i==1){
+//                    return "success";
+//                }else {
+//                    return "失败！";
+//                }
+//            }
+//        }else {
+//            server s1 = serverMapper.findserverByName(userName);
+//            if (s1!=null){
+//                return "维修人员用户名重复！";
+//            }else{
+//                int id = 0;
+//                int ids = 0;
+//                int k = 0;
+//                if (userPowerMapper.getuserNUMs()==0){
+//                    id = 0;
+//                }else {
+//                    id = userPowerMapper.getMaxId();
+//                }
+//                if(userPowerMapper.getuserNUMs()==0){
+//                    k=0;
+//                }else {
+//                    k = userPowerMapper.getuseruserMaxId();
+//                }
+//                if (serverMapper.getNum()==0){
+//                    ids = 0;
+//                }else {
+//                    ids = serverMapper.getMaxId();
+//                }
+//                if (id<k){
+//                    id=k;
+//                }
+//                if (id<ids){
+//                    id = ids;
+//                }
+//                int i = serverMapper.addServer(id+1,userName,userPassword,software,"在职");
+//                int j = userPowerMapper.addQuser(id+1,userName,userPassword);
+//                if (userPowerMapper.getuserroleNum()==0){
+//                    userPowerMapper.insertuserrole(1,id+1,2);
+//                }else {
+//                    int r = userPowerMapper.getuserroleNum();
+//                    userPowerMapper.insertuserrole(r+1,id+1,2);
+//                }
+//                if (i==1){
+//                    return "success";
+//                }else {
+//                    return "失败！";
+//                }
+//            }
+//        }
+//
+//    }
+
+//    public String addUser(String userName,String userPassword,String usertype,String software){
+//        if (usertype .equals( "客户")){
+//            //System.out.println("开客户");
+//            user u1 = userPowerMapper.finduserByName(userName);
+//            if(u1!=null){
+//                return "客户用户名重复！";
+//            }else {
+//                int id = 0;
+//                int ids = 0;
+//                int k = 0;
+//                if (userPowerMapper.getuserNUMs()==0){
+//                    id = 0;
+//                }else {
+//                    id = userPowerMapper.getMaxId();
+//                }
+//                if(userPowerMapper.getuserNUMs()==0){
+//                    k=0;
+//                }else {
+//                    k = userPowerMapper.getuseruserMaxId();
+//                }
+//                if (serverMapper.getNum()==0){
+//                    ids = 0;
+//                }else {
+//                    ids = serverMapper.getMaxId();
+//                }
+//                if (id<k){
+//                    id=k;
+//                }
+//                if (id<ids){
+//                    id = ids;
+//                }
+//                int i = userPowerMapper.addUser(id+1,userName,userPassword,"正常");
+//                int j = userPowerMapper.addQuser(id+1,userName,userPassword);
+//                if (i==1){
+//                    return "success";
+//                }else {
+//                    return "失败！";
+//                }
+//            }
+//        }else {
+//            server s1 = serverMapper.findserverByName(userName);
+//            if (s1!=null){
+//                return "维修人员用户名重复！";
+//            }else{
+//                int id = 0;
+//                int ids = 0;
+//                int k = 0;
+//                if (userPowerMapper.getuserNUMs()==0){
+//                    id = 0;
+//                }else {
+//                    id = userPowerMapper.getMaxId();
+//                }
+//                if(userPowerMapper.getuserNUMs()==0){
+//                    k=0;
+//                }else {
+//                    k = userPowerMapper.getuseruserMaxId();
+//                }
+//                if (serverMapper.getNum()==0){
+//                    ids = 0;
+//                }else {
+//                    ids = serverMapper.getMaxId();
+//                }
+//                if (id<k){
+//                    id=k;
+//                }
+//                if (id<ids){
+//                    id = ids;
+//                }
+//                int i = serverMapper.addServer(id+1,userName,userPassword,software,"在职");
+//                int j = userPowerMapper.addQuser(id+1,userName,userPassword);
+//                if (i==1){
+//                    return "success";
+//                }else {
+//                    return "失败！";
+//                }
+//            }
+//        }
+//
+//    }
+
+//    public String addUser(String userName,String userPassword,String usertype,String software){
+//        if (usertype .equals( "客户")){
+//            //System.out.println("开客户");
+//            user u1 = userPowerMapper.finduserByName(userName);
+//            if(u1!=null){
+//                return "客户用户名重复！";
+//            }else {
+//                if (userPowerMapper.getNum()!=0){
+//                    int id = userPowerMapper.getMaxId();
+//                    int k=0;
+//                    if(userPowerMapper.getuserNUMs()==0){
+//                        k=1;
+//                    }else {
+//                        k = userPowerMapper.getuserNUMs();
+//                    }
+//                    if(id<k){
+//                        id=k;
+//                    }
+//                    int i = userPowerMapper.addUser(id+1, userName, userPassword, "正常");
+//                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
+//                    if (userPowerMapper.getuserroleNum()==0){
+//                        userPowerMapper.insertuserrole(1,id+1,1);
+//                    }else {
+//                        int r = userPowerMapper.getuserroleNum();
+//                        userPowerMapper.insertuserrole(r+1,id+1,1);
+//                    }
+//
+//                    if (i==1){
+//                        return "success";
+//                    }else {
+//                        return "请重试！";
+//                    }
+//                }else {
+//
+//
+//                    int id = 0;
+//                    int k=0;
+//                    if(userPowerMapper.getuserNUMs()==0){
+//                        k=1;
+//                    }else {
+//                        k = userPowerMapper.getuserNUMs();
+//                    }
+//                    if(id<k){
+//                        id=k;
+//                    }
+//                    int i = userPowerMapper.addUser(id+1, userName, userPassword, "正常");
+//                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
+//                    if (userPowerMapper.getuserroleNum()==0){
+//                        userPowerMapper.insertuserrole(1,1,1);
+//                    }else {
+//                        int r = userPowerMapper.getuserroleNum();
+//                        userPowerMapper.insertuserrole(r+1,1,1);
+//                    }
+//
+//                    if (i==1){
+//                        return "success";
+//                    }else {
+//                        return "请重试！";
+//                    }
+//                }
+//
+//
+//            }
+//        }else {
+//            server s1 = serverMapper.findserverByName(userName);
+//            if (s1!=null){
+//                return "维修人员用户名重复！";
+//            }else{
+//                System.out.println("开维护");
+//                if (serverMapper.getNum()==0){
+//                    int id = 0;
+//                    int k=0;
+//                    if(userPowerMapper.getuserNUMs()==0){
+//                        k=1;
+//                    }else {
+//                        k = userPowerMapper.getuserNUMs();
+//                    }
+//                    if(id<k){
+//                        id=k;
+//                    }
+//                    int i = serverMapper.addServer(id+1, userName, userPassword, software,"正常");
+//                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
+//                    if (userPowerMapper.getuserroleNum()==0){
+//                        userPowerMapper.insertuserrole(1,1,2);
+//                    }else {
+//                        int r = userPowerMapper.getuserroleNum();
+//                        userPowerMapper.insertuserrole(r+1,1,2);
+//                    }
+//
+//                    if (i==1){
+//                        return "success";
+//                    }else {
+//                        return "请重试！";
+//                    }
+//                }else {
+//                    int id = userPowerMapper.getMaxId();
+//                    int k=0;
+//                    if(userPowerMapper.getuserNUMs()==0){
+//                        k=1;
+//                    }else {
+//                        k = userPowerMapper.getuserNUMs();
+//                    }
+//                    if(id<k){
+//                        id=k;
+//                    }
+//                    int i = serverMapper.addServer(id+1, userName, userPassword, software,"正常");
+//                    int j = userPowerMapper.addQuser(id+1,userName,userPassword);
+//                    if (userPowerMapper.getuserroleNum()==0){
+//                        userPowerMapper.insertuserrole(1,id+1,2);
+//                    }else {
+//                        int r = userPowerMapper.getuserroleNum();
+//                        userPowerMapper.insertuserrole(r+1,id+1,2);
+//                    }
+//
+//                    if (i==1){
+//                        return "success";
+//                    }else {
+//                        return "请重试！";
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
 
 }

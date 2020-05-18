@@ -55,11 +55,15 @@ $(document).ready(function () {
                     }
                     if (log_vm.message=="") {
                         // location.href = "administrator.html?" + "username=" + log_vm.userName;
+                         var pwd = log_vm.passWord;
+                         pwd = hex_md5(pwd);
+                         pwd = hex_md5(pwd);
                         var tmp = JSON.stringify({
                             "name": log_vm.userName,
-                            "pwd": log_vm.passWord,
+                            "pwd": pwd,
 
                         });
+                        console.log(pwd)
                         console.log(tmp)
                         $.ajax({
                             type: "POST",

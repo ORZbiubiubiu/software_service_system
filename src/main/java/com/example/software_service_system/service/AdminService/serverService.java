@@ -3,6 +3,7 @@ package com.example.software_service_system.service.AdminService;
 import com.example.software_service_system.Entity.AdminEntity.return_data;
 import com.example.software_service_system.Entity.AdminEntity.server;
 import com.example.software_service_system.mapper.AdminMapper.serverMapper;
+import com.example.software_service_system.mapper.AdminMapper.userPowerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ import java.util.Map;
 public class serverService {
     @Autowired
     serverMapper serverMapper;
+    @Autowired
+    com.example.software_service_system.mapper.AdminMapper.userPowerMapper userPowerMapper;
     //获得替换人名单
     public return_data<String> getrpName(String serverName){ ;
         return_data<String> rs = new return_data<String>();
@@ -50,8 +53,6 @@ public class serverService {
         return serverMapper.getNum();
     }
 
-
-    //修改售后服务人员的状态
     public return_data<server> updateUser(String serverState,int id){
 
         return_data<server> result= new return_data<server>();
@@ -59,7 +60,8 @@ public class serverService {
             server u1 = serverMapper.findserverbyId(id);
             if (result!=null){
                 serverMapper.updateServer(serverState,id);
-                System.out.println(serverState+id);
+                userPowerMapper.updateQUser(serverState,id);
+                //System.out.println(serverState+id);
                 result.setMessage("维护人员权限修改成功！");
             }
             else {
@@ -71,4 +73,25 @@ public class serverService {
         }
         return result;
     }
+
+    //修改售后服务人员的状态
+//    public return_data<server> updateUser(String serverState,int id){
+//
+//        return_data<server> result= new return_data<server>();
+//        try{
+//            server u1 = serverMapper.findserverbyId(id);
+//            if (result!=null){
+//                serverMapper.updateServer(serverState,id);
+//                System.out.println(serverState+id);
+//                result.setMessage("维护人员权限修改成功！");
+//            }
+//            else {
+//                result.setMessage("无此人员，无法提交修改");
+//            }
+//        }catch (Exception e){
+//            result.setMessage(e.getMessage());
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 }
