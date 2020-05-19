@@ -42,20 +42,16 @@ var vm = new Vue({
                     index:  '0'
                 },
                 {
-                    name: "登录异常",
+                    name: "数据库",
                     index:  '1'
                 },
                 {
-                    name: "界面无法显示",
+                    name: "balabala",
                     index:  '2'
                 },
                 {
-                    name: "显示信息有误",
+                    name: "balabala",
                     index:  '3'
-                },
-                {
-                    name: "其他",
-                    index:  '4'
                 },
                ],
          faqData:[],
@@ -63,10 +59,9 @@ var vm = new Vue({
          index: 0,
          faqType:null,
          faqInfo:"",
-         getFaqUrl:"/client/type_faq",
          pagesize: 4,
-         currentPage: 1
-         getFaqUrl:"/server/type_faq"
+         currentPage: 1,
+         getFaqUrl:"/client/type_faq"
     },
     mounted:function(){
             this.getFaq();
@@ -100,9 +95,7 @@ var vm = new Vue({
                                               withCredentials : true
                                          })
                                          .then((response) => {
-                                            if(response.data.data.list.length!=0){
-                                                this.faqData = response.data.data.list ;
-                                             }
+                                             this.faqData = response.data.data.list ;
 
                                              this.searchHistory=this.faqInfo;
                                          })

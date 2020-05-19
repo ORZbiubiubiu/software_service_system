@@ -137,14 +137,9 @@ const server_func = new Vue({
            this.serviceData.slice((this.currentPage-1)*this.pagesize,this.currentPage*this.pagesize).map((item) => {
              if (row.id != item.id) {
                table.toggleRowExpansion(item, false)
-               item.expansion=false;
-             }
-             else{
-                item.expansion = !item.expansion;
              }
            })
-           table.toggleRowExpansion(row);
-
+           table.toggleRowExpansion(row)
         },
         viewDetail(sname){
             this.getService();
@@ -261,10 +256,10 @@ const server_func = new Vue({
                          })
                          .then((response) => {
                              this.serviceData = response.data.data.list ;
-
                              this.serviceData.map(item => {
                                    item.expansion = false
-                                 });
+                                 })
+
 
                          })
                          .catch(function (error) {
@@ -280,14 +275,8 @@ const server_func = new Vue({
         handleChange(data){
                     axios.post(this.getUpdateInfoUrl, {
                        softwareName:data
-                    },{
-                           headers:{
-                                       'token':sessionStorage.getItem('token')
-                           },
-                           withCredentials : true
                     })
                     .then((response) => {
-
                        this.updateData = response.data.data.list ;
                     })
                     .catch(function (error) {
@@ -306,9 +295,6 @@ const server_func = new Vue({
                   }
                   if (key == 1) {
                     this.getService();
-                  }
-                  if (key == 1) {
-                    this.form.softwareName="";
                   }
                   if (key == 4){
                     this.getMsg();

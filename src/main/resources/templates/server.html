@@ -17,7 +17,12 @@
             <h1 id="title" class="v-center">
                 软件售后服务系统
             </h1>
-
+            <div id="search" class="v-center">
+                <el-row :gutter="20">
+                    <el-col :span="16"><el-input v-model="searchInfo"></el-input></el-col>
+                    <el-col :span="8"><el-button type="primary" @click="search" icon="el-icon-search">搜索</el-button></el-col>
+                </el-row>
+            </div>
             <div id="userinfo" class="v-center">
                 <div id="avatar">
                     <i class="el-icon-s-custom"></i>
@@ -26,7 +31,7 @@
                         {{username}}
                     </span>
                 <div id="logout">
-                    <a href="" @click="logout" id="btn-logout" >退出</a>
+                    <a href="" id="btn-logout" >退出</a>
                 </div>
             </div>
         </div>

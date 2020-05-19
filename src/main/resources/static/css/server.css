@@ -6,7 +6,7 @@
 #functions_area {
     float:right;
     width: 1000px;
-    min-height: 800px;
+    height: 800px;
     background-color: #fff;
 }
 
@@ -39,7 +39,7 @@
     position:relative;
     width:800px;
     margin:50px 90px;
-    min-height:800px;
+    height:600px;
     padding:10px;
 }
 
@@ -78,6 +78,5 @@
   }
 
 .service-detail{
-    width:600px;
-    height:100px;
+    width:400px;
 }
