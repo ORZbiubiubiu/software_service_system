@@ -1,6 +1,5 @@
 $(document).ready(function () {
-
-
+   
     var log_vm= new Vue({
         el: "#loginblock",
         data:{
@@ -73,8 +72,8 @@ $(document).ready(function () {
                             url: "/login",
                             data: tmp,
                             success: function (response) {
-                                
-                                if (response.data.msg == "success") {
+                                console.log(response);
+                                if (response.data != null || response.msg== null && response.data.msg == "success" ) {
                                      log_vm.$message({
                                          message: "登录成功！！",
                                          type: 'success'
@@ -98,13 +97,13 @@ $(document).ready(function () {
                                     }
 
                                 } else {
-                                    if (response.data.msg == "账号已冻结") {
+                                    if (response.msg == "账号已冻结") {
                                          log_vm.$message({
                                              message: "账号已冻结",
                                              type: 'error'
                                          });
                                          log_vm.message = "账号已冻结"
-                                    } else if (response.data.msg == "账户或者密码错误") {
+                                    } else if (response.msg == "账户或者密码错误") {
                                          log_vm.$message({
                                              message: "登录失败！！",
                                              type: 'error'
