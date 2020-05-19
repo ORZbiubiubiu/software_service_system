@@ -4,8 +4,19 @@
 
 #type-nav{
     margin-top:50px;
-    width:1000px;
-    padding-left:400px;
+}
+
+.tips{
+    text-align: right;
+    height:60px;
+    line-height:60px;
+    color:black;
+    background-color:#fff;
+    font-size:20px;
+}
+
+#tip{
+    margin-right:30px;
 }
 
 #result{

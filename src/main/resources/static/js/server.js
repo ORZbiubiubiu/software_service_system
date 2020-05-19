@@ -33,18 +33,6 @@ const logout = new Vue({
 })
 
 
-const search_bar = new Vue({
-    el: '#search',
-    data:{
-        searchInfo:"",
-    },
-    methods:{
-        search(){
-            sessionStorage.setItem("searchInfo",this.searchInfo);
-            window.location.href = "/faq";
-        }
-    }
-});
 
 
 const server_func = new Vue({

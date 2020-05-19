@@ -17,12 +17,7 @@
             <h1 id="title" class="v-center">
                 软件售后服务系统
             </h1>
-            <div id="search" class="v-center">
-                <el-row :gutter="20">
-                    <el-col :span="16"><el-input v-model="searchInfo"></el-input></el-col>
-                    <el-col :span="8"><el-button type="primary" @click="search" icon="el-icon-search">搜索</el-button></el-col>
-                </el-row>
-            </div>
+
             <div id="userinfo" class="v-center">
                 <div id="avatar">
                     <i class="el-icon-s-custom"></i>
@@ -31,7 +26,7 @@
                         {{username}}
                     </span>
                 <div id="logout">
-                    <a href="" id="btn-logout" >退出</a>
+                    <a href="" @click="logout" id="btn-logout" >退出</a>
                 </div>
             </div>
         </div>
@@ -173,10 +168,6 @@
             </div>
     </div>
     <div class="footer">
-            <span id="versionInf">
-                <p>版本号v1.0</p>
-                <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
-            </span>
             <span class="details"><a href="">咨询电话:8888-8888</a></span>
             <span class="details"><a href="">技术说明</a></span>
             <span class="details"><a href="">帮助中心</a></span>

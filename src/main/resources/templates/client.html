@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <div class="center">
+    <div class="center clearfix">
         <div id="left-side">
             <div id="nav" class="clearfix">
                 <el-col :span="12">
@@ -151,7 +151,8 @@
                         <span>亲爱的用户:</span>
                         <el-divider></el-divider>
                         <p>
-                            &nbsp;&nbsp;&nbsp;十分感谢您使用我们的产品，但是感到抱歉的是您现在准备申请售后服务！balabala
+                            &nbsp;&nbsp;&nbsp;十分感谢您使用我们的产品，但是感到抱歉的是您现在准备申请售后服务！我们将以最快的速度处理您即将提交的问题！
+                            感谢您的信赖！
                         </p>
                     </el-card>
                 </div>
@@ -163,8 +164,10 @@
                         </el-form-item>
                         <el-form-item label="问题类型">
                             <el-select v-model="form.kind" placeholder="请选择问题类型" >
-                                <el-option label="数据库" value="database"></el-option>
-                                <el-option label="balabala" value="beijing"></el-option>
+                                <el-option label="登录异常" value="登录异常"></el-option>
+                                <el-option label="界面无法正常显示" value="界面无法正常显示"></el-option>
+                                <el-option label="界面信息显示有误" value="界面信息显示有误"></el-option>
+                                <el-option label="其它" value="其它"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="问题描述">
@@ -265,10 +268,7 @@
         </div>
     </div>
     <div class="footer">
-            <span id="versionInf">
-                <p>版本号v1.0</p>
-                <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
-            </span>
+
             <span class="details"><a href="">咨询电话:8888-8888</a></span>
             <span class="details"><a href="">技术说明</a></span>
             <pspan class="details"><a href="">帮助中心</a></pspan>

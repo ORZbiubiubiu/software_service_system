@@ -39,7 +39,8 @@
             </el-row>
         </div>
         <div id="type-nav" class="clearfix">
-            <el-col :span="10">
+            <el-col :span="8" class="tips"><div id="tip">您可以在这里对搜索结果进行筛选:</div></el-col>
+            <el-col :span="16">
                 <el-menu default-active="0" class="el-menu-demo" @select="handleSelect" mode="horizontal">
                     <el-menu-item v-bind:index="item.index" v-for="(item, index) in types">
                         {{item.name}}
@@ -80,10 +81,6 @@
 
 </div>
 <div class="footer">
-            <span id="versionInf">
-                <p>版本号v1.0</p>
-                <p>版本说明：4地方是的是的归属感三个傻瓜Gh</p>
-            </span>
     <span class="details"><a href="">咨询电话:8888-8888</a></span>
     <span class="details"><a href="">技术说明</a></span>
     <pspan class="details"><a href="">帮助中心</a></pspan>

@@ -14,6 +14,6 @@ public interface UserMapper {
     @Select("select * from user where username  = #{username} and password = #{pwd}")
     User findByUsernameAndPwd(@Param("username")String username,@Param("pwd")String pwd);
 
-    @Select("select userstate from user where username = #{username}")
+    @Select("select state from user where username = #{username}")
     String findUserstate(@Param("username")String username);
 }
