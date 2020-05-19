@@ -40,7 +40,12 @@ private UserService userService;
 
         String username = userQuery.getName();
         System.out.println(username);
+        String userState = userService.findUserstate(username);
+//        System.out.println(userState+"失败");
+        if(userState.equals("冻结") )
+           return JsonData.buildError("账号已冻结");
 
+//        System.out.println(username);
 
         try{
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userQuery.getName(),userQuery.getPwd());

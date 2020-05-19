@@ -47,13 +47,14 @@ $(document).ready(function () {
                                 message: "更换售后服务人员" + service_dialog_vm.change_name + "成功!",
                                 type: 'success'
                             });
+                            
 
                         } else {
                             service_dialog_vm.$message.error("更换售后服务人员" + service_dialog_vm.change_name + "失败!");
 
                         }
                         
-
+                        service_error_page_getdata(service_page_vm.current_page);
                     }
                 });
                 service_dialog_vm.dialogFormVisible = false;
@@ -455,7 +456,7 @@ $(document).ready(function () {
     var faq_vm = new Vue({
         el: '#modifylist',
         data: {
-            items: [/* {
+            items: [  {
                 id: "",
                 faqType: "faqType",
                 "faqtitle": "faqtitle1",
@@ -473,7 +474,26 @@ $(document).ready(function () {
                 "faqtitle": "faqtitle3",
                 "faqdetails": "faqdetails",
                 "faqdate": "20/03/05"
-            } */]
+                }, {
+                    id: "",
+                    faqType: "faqType",
+                    "faqtitle": "faqtitle3",
+                    "faqdetails": "faqdetails",
+                    "faqdate": "20/03/05"
+                }  , {
+                id: "",
+                faqType: "faqType",
+                "faqtitle": "faqtitle3",
+                "faqdetails": "faqdetails",
+                "faqdate": "20/03/05"
+                }, {
+                    id: "",
+                    faqType: "faqType",
+                    "faqtitle": "faqtitle3",
+                    "faqdetails": "faqdetails",
+                    "faqdate": "20/03/05"
+                }    ],
+            last:""
         },
         methods: {
             modify: function (id, faqInfo) {
@@ -952,7 +972,7 @@ $(document).ready(function () {
     var access_page_vm = new Vue({
         el: '#access_page',
         data: {
-            page_size: 11, //每頁条目数er
+            page_size: 10, //每頁条目数er
             total: 35, //总条目数
             current_page: 1 //当前页数，
 
@@ -979,7 +999,7 @@ $(document).ready(function () {
     var faq_page_vm = new Vue({
         el: '#faq_page',
         data: {
-            page_size: 3, //每頁条目数
+            page_size: 5, //每頁条目数
             total: 20, //总条目数
             current_page: 1 //当前页数，
 
@@ -987,8 +1007,13 @@ $(document).ready(function () {
         },
         methods: {
             handleCurrentChange: function (p) {
-            faq_page_vm.current_page=p;
-                faq_page_getdata(p);
+                if (faq_vm.last=="") {
+                    faq_page_vm.current_page = p;
+                    faq_page_getdata(p);
+                }else{
+                    faqserch(faq_vm.last,p);
+                }
+           
             },
             prev_click: function (p) {
                 
@@ -1001,13 +1026,72 @@ $(document).ready(function () {
 
     //页面开始获取异常服务列表
     service_error_page_getdata(1);
-
+    
+    
+    //faq搜索
+    $("#btnSearch").click(function (e) {
+       
+        var keyWord = $("#search-bar").val();
+        if (keyWord=="") {
+            faq_page_getdata(1);
+        }else{
+            console.log("btnSearch" + keyWord)
+           
+            faqserch(keyWord, 1);
+        }
+        faq_vm.last = keyWord;
+       
+    });
    
 
 
 
    
+        //搜索
+    function faqserch(keyWord, pageNo) {
+        var data = {
+            faqInfo: keyWord,
+            pageNo: pageNo,
+            pageSize: faq_page_vm.page_size
+        };
+        faq_vm.current_page = pageNo;
+        console.log("faqserch"  )
+        console.log(data )
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: "/admin/getsearchFaqList",
+            data: JSON.stringify(data),
+            headers: { "token": sessionStorage.getItem("token")},
+            success: function (response) {
 
+                var list = response.data.list;
+                console.log(response.data);
+                console.log(Number(response.data.message));
+                faq_page_vm.total = Number(response.data.message);
+                console.log(list.length);
+
+                faq_vm.items = [];
+                $.each(list, function (indexInArray, element) {
+
+                    Vue.set(faq_vm.items, indexInArray, {
+                        id: element.id,
+                        "faqtitle": element.faqName,
+                        faqType: element.faqType,
+                        "faqdetails": element.faqInfo,
+                        "faqdate": element.faqDate
+                    });
+
+
+                });
+
+
+            }
+        });
+
+
+    }        
 
     //版本信息导航栏
 
@@ -1221,6 +1305,7 @@ $(document).ready(function () {
     function faq_page_getdata(i) {
         //参数i ：用户点击下方分页器的页数
         //从服务器获取数据
+        console.log(" faq_page_getdata")
         var data = JSON.stringify({
             pageNo: i,
             pageSize: faq_page_vm.page_size
