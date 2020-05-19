@@ -27,7 +27,9 @@ public class user_show_software {
         list2=user_search_service_mapper._user_search_service(userName);
         String send_messgae="";
         for(int i=0;i<list2.size();i++){
-            send_messgae=send_messgae+list2.get(i).getSoftwareName()+"#";
+            if(!list2.get(i).getServiceState().equals("finish")){
+                send_messgae=send_messgae+list2.get(i).getSoftwareName()+"#";
+            }
         }
         myData.setMessage(send_messgae);
         myData.setList(mylist);

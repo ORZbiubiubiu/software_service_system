@@ -53,7 +53,7 @@ public class update_service_state {
         String dateNowStr = sdf.format(d);
         String mymessage=list_for_id.get(0).getId()+"+change";
         //System.out.println(mymessage);
-        if(!list_for_id.get(0).getServiceState().equals("异常")){
+        if(list_for_id.get(0).getServiceState().equals("yes")&&!serviceState.equals("finish")){
             server_send_message_mapper._server_send_message_mapper("Admin",serverName,mymessage,dateNowStr);
         }
         myData.setList(mylist);

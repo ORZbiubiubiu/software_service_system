@@ -53,8 +53,8 @@
                                 <el-col :span="5">{{item.softwareName}}</el-col>
                                 <el-col :span="3">当前状态:</el-col>
                                 <el-col :span="5">
-                                        <span v-if="isServer(item.serviceState)">正在进行售后处理</span>
-                                        <span v-if="!isServer(item.serviceState)">异常</span>
+                                        <span v-if="isServer(item.serviceState)">正在处理</span>
+                                        <span v-if="!isServer(item.serviceState)">正在切换服务人员</span>
                                 </el-col>
                                 <el-col :span="3">服务人员:</el-col>
                                 <el-col :span="5">{{item.serverName}}</el-col>
@@ -128,14 +128,16 @@
                         </el-table-column>
                         <el-table-column label="当前状态">
                             <template slot-scope="scope">
-                                <span v-if="isServer(scope.row.serviceState)">正在进行售后处理</span>
-                                <span v-if="!isServer(scope.row.serviceState)">异常</span>
+                                <span v-if="isServer(scope.row.serviceState)">正在处理</span>
+                                <span v-if="!isServer(scope.row.serviceState)">正在申请换人</span>
                             </template>
                         </el-table-column>
                         <el-table-column label="操作">
                             <template slot-scope="scope">
-                                <el-button type="primary" @click="finish(scope.row.softwareName,scope.row.userName)" size="mini">完成</el-button>
-                                <el-button type="danger" @click="change(scope.row.softwareName,scope.row.userName)" size="mini">异常申请</el-button>
+                                <el-button v-if="isServer(scope.row.serviceState)" type="primary" @click="finish(scope.row.softwareName,scope.row.userName)" size="mini">完成</el-button>
+                                <el-button v-if="!isServer(scope.row.serviceState)" disabled type="primary" @click="finish(scope.row.softwareName,scope.row.userName)" size="mini">完成</el-button>
+                                <el-button v-if="isServer(scope.row.serviceState)" type="danger" @click="change(scope.row.softwareName,scope.row.userName)" size="mini">申请换人</el-button>
+                                <el-button v-if="!isServer(scope.row.serviceState)" disabled type="danger" @click="change(scope.row.softwareName,scope.row.userName)" size="mini">申请换人</el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -151,17 +153,22 @@
                     </div>
                 </div>
                     <div id="sendmsg" v-if="flag == 3">
-                        <el-form ref="form" :model="msg" label-width="80px" size="mini">
-                            <el-form-item label="收件人">
-                                <el-input v-model="msg.receiver"></el-input>
+                        <el-form ref="form" :rules="sendMsgRules" :model="msg" label-width="80px" size="mini">
+                            <el-form-item label="收件人" prop="receiver">
+                                <el-autocomplete
+                                        v-model="msg.receiver"
+                                        :fetch-suggestions="querySearchAsync"
+                                        placeholder="请选择收件人"
+                                        @select="receiverSelect"
+                                ></el-autocomplete>
                             </el-form-item>
-                            <el-form-item label="内容">
+                            <el-form-item label="内容" prop="msg">
                                 <el-input type="textarea" v-model="msg.msg"></el-input>
                             </el-form-item>
 
                             <el-form-item>
                                 <el-button type="primary" @click="sendMsg">提交</el-button>
-                                <el-button>取消</el-button>
+                                <el-button @click="resetSendForm">重置</el-button>
                             </el-form-item>
                         </el-form>
                     </div>

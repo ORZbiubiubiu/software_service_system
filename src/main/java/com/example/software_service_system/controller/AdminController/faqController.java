@@ -1,8 +1,9 @@
 package com.example.software_service_system.controller.AdminController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.software_service_system.Entity.AdminEntity.*;
-import com.example.software_service_system.service.AdminService.faqService;
+import com.example.software_service_system.Entity.AdminEntity.faq;
+import com.example.software_service_system.Entity.AdminEntity.return_data;
+import com.example.software_service_system.Entity.AdminEntity.return_json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ import java.util.Map;
 @RequestMapping("admin")
 public class faqController {
     @Autowired
-    faqService faqService;
+    com.example.software_service_system.service.AdminService.faqService faqService;
 
     @RequestMapping("/getFaqList")
     public return_json queryFaqDbList(@RequestBody JSONObject jsonObject) throws ParseException {//返回faqlist
@@ -44,7 +45,7 @@ public class faqController {
     }
 
     @RequestMapping("/FaqModify")
-    public  return_json updateFaq(@RequestBody JSONObject jsonObject){
+    public return_json updateFaq(@RequestBody JSONObject jsonObject){
         int id = jsonObject.getIntValue("id");
         String faqInfo = jsonObject.getString("faqInfo");
         return_data<faq> updateresoult = faqService.updateFaq(id,faqInfo);

@@ -22,8 +22,7 @@ public class server_search_controller {
     private get_server_message get_server_message;
     @Autowired
     private send_server_message send_server_message;
-    @Autowired
-    private com.example.software_service_system.service.ClientService.type_find_faq type_find_faq;
+
 
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     @ResponseBody
@@ -31,6 +30,7 @@ public class server_search_controller {
         String servername = (String)jsonParam.get("servername");
         //System.out.println(servername);
         String return_json_string = JSONObject.toJSONString(ServerService.server_search_service(servername));
+        //System.out.println(return_json_string);
         return return_json_string;
     }
 
@@ -67,16 +67,6 @@ public class server_search_controller {
         //System.out.println(justMessage);
         //System.out.println(messageDate);
         String return_json_string = JSONObject.toJSONString(send_server_message._send_server_message(getName,sendName,justMessage,messageDate));
-        //System.out.println("return:"+return_json_string);
-        return return_json_string;
-    }
-    @RequestMapping(value = "/type_faq")
-    @ResponseBody
-    public String show_stype_faq(@RequestBody JSONObject jsonParam){
-        String faqType = (String)jsonParam.get("faqType");
-        String faqInfo = (String)jsonParam.get("faqInfo");
-        //System.out.println(faqType+"/"+faqInfo);
-        String return_json_string = JSONObject.toJSONString(type_find_faq._type_find_faq(faqType,faqInfo));
         //System.out.println("return:"+return_json_string);
         return return_json_string;
     }

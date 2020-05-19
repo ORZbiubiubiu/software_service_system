@@ -1,4 +1,6 @@
 var username;
+var receivers=[];
+var softwareNames=[];
 
 const name = new Vue({
     el: '#username',
@@ -46,6 +48,49 @@ const search_bar = new Vue({
 });
 
 
+var validateReceiver = (rule, value, callback) => {
+        var flag = false;
+        if (!value) {
+          return callback(new Error('收件人不能为空'));
+        }
+        receivers.map((item) =>{
+            if (item.value==value){
+                flag=true;
+            }
+        })
+        if(!flag){
+            return callback(new Error("您只能给您的产品维护人员发信息"))
+        }
+      };
+
+var validateMessage = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('内容不能为空'));
+        }
+      };
+
+
+var validateSoftwareName = (rule, value, callback) => {
+        var flag = false;
+        if (!value) {
+          return callback(new Error('软件名称不能为空'));
+        }
+        softwareNames.map((item) =>{
+            if (item.value==value){
+                flag=true;
+            }
+        })
+        if(!flag){
+            return callback(new Error("您只能为您购买过的产品申请售后服务"))
+        }
+      };
+
+var validateDescription = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('问题描述不能为空'));
+        }
+      };
+
 const server_func = new Vue({
     el: '.center',
     data:{
@@ -73,14 +118,32 @@ const server_func = new Vue({
          serviceData:[],
          receiveMsg:[],
          updateData:[],
+         getName:'',
+         justMessage:'',
          form: {
-                   sofwareName: '',
+                   softwareName: '',
                    kind: '',
                    desc: ''
                  },
          msg: {
                 receiver:'',
                 msg: ''
+         },
+         sendMsgRules:{
+            receiver:[
+                {validator:validateReceiver,trigger: 'blur'}
+            ],
+            msg:[
+                {validator:validateMessage,trigger:'blur'}
+            ]
+         },
+         applyServiceRules:{
+            softwareName:[
+                {validator:validateSoftwareName,trigger: 'blur'}
+            ],
+            description:[
+                {validator:validateDescription,trigger:'blur'}
+            ]
          },
          index : 0,
          getOrderUrl: "/client/user_show_software",
@@ -111,7 +174,9 @@ const server_func = new Vue({
                 .then((response) => {
                     var data = response.data.data.list;
                     var msg = response.data.data.message.split('#');
-                    console.log(msg);
+
+
+                    softwareNames=[];
                    this.orderData = data.filter(function(item,index){
                         for(var i = 0;i < msg.length;i++){
 
@@ -119,13 +184,22 @@ const server_func = new Vue({
                                 item.serviceState = 1;
                                 return item;
                             }
-                            else item.serviceState = 0;
+                            else {
+                                item.serviceState = 0;
+                            }
                         }
 
                         return item;
                    })
 
-                    console.log(this.orderData);
+                    for(var i=0 ;i<this.orderData.length;i++){
+                        console.log(this.orderData[i].serviceState==0);
+                        if(this.orderData[i].serviceState==0){
+                             softwareNames.push({"value":this.orderData[i].softwareName});//动态获取没有申请售后的软件名称
+                        }
+                    }
+
+                    console.log(softwareNames);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -167,7 +241,7 @@ const server_func = new Vue({
                                     userName:this.userName,
                                     softwareName:this.form.softwareName,
                                     serviceKind:this.form.kind,
-                                    serviceInfo:this.form.desc
+                                    serviceInfo:this.escape(this.form.desc)
                                 },{
                                       headers:{
                                                 'token':sessionStorage.getItem('token')
@@ -197,16 +271,29 @@ const server_func = new Vue({
                                     console.log(error);
                                 });
         },
+        resetSendForm() {
+                this.msg.receiver='';
+                this.msg.msg='';
+              },
+        resetApplyForm() {
+                this.form.softwareName='';
+                this.form.kind='';
+                this.form.desc='';
+        },
         sendMsg(){
                      var date = new Date();
                      var year=date.getFullYear(); //获取当前年份
                      var mon=date.getMonth()+1; //获取当前月份
                      var day=date.getDate(); //获取当前日
                      var now = year + "-" + mon + "-" +day;
+
+                     this.getName=this.escape(this.msg.receiver);
+                     this.justMessage=this.escape(this.msg.msg);
+
                         axios.post(this.sendMsgUrl, {
-                            getName:this.msg.receiver,
+                            getName:this.getName,
                             sendName:this.userName,
-                            justMessage:this.msg.msg,
+                            justMessage:this.justMessage,
                             messageDate:now
                             },{
                                 headers:{
@@ -234,6 +321,14 @@ const server_func = new Vue({
                                 console.log(error);
                              });
                 },
+        escape(str){
+                var pattern = new RegExp("[`~@#$^&*()=|{}':;'\\[\\].<>/~@#￥……&*（）——|{}【】‘”“']");
+                var rs='';
+                for (var i =0;i < str.length;i++){
+                    rs=rs+str.substr(i,1).replace(pattern,'');
+                }
+                return rs;
+        },
         getMsg(){
                      axios.post(this.getMsgUrl, {
                          getName:this.userName
@@ -261,21 +356,59 @@ const server_func = new Vue({
                          })
                          .then((response) => {
                              this.serviceData = response.data.data.list ;
-
+                             console.log(this.serviceData);
+                             //动态获取收件人的输入建议
+                             receivers=[];
                              this.serviceData.map(item => {
-                                   item.expansion = false
+                                   item.expansion = false;
+                                   receivers.push({"value":item.serverName});
                                  });
-
+                             console.log(receivers);
                          })
                          .catch(function (error) {
                              console.log(error);
                          });
                  },
-        isServer(state){
+        serverState(state){
             if (state == "yes"){
-                return true;
+                return 1;
             }
-            else return false;
+            if (state == "no"){
+                return -1;
+            }
+            if (state == "finish"){
+                return 0;
+            }
+        },
+        querySearchAsync(queryString, cb) {
+            var receiver = receivers;
+            var results = queryString ? receiver.filter(this.createStateFilter(queryString)) : receiver;
+
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+              cb(results);
+            }, 3000 * Math.random());
+        },
+        createStateFilter(queryString) {
+                return (state) => {
+                  return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
+        },
+        receiverSelect(item) {
+                console.log(item);
+        },
+        querySearchAsyncSoftware(queryString, cb) {
+            var softwareName = softwareNames;
+            var results = queryString ? softwareName.filter(this.createStateFilter(queryString)) : softwareName;
+
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+              cb(results);
+            }, 3000 * Math.random());
+        },
+
+        softwareNameSelect(item) {
+                console.log(item);
         },
         handleChange(data){
                     axios.post(this.getUpdateInfoUrl, {
@@ -287,7 +420,6 @@ const server_func = new Vue({
                            withCredentials : true
                     })
                     .then((response) => {
-
                        this.updateData = response.data.data.list ;
                     })
                     .catch(function (error) {
@@ -304,10 +436,10 @@ const server_func = new Vue({
                   if (key == 0) {
                     this.getOrder();
                   }
-                  if (key == 1) {
+                  if (key == 1 || key==3) {
                     this.getService();
                   }
-                  if (key == 1) {
+                  if (key != 2) {
                     this.form.softwareName="";
                   }
                   if (key == 4){

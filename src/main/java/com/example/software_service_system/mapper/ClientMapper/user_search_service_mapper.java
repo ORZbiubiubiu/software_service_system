@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface user_search_service_mapper {
-    @Select(value = "select * from service_table where userName=#{userName}")
+    @Select(value = "select * from service_table where userName=#{userName} order by id")
     @Results
             (value = {
                     @Result(id=true, column = "id", property = "id"),

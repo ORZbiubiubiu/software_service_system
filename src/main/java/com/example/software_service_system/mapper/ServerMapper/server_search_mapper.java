@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface server_search_mapper {
 
-    @Select(value = "select * from service_table where serverName=#{serverName} and serviceState<>'已经完成' ")
+    @Select(value = "select * from service_table where serverName=#{serverName} and serviceState<>'finish' ")
     @Results
             (value = {
                     @Result(id=true, column = "id", property = "id"),

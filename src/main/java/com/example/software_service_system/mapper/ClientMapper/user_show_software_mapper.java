@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface user_show_software_mapper {
 
-    @Select(value = "select * from order_table where userName=#{userName}")
+    @Select(value = "select * from order_table where userName=#{userName} order by id desc")
     @Results
             (value = {
                     @Result(id=true, column = "id", property = "id"),

@@ -19,6 +19,8 @@ public class serviceService {
     serviceMapper serviceMapper;
     @Autowired
     messageMapper messageMapper;
+    @Autowired
+    com.example.software_service_system.mapper.AdminMapper.change_state_mapper change_state_mapper;
 
     //更新服务对应的处理人 并且删除相应换人的message  给新的处理人发message
     public return_data<service> Updateserver(String serverName,int id,int mesid) throws ParseException {
@@ -36,6 +38,7 @@ public class serviceService {
             SimpleDateFormat sdf = new SimpleDateFormat(" yyyy-MM-dd HH:mm:ss ");
             String nowTime = sdf.format(date);
             Date time = sdf.parse(nowTime);
+            change_state_mapper._change_state_mapper("yes",id);
             messageMapper.addMessage(mid,serverName,"Admin","您新增服务了!",time);
             str1 = "Admin 发送新增服务邮件 success 收信人："+serverName;
             log.info(str1);
