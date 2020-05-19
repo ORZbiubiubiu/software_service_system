@@ -64,6 +64,7 @@ $(document).ready(function () {
                             "pwd": pwd,
 
                         });
+                        console.log(pwd)
                         
                         $.ajax({
                             type: "POST",

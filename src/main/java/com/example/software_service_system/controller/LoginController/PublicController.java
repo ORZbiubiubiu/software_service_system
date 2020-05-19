@@ -42,8 +42,13 @@ private UserService userService;
         System.out.println(username);
         String userState = userService.findUserstate(username);
 //        System.out.println(userState+"失败");
-        if(userState.equals("冻结") )
-           return JsonData.buildError("账号已冻结");
+        if(userState.equals("冻结") ){
+            log.info("{} login err,account freezed",username);
+            log.error("{} login err,account freezed",username);
+            return JsonData.buildError("账号已冻结");
+
+        }
+
 
 //        System.out.println(username);
 
@@ -61,6 +66,8 @@ private UserService userService;
             return JsonData.buildSuccess(info);
         }catch ( Exception e){
             e.printStackTrace();
+            log.info("{} login err",username);
+            log.error("{} login err",username);
             return JsonData.buildError("账户或者密码错误");
         }
 
