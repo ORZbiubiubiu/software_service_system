@@ -64,7 +64,8 @@ const server_func = new Vue({
          msgItems:[],
          serviceItems:[],
          softwareName:'',
-         userName:sessionStorage.getItem("name"),
+         serverName:sessionStorage.getItem("name"),
+         userName:"",
          token :sessionStorage.getItem("token"),
          pagesize:7,
          currentPage:1
@@ -141,16 +142,17 @@ const server_func = new Vue({
                         console.log(error);
                      });
         },
-        finish(sname){
+        finish(sname,uname){
                 this.softwareName=sname;
-                console.log(this.softwareName);
+                this.userName=uname;
                 this.$confirm('确定要修改该服务状态为完成吗?', '提示', {
                           confirmButtonText: '确定',
                           cancelButtonText: '取消',
                           type: 'warning'
                         }).then(() => {
                             axios.post(this.updateUrl, {
-                                                servername:this.userName,
+                                                userName:this.userName,
+                                                servername:this.serverName,
                                                 serverstate:"已完成",
                                                 softwareName:this.softwareName
                                             },{
@@ -183,15 +185,17 @@ const server_func = new Vue({
                         });
 
         },
-        change(sname){
+        change(sname,uname){
              this.softwareName=sname;
+             this.userName=uname;
              this.$confirm('确定提交换人申请吗?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
              }).then(() => {
                       axios.post(this.updateUrl, {
-                            servername:this.userName,
+                            userName:this.userName,
+                            servername:this.serverName,
                             serverstate:"异常",
                             softwareName:this.softwareName
                       }).then((response) => {
