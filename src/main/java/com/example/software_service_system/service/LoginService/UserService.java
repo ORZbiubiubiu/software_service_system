@@ -45,6 +45,4 @@ public class UserService {
     }
     public List<Integer> findSimpleRoleIdById(int userId){return roleMapper.findRoleIdListByUserId(userId);}
 
-    public String findUserstate(String username){return userMapper.findUserstate(username);}
-
 }

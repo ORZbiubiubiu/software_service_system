@@ -71,12 +71,9 @@ public class faqController {
     }
 
 
-    @RequestMapping("/getsearchFaqList")
+    @RequestMapping("/getseaarchFaqList")
     public return_json searchFaqDbList(@RequestBody JSONObject jsonObject) throws ParseException {//返回faqlist
         //System.out.println("来咯");
-        System.out.println("getseaarchFaqList");
-        System.out.println(jsonObject.getString("faqInfo")+ jsonObject.getIntValue("pageNo")+""+jsonObject.getIntValue("pageSize"));
-
         List<Map<String,String>> faqList = faqService.querysearchFaqDbList(jsonObject.getString("faqInfo"),jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
         return_data<Map<String,String>> faqreturn_data = new return_data<Map<String,String>>();
 

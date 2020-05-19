@@ -72,10 +72,8 @@ public interface userPowerMapper {
 //    int updateQUser(String userState, int id);
 
 
-//    @Update("update user set userState=#{userState}  where id=#{id}")
-//    int updateQUser(String userState, int id);
-@Update("update user set userstate=#{userState}  where id=#{id}")
-int updateQUser(String userState, int id);
+    @Update("update user set userState=#{userState}  where id=#{id}")
+    int updateQUser(String userState, int id);
 
 
 }
