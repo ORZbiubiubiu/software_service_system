@@ -674,17 +674,22 @@ $(document).ready(function () {
                         },
                         data: tmp,
                         success: function (response) {
-                            console.log(response)
                             if (response.data.message == "success") {
                                 adduser_vm.$message({
                                     message: adduser_vm.username + "  " + "添加成功!",
                                     type: 'success'
                                 });
-                                 adduser_vm.username = "";
-                                 adduser_vm.password = "";
-                                 adduser_vm.password_check = "";
-                                 adduser_vm.message = "";
+                                adduser_vm.username = "";
+                                adduser_vm.password = "";
+                                adduser_vm.password_check = "";
+                                adduser_vm.message = "";
+                            }else{
+                                adduser_vm.$message({
+                                    message: adduser_vm.username + "  " + "添加失败!",
+                                    type: 'error'
+                                });
                             }
+
 
                         }
                     });
