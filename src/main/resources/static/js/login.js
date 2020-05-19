@@ -21,8 +21,7 @@ $(document).ready(function () {
         },
         methods:{
             onSubmit: function () {
-                 log_vm.message ="";
-                
+                alert(log_vm.userName + log_vm.passWord + log_vm.Character)
                 if (log_vm.userName == "" || log_vm.passWord == "") {
 
                     if (log_vm.userName == "") {
@@ -55,9 +54,8 @@ $(document).ready(function () {
                         log_vm.message="请选择用户登录类型！"
                     }
                     if (log_vm.message=="") {
-                        
                         // location.href = "administrator.html?" + "username=" + log_vm.userName;
-                          var pwd = log_vm.passWord;
+                         var pwd = log_vm.passWord;
                          pwd = hex_md5(pwd);
                          pwd = hex_md5(pwd);
                         var tmp = JSON.stringify({
@@ -65,7 +63,8 @@ $(document).ready(function () {
                             "pwd": pwd,
 
                         });
-                        
+                        console.log(pwd)
+                        console.log(tmp)
                         $.ajax({
                             type: "POST",
                             contentType: "application/json; charset=utf-8",
@@ -73,16 +72,12 @@ $(document).ready(function () {
                             url: "/login",
                             data: tmp,
                             success: function (response) {
-                                
+                                console.log(response)
                                 if (response.data.msg == "success") {
-                                     log_vm.$message({
-                                         message: "登录成功！！",
-                                         type: 'success'
-                                     });
-                                   
+                                    alert("登陆成功！！！");
                                     var type = response.data.role;
-                                     session = response.data.session_id;
-                                    //console.log(type + "    " + session)
+                                    var session = response.data.session_id;
+                                    console.log(type + "    " + session)
                                     if (type=="1") {
                                         sessionStorage.setItem("name", log_vm.userName);
                                         sessionStorage.setItem("token", session);
@@ -98,23 +93,10 @@ $(document).ready(function () {
                                     }
 
                                 } else {
-                                    if (response.data.msg == "账号已冻结") {
-                                         log_vm.$message({
-                                             message: "账号已冻结",
-                                             type: 'error'
-                                         });
-                                         log_vm.message = "账号已冻结"
-                                    } else if (response.data.msg == "账户或者密码错误") {
-                                         log_vm.$message({
-                                             message: "登录失败！！",
-                                             type: 'error'
-                                         });
-                                         log_vm.message = "账户或密码错误！"
-                                    }
-                                    
+                                    alert("登陆失败！！！");
                                 }
                             }
-                        });  
+                        });
 
                     }
                     /* $.ajax({

@@ -28,7 +28,10 @@
             <h1 id="title">
                 软件售后服务系统
             </h1>
-            
+            <div id="search" class="v-center">
+                <input type="text" id="search-bar" maxlength="40">
+                <a href="#" id="btn-search">搜索</a>
+            </div>
             <div id="userHead">
 
                 <!--
@@ -194,7 +197,7 @@
                     </el-dialog>
                 </div>
                 <div id="access_setting_holder">
-                    <el-table :data="tableData" style="width:100%"    >
+                    <el-table :data="tableData" style="width:100%">
                         <el-table-column label="用户账户" width="205">
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
@@ -268,48 +271,11 @@
                 </div>
                 <div id="faqcenter">
                     <div id="modifyfaqarea" class="faqarea faqshow">
-                    <div id="search" class="v-center">
-                        <input type="text" id="search-bar" maxlength="40">
-                        
-                        <a   id="btnSearch">搜索</a>
-                    </div>
+
 
                         <div id="modifylist">
-                            <el-table :data="items" style="width: 100%">
-                                <el-table-column label="标题" width="130">
-                                    <template slot-scope="scope">
-                            
-                                        <span style="margin-left: 10px">{{ scope.row.faqtitle }}</span>
-                                    </template>
-                                </el-table-column>
-                            
-                            
-                                <el-table-column label="类型" width="130">
-                                    <template slot-scope="scope">
-                                        <el-popover trigger="hover" placement="top">
-                            
-                                            <div slot="reference" class="name-wrapper">
-                                                <el-tag size="medium">{{ scope.row.faqType }}</el-tag>
-                                            </div>
-                                        </el-popover>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column label="详细信息" width="370">
-                                    <template slot-scope="scope">
-                                        <el-input type="textarea" :rows="2" v-model="scope.row.faqdetails">
-                                        </el-input>
-                            
-                                    </template>
-                                </el-table-column>
-                                <el-table-column label="操作">
-                                    <template slot-scope="scope">
-                                        <el-button size="mini" @click="modify(scope.row.id,scope.row.faqdetails)">修改</el-button>
-                                        <el-button size="mini" type="danger" @click="del(scope.row.id)">删除</el-button>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
 
-                           <!--  <div style="color: #ffffff;">
+                            <div style="color: #ffffff;">
                                 1
                             </div>
                             <div class="modifyitem" v-for="item in items">
@@ -327,7 +293,7 @@
                                     <button class="faqdelbtn" @click="del(item.id)">删除</button>
                                 </div>
 
-                            </div> -->
+                            </div>
 
                         </div>
                         <div class="paging" id="faq_page">
@@ -352,12 +318,10 @@
                             </el-form-item>
                             <el-form-item label="类型">
                                 <el-select v-model="faqType" placeholder="请选择类型">
-                                    <el-option label="登陆异常" value="登陆异常"></el-option>
-                                    <el-option label="界面无法显示" value="界面无法显示"></el-option>
-                                    <el-option label="显示信息有误" value="显示信息有误"></el-option>
+                                    <el-option label="后台数据库错误" value="后台数据库错误"></el-option>
+                                    <el-option label="软件页面显示数据出错" value="软件页面显示数据出错"></el-option>
+                                    <el-option label="软件功能失效或出错" value="软件功能失效或出错"></el-option>
                                     <el-option label="其他" value="其他"></el-option>
-
-                               <!--      .登陆异常，2.界面无法显示，3.显示信息有误，4.其他 -->
 
                                 </el-select>
                             </el-form-item>
@@ -375,7 +339,42 @@
 
 
                         </el-form>
-                        
+                        <div id="addform" style="display: none;">
+
+                            <div id="addauthor">
+                                <span>目标软件：</span>
+                                <select type="text" v-model="faqSoftware" id="target" class="addfaqinfinput">
+                                    <option v-bind:value="item.targetsoftware" v-for="item in items">
+                                        {{item.targetsoftware}}</option>
+
+                                </select>
+                            </div>
+
+                            <div id="addtitle">
+                                <span>标题：</span>
+                                <input type="text" v-model="faqName" id="titleipt" class="addfaqinfinput">
+                            </div>
+                            <div id="addtype">
+                                <span>类型：</span>
+                                <select id="faqtype" v-model="faqType">
+                                    <option value="type1">type1</option>
+                                    <option value="type2">type2</option>
+                                    <option value="type3">type3</option>
+                                    <option value="type4">type4</option>
+                                </select>
+                            </div>
+                            <div id="adddescription">
+                                <span>问题描述：</span>
+                                <textarea v-model="faqDescription" id="descriptiontext" cols="30" rows="10"
+                                    class="addfaqinfinput"></textarea>
+                            </div>
+                            <div id="addsolution">
+                                <span>解决方法：</span>
+                                <textarea v-model="faqInfo" id="solutiontext" cols="30" rows="10"
+                                    class="addfaqinfinput"></textarea>
+                            </div>
+                            <button id="submitbtn" @click="commit">提交</button>
+                        </div>
 
                     </div>
                 </div>
@@ -454,7 +453,10 @@
         </div>
     </div>
     <div class="footer">
-       
+        <span id="versionInfo">
+            <p>版本号v1.0</p>
+            <p>版本说明：XXXXXXXXXXXXXXXXXX</p>
+        </span>
         <span class="details">咨询电话:8888-8888</span>
         <span class="details">技术说明</span>
         <pspan class="details">帮助中心</pspan>

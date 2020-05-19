@@ -10,7 +10,6 @@
     margin-right: 20px;
     margin-top: 30px;
     height: 60px;
-    color: #fff;
 }
 
 #head_icon {
@@ -134,26 +133,24 @@
 }
 
 #search {
-    position: absolute;
-    top: -20px;
+    left: 30%;
     width: 550px;
-    left: 50px;
 }
 
 #search-bar {
-    
-    bottom: 5px ;
+    float: left;
+    border: none;
     border-radius: 10px;
     padding-left: 10px;
     height: 34px;
-    width: 280px;
+    width: 380px;
     background: url(../img/search.png);
 }
 
-#btnSearch {
+#btn-search {
     float: right;
     width: 100px;
-    margin-right: 120px;
+    margin-right: 20px;
     border:0;
     border-radius: 10px;
     height: 30px;
@@ -162,7 +159,6 @@
     background-color: #409EFF;
     color: #fff;
     text-decoration: none;
-    cursor: pointer;
 }
 
 /*center*/
@@ -246,7 +242,6 @@
     position: relative;
     background-color: #545c64;
     top: 20px;
-    padding-top: 150px;
 }
 
 #versionInf {

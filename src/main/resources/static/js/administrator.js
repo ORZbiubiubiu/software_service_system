@@ -3,7 +3,7 @@ $(document).ready(function () {
     var name = sessionStorage.getItem("name");
     $("#userName").text(name);
     var session_id = sessionStorage.getItem("token");
-   
+
  
     var service_dialog_vm = new Vue({
         el: '#service_dialog',
@@ -43,21 +43,19 @@ $(document).ready(function () {
 
 
                         if (response.data.message == "更新成功") {
-                            service_dialog_vm.$message({
+                            this.$message({
                                 message: "更换售后服务人员" + service_dialog_vm.change_name + "成功!",
                                 type: 'success'
                             });
-                            
 
                         } else {
-                            service_dialog_vm.$message.error("更换售后服务人员" + service_dialog_vm.change_name + "失败!");
+                            this.$message.error("更换售后服务人员" + service_dialog_vm.change_name + "失败!");
 
                         }
-                        
-                        service_error_page_getdata(service_page_vm.current_page);
+                        service_dialog_vm.dialogFormVisible = false;
+
                     }
                 });
-                service_dialog_vm.dialogFormVisible = false;
 
             }
         }
@@ -73,7 +71,7 @@ $(document).ready(function () {
         el: '#service_table_holder',
         data: {
             //每页显示 11 个
-            tableData: [/* {
+            tableData: [{
                 mesid: "",
                 "serviceId": "SDA1000",
                 "serviceState": "正在处理",
@@ -150,7 +148,7 @@ $(document).ready(function () {
                 "Applicants": "东北爷们",
                 "Application_reason": "韭菜卷大葱不好吃",
                 solution: ""
-            } */]
+            }]
 
         },
         methods: {
@@ -160,7 +158,7 @@ $(document).ready(function () {
 
                 if (solution == "") {
 
-                    service_table_vm.$message({
+                    this.$message({
                         message: '请选择解决方式！',
                         type: 'warning'
                     });
@@ -211,7 +209,7 @@ $(document).ready(function () {
         }
     });
 
-   
+
     //access-dialog
     var access_dialog_vm = new Vue({
         el: '#access_dialog',
@@ -251,15 +249,15 @@ $(document).ready(function () {
 
                             if (response.data.message == "用户权限修改成功！") {
                                 access_dialog_vm.dialogFormVisible = false;
-                                access_dialog_vm.$message({
+                                this.$message({
                                     message: '客户权限修改成功！',
                                     type: 'success'
                                 });
 
                                 access_setting_page_getdata1(access_page_vm.current_page);
                             } else {
-                               
-                                access_dialog_vm.$message({
+
+                                this.$message({
                                     message: '客户权限修改失败！',
                                     type: 'error'
                                 });
@@ -286,15 +284,14 @@ $(document).ready(function () {
 
                             if (response.data.message == "维护人员权限修改成功！") {
                                 access_dialog_vm.dialogFormVisible = false;
-                                access_dialog_vm.$message({
+                                this.$message({
                                     message: '售后服务人员权限修改成功',
                                     type: 'success'
                                 });
 
                                 access_setting_page_getdata(access_page_vm.current_page);
                             } else {
-                                 access_dialog_vm.dialogFormVisible = false;
-                                access_dialog_vm.$message({
+                                this.$message({
                                     message: '售后服务人员权限修改失败！',
                                     type: 'error'
                                 });
@@ -303,7 +300,6 @@ $(document).ready(function () {
                         }
                     });
                 }
-                  access_dialog_vm.dialogFormVisible = false;
 
             }
 
@@ -346,7 +342,7 @@ $(document).ready(function () {
         el: '#access_setting_holder',
         data: {
             current: "售后服务人员",
-            tableData: [/* {
+            tableData: [{
                 id: "",
                 "userId": "韭菜卷大葱7",
                 "userRole": "userRole1",
@@ -412,7 +408,7 @@ $(document).ready(function () {
                 "userRole": "userRole1",
                 "accountStatus": "封禁中",
                 values: ""
-            } */]
+            }]
 
         },
         methods: {
@@ -431,12 +427,12 @@ $(document).ready(function () {
 
                 if (way == accountStatus) {
 
-                    access_table_vm.$message({
+                    this.$message({
                         message: userId + " 已处于" + accountStatus + "   中！",
                         type: 'warning'
                     });
                 } else if (way == "") {
-                    access_table_vm.$message({
+                    this.$message({
                         message: "请选择解决方式！",
                         type: 'warning'
                     });
@@ -456,7 +452,7 @@ $(document).ready(function () {
     var faq_vm = new Vue({
         el: '#modifylist',
         data: {
-            items: [  {
+            items: [{
                 id: "",
                 faqType: "faqType",
                 "faqtitle": "faqtitle1",
@@ -474,26 +470,7 @@ $(document).ready(function () {
                 "faqtitle": "faqtitle3",
                 "faqdetails": "faqdetails",
                 "faqdate": "20/03/05"
-                }, {
-                    id: "",
-                    faqType: "faqType",
-                    "faqtitle": "faqtitle3",
-                    "faqdetails": "faqdetails",
-                    "faqdate": "20/03/05"
-                }  , {
-                id: "",
-                faqType: "faqType",
-                "faqtitle": "faqtitle3",
-                "faqdetails": "faqdetails",
-                "faqdate": "20/03/05"
-                }, {
-                    id: "",
-                    faqType: "faqType",
-                    "faqtitle": "faqtitle3",
-                    "faqdetails": "faqdetails",
-                    "faqdate": "20/03/05"
-                }    ],
-            last:""
+            }]
         },
         methods: {
             modify: function (id, faqInfo) {
@@ -513,7 +490,7 @@ $(document).ready(function () {
                         if (response.data.code != 500) {
                             faq_page_getdata(faq_page_vm.current_page);
 
-                            faq_vm.$message({
+                            this.$message({
                                 message: '修改成功！',
                                 type: 'success'
                             });
@@ -540,7 +517,7 @@ $(document).ready(function () {
                     success: function (response) {
                         if (response.data.code != 500) {
                             faq_page_getdata(faq_page_vm.current_page);
-                            faq_vm.$message({
+                            this.$message({
                                 message: '删除成功！',
                                 type: 'success'
                             });
@@ -676,14 +653,11 @@ $(document).ready(function () {
                         success: function (response) {
                             console.log(response)
                             if (response.data.message == "success") {
-                                adduser_vm.$message({
+                                this.$message({
                                     message: adduser_vm.username + "  " + "添加成功!",
                                     type: 'success'
                                 });
-                                 adduser_vm.username = "";
-                                 adduser_vm.password = "";
-                                 adduser_vm.password_check = "";
-                                 adduser_vm.message = "";
+
                             }
 
                         }
@@ -782,7 +756,7 @@ $(document).ready(function () {
                 //alert(targetsoftware_vm.faqSoftware + targetsoftware_vm.faqName + targetsoftware_vm.faqType + targetsoftware_vm.faqInfo + targetsoftware_vm.faqDescription);
                 if (targetsoftware_vm.faqSoftware == "" || targetsoftware_vm.faqName == "" || targetsoftware_vm.faqInfo == "" || targetsoftware_vm.faqDescription == "" || targetsoftware_vm.faqType == "") {
 
-                    targetsoftware_vm.$message({
+                    this.$message({
                         message: '请完善所有信息！',
                         type: 'warning'
                     });
@@ -809,18 +783,13 @@ $(document).ready(function () {
                             console.log(response.data);
                             if (response.data.message == "success") {
                                 console.log(response.data);
-                                targetsoftware_vm.$message({
+                                this.$message({
                                     message: '添加成功！',
                                     type: 'success'
                                 });
-                                 targetsoftware_vm.faqName ="";
-                                   targetsoftware_vm.faqDescription = "";
-                                    targetsoftware_vm.faqInfo = "";
-                                   targetsoftware_vm.faqSoftware = "";  
-                                   targetsoftware_vm.faqType = "";
 
                             } else {
-                                targetsoftware_vm.$message.error('添加失败');
+                                this.$message.error('添加失败');
                             }
                         }
                     });
@@ -838,113 +807,6 @@ $(document).ready(function () {
 
         }
     })
-
-
-     var func_menu_vm = new Vue({
-             el: "#funcmenu",
-             data: {
-                 funcs: [{
-                         fncname: "售后服务异常处理",
-                         index: "0"
-                     },
-                     {
-                         fncname: "权限设置",
-                         index: "1"
-                     },
-                     {
-                         fncname: "FAQ数据库管理",
-                         index: "2"
-                     },
-                     {
-                         fncname: "关于此软件",
-                         index: "3"
-                     }, {
-                         fncname: "添加用户",
-                         index: "4"
-                     }
-                 ]
-             },
-             methods: {
-                 handleSelect(key, keyPath) {
-                     menuSelect(Number(key));
-                 },
-                 handleOpen(key, keyPath) {
-                     console.log(" handleOpe");
-                     menuSelect(Number(key));
-                 },
-                 handleClose(key, keyPath) {
-                     console.log(" handleClose");
-                     menuSelect(Number(key));
-                 }
-             }
-         }
-
-     );
-
-     function menuSelect(index) {
-
-
-         $("#functions_area").children().removeClass("selected_area");
-         $("#functions_area").children().eq(index).addClass("selected_area");
-
-
-         //根据被点击元素在父元素中的位置顺序判断要跳转到哪个页面去
-         if (index == 0) { //售后服务异常处理页面加载数据
-
-             service_error_page_getdata(1);
-
-
-         } else if (index == 1) { //权限设置界面
-             //将从数据库里获得数据并且加载到 access_vm 中
-             // access_setting_page_getdata(1);
-             if (access_table_vm.current == "客户") {
-                 console.log("access_table_vm.current==客户");
-                 access_setting_page_getdata1(1);
-             } else {
-                 console.log("access_table_vm.current==售后服务人员");
-                 access_setting_page_getdata(1);
-             }
-
-             // console.log("access_setting_page_getdata(1)");
-         } else if (index == 2) {
-             //faq数据库管理界面
-             console.log("faq_page_getdata(1)");
-             faq_page_getdata(1);
-
-         } else { //
-             console.log("新增用户-售后服务人员-可先服务软件");
-             $.ajax({
-                 type: "POST",
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 url: "/admin/GetSoftWareList",
-                 headers: {
-                     "token": sessionStorage.getItem("token")
-                 },
-                 data: "data",
-                 success: function (response) {
-                     console.log(response.data);
-                     var list = response.data.list;
-                     for (let index = 0; index < list.length; index++) {
-                         const element = list[index];
-                         Vue.set(adduser_vm.list, index, {
-                             name: element.softwareName,
-
-                         })
-                     }
-
-
-
-                 }
-             });
-
-
-         }
-
-
-     }
-
-    
     //分页器
     var service_page_vm = new Vue({
         el: '#service_page',
@@ -972,7 +834,7 @@ $(document).ready(function () {
     var access_page_vm = new Vue({
         el: '#access_page',
         data: {
-            page_size: 10, //每頁条目数er
+            page_size: 11, //每頁条目数er
             total: 35, //总条目数
             current_page: 1 //当前页数，
 
@@ -999,7 +861,7 @@ $(document).ready(function () {
     var faq_page_vm = new Vue({
         el: '#faq_page',
         data: {
-            page_size: 5, //每頁条目数
+            page_size: 3, //每頁条目数
             total: 20, //总条目数
             current_page: 1 //当前页数，
 
@@ -1007,13 +869,8 @@ $(document).ready(function () {
         },
         methods: {
             handleCurrentChange: function (p) {
-                if (faq_vm.last=="") {
-                    faq_page_vm.current_page = p;
-                    faq_page_getdata(p);
-                }else{
-                    faqserch(faq_vm.last,p);
-                }
-           
+            faq_page_vm.current_page=p;
+                faq_page_getdata(p);
             },
             prev_click: function (p) {
                 
@@ -1024,74 +881,154 @@ $(document).ready(function () {
         }
     })
 
-    //页面开始获取异常服务列表
-    service_error_page_getdata(1);
-    
-    
-    //faq搜索
-    $("#btnSearch").click(function (e) {
-       
-        var keyWord = $("#search-bar").val();
-        if (keyWord=="") {
-            faq_page_getdata(1);
-        }else{
-            console.log("btnSearch" + keyWord)
-           
-            faqserch(keyWord, 1);
+
+
+    $(".faqfunction").click(function () {
+
+        $(".faqfunction").removeClass("selectedfaqfunction");
+        $(this).addClass("selectedfaqfunction");
+        var key = $(this).index();
+
+        $(".faqarea").removeClass("faqshow");
+        $(".faqarea").eq(key).addClass("faqshow");
+        if (key == 0) { //如果是点击的  修改&删除按钮
+            //加载数据
+        } else { ////如果是点击的  新增除按钮
+            //加载软件列表供选择
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "/admin/GetSoftWareList",
+                headers: {
+                    "token": sessionStorage.getItem("token")
+                },
+                data: "data",
+                success: function (response) {
+                    console.log(response.data);
+                    var list = response.data.list;
+                    for (let index = 0; index < list.length; index++) {
+                        const element = list[index];
+                        Vue.set(targetsoftware_vm.items, index, {
+                            targetsoftware: element.softwareName,
+                            id: element.id
+                        })
+                    }
+
+                    // targetsoftware_vm.items
+
+                }
+            });
+
         }
-        faq_vm.last = keyWord;
-       
     });
-   
 
 
 
-   
-        //搜索
-    function faqserch(keyWord, pageNo) {
-        var data = {
-            faqInfo: keyWord,
-            pageNo: pageNo,
-            pageSize: faq_page_vm.page_size
-        };
-        faq_vm.current_page = pageNo;
-        console.log("faqserch"  )
-        console.log(data )
-        $.ajax({
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            url: "/admin/getsearchFaqList",
-            data: JSON.stringify(data),
-            headers: { "token": sessionStorage.getItem("token")},
-            success: function (response) {
-
-                var list = response.data.list;
-                console.log(response.data);
-                console.log(Number(response.data.message));
-                faq_page_vm.total = Number(response.data.message);
-                console.log(list.length);
-
-                faq_vm.items = [];
-                $.each(list, function (indexInArray, element) {
-
-                    Vue.set(faq_vm.items, indexInArray, {
-                        id: element.id,
-                        "faqtitle": element.faqName,
-                        faqType: element.faqType,
-                        "faqdetails": element.faqInfo,
-                        "faqdate": element.faqDate
-                    });
-
-
-                });
-
-
+    var func_menu_vm = new Vue({
+            el: "#funcmenu",
+            data: {
+                funcs: [{
+                        fncname: "售后服务异常处理",
+                        index: "0"
+                    },
+                    {
+                        fncname: "权限设置",
+                        index: "1"
+                    },
+                    {
+                        fncname: "FAQ数据库管理",
+                        index: "2"
+                    },
+                    {
+                        fncname: "关于此软件",
+                        index: "3"
+                    }, {
+                        fncname: "添加用户",
+                        index: "4"
+                    }
+                ]
+            },
+            methods: {
+                handleSelect(key, keyPath) {
+                    menuSelect(Number(key));
+                },
+                handleOpen(key, keyPath) {
+                    console.log(" handleOpe");
+                    menuSelect(Number(key));
+                },
+                handleClose(key, keyPath) {
+                    console.log(" handleClose");
+                    menuSelect(Number(key));
+                }
             }
-        });
+        }
+
+    );
+
+    function menuSelect(index) {
 
 
-    }        
+        $("#functions_area").children().removeClass("selected_area");
+        $("#functions_area").children().eq(index).addClass("selected_area");
+
+
+        //根据被点击元素在父元素中的位置顺序判断要跳转到哪个页面去
+        if (index == 0) { //售后服务异常处理页面加载数据
+
+            service_error_page_getdata(1);
+
+
+        } else if (index == 1) { //权限设置界面
+            //将从数据库里获得数据并且加载到 access_vm 中
+            // access_setting_page_getdata(1);
+            if (access_table_vm.current=="客户") {
+                 console.log("access_table_vm.current==客户");
+                  access_setting_page_getdata1(1);
+            }else{
+                   console.log("access_table_vm.current==售后服务人员");
+                 access_setting_page_getdata(1);
+            }
+           
+           // console.log("access_setting_page_getdata(1)");
+        } else if (index == 2) {
+            //faq数据库管理界面
+            console.log("faq_page_getdata(1)");
+            faq_page_getdata(1);
+
+        } else { //
+               console.log("新增用户-售后服务人员-可先服务软件");
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: "/admin/GetSoftWareList",
+                headers: {
+                    "token": sessionStorage.getItem("token")
+                },
+                data: "data",
+                success: function (response) {
+                    console.log(response.data);
+                    var list = response.data.list;
+                    for (let index = 0; index < list.length; index++) {
+                        const element = list[index];
+                        Vue.set(adduser_vm.list, index, {
+                            name: element.softwareName,
+
+                        })
+                    }
+
+
+
+                }
+            });
+
+
+        }
+
+
+    }
+
 
     //版本信息导航栏
 
@@ -1191,7 +1128,6 @@ $(document).ready(function () {
             },
             complete: function (XMLHttpRequest, textStatus) {},
             error: function () {
-                 
 
                  
 
@@ -1305,7 +1241,6 @@ $(document).ready(function () {
     function faq_page_getdata(i) {
         //参数i ：用户点击下方分页器的页数
         //从服务器获取数据
-        console.log(" faq_page_getdata")
         var data = JSON.stringify({
             pageNo: i,
             pageSize: faq_page_vm.page_size
@@ -1371,7 +1306,7 @@ $(document).ready(function () {
         });
 
     });
-  //页面初始化加载第一页数据
+    service_error_page_getdata(1); //页面初始化加载第一页数据
    
    /*  access_setting_page_getdata(1);
     faq_page_getdata(1); */
