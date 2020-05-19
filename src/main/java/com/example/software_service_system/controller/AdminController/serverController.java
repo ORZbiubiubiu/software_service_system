@@ -28,7 +28,6 @@ public class serverController {
 
     @RequestMapping("/getServerList" ) //权限设置界面服务人员名单
     public return_data<Map<String,String>>   queryFaqDbList(@RequestBody JSONObject jsonObject){
-        //System.out.println("前端来取数据了");
         List<Map<String,String>> userList = serverService.queryUserList(jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
         return_data<Map<String,String>> userreturn_data = new return_data<Map<String,String>>();
         userreturn_data.setList(userList);
@@ -42,18 +41,9 @@ public class serverController {
     public  return_json updateuser(@RequestBody JSONObject json) throws IOException {
         int id = json.getIntValue("id");
         String serverState = json.getString("serverState");
-        System.out.println(id+serverState);
         return_data<server> updateresoult = serverService.updateUser(serverState,id);
         return_json updatereturnjson = new return_json();
         updatereturnjson.setData(updateresoult);
         return updatereturnjson;
     }
-    /*@RequestMapping("/getnames")
-    public return_json rp1NameList() {
-        System.out.println("getnames");
-        return_data<String> rs = serverService.getrpName("BB");
-        return_json returnJson = new return_json();
-        returnJson.setData(rs);
-        return returnJson;
-    }*/
 }

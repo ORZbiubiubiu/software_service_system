@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface update_service_mapper {
 
-    @Select(value = "select * from service_table where serverName=#{serverName}")
+    @Select(value = "select * from service_table where softwareName=#{softwareName} and serverName = #{serverName} and userName = #{userName}")
     @Results
             (value = {
                     @Result(id=true, column = "id", property = "id"),
@@ -21,9 +21,9 @@ public interface update_service_mapper {
                     @Result(property = "serviceKind",column = "serviceKind"),
                     @Result(property = "serviceInfo",column = "serviceInfo")
             })
-    List<find_service_List> find_service_by_server(@Param("serverName") String serverName);
+    List<find_service_List> search(@Param("softwareName") String softwareName, @Param("serverName") String serverName, @Param("userName") String userName);
 
-    @Update("UPDATE service_table SET serviceState=#{serviceState} WHERE softwareName=#{softwareName} and serverName = #{serverName}")
-    int update(@Param("softwareName") String softwareName, @Param("serviceState") String serviceState,@Param("serverName") String serverName);
+    @Update("UPDATE service_table SET serviceState=#{serviceState} WHERE softwareName=#{softwareName} and serverName = #{serverName} and userName = #{userName}")
+    int update(@Param("softwareName") String softwareName, @Param("serviceState") String serviceState, @Param("serverName") String serverName, @Param("userName") String userName);
 
 }

@@ -29,7 +29,7 @@ public class server_search_controller {
     @ResponseBody
     public String search_server(@RequestBody JSONObject jsonParam) {
         String servername = (String)jsonParam.get("servername");
-        System.out.println(servername);
+        //System.out.println(servername);
         String return_json_string = JSONObject.toJSONString(ServerService.server_search_service(servername));
         return return_json_string;
     }
@@ -37,29 +37,13 @@ public class server_search_controller {
     @RequestMapping(value = "/update_state",method = RequestMethod.POST)
     @ResponseBody
     public String update_service(@RequestBody JSONObject jsonParam) {
-//        String servername = (String)jsonParam.get("servername");
-//        String serverstate = (String)jsonParam.get("serverstate");
-//        int id = Integer.parseInt((String)jsonParam.get("id"));
         String return_json_string;
-//        System.out.println(serverstate+"--->"+id);
-//        if(serverstate.equals("change")){
-//            Date d = new Date();
-//            System.out.println(d);
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            String dateNowStr = sdf.format(d);
-//            System.out.println("格式化后的日期：" + dateNowStr);
-//            send_server_message._send_server_message("admin",servername,id+"+change",dateNowStr);
-//            return_json_string = JSONObject.toJSONString(update_service_state.update_service_now_state(id,serverstate,servername));
-//            return return_json_string;
-//        }else {
-//            return_json_string = JSONObject.toJSONString(update_service_state.update_service_now_state(id,serverstate,servername));
-//            return return_json_string;
-//        }
-        String servername = (String)jsonParam.get("servername");
+        String serverName = (String)jsonParam.get("servername");
         String serverstate = (String)jsonParam.get("serverstate");
-        String softwareId = (String)jsonParam.get("softwareName");
-        System.out.println(servername+"----"+serverstate+"----"+softwareId);
-        return_json_string = JSONObject.toJSONString(update_service_state.update_service_now_state(softwareId,serverstate,servername));
+        String softwareName = (String)jsonParam.get("softwareName");
+        String userName = (String)jsonParam.get("userName");
+        //System.out.println(serverName+"----"+serverstate+"----"+softwareName+"----"+userName);
+        return_json_string = JSONObject.toJSONString(update_service_state.update_service_now_state(softwareName,serverstate,serverName,userName));
         return return_json_string;
     }
 
@@ -67,7 +51,7 @@ public class server_search_controller {
     @ResponseBody
     public String get_message(@RequestBody JSONObject jsonParam) {
         String getname = (String)jsonParam.get("getName");
-        System.out.println(getname);
+        //System.out.println(getname);
         String return_json_string = JSONObject.toJSONString(get_server_message._get_server_message(getname));
         return return_json_string;
     }
@@ -80,10 +64,10 @@ public class server_search_controller {
         String sendName = (String)jsonParam.get("sendName");
         String justMessage = (String)jsonParam.get("justMessage");
         String messageDate = (String)jsonParam.get("messageDate");
-        System.out.println(justMessage);
-        System.out.println(messageDate);
+        //System.out.println(justMessage);
+        //System.out.println(messageDate);
         String return_json_string = JSONObject.toJSONString(send_server_message._send_server_message(getName,sendName,justMessage,messageDate));
-        System.out.println("return:"+return_json_string);
+        //System.out.println("return:"+return_json_string);
         return return_json_string;
     }
     @RequestMapping(value = "/type_faq")
@@ -91,9 +75,9 @@ public class server_search_controller {
     public String show_stype_faq(@RequestBody JSONObject jsonParam){
         String faqType = (String)jsonParam.get("faqType");
         String faqInfo = (String)jsonParam.get("faqInfo");
-        System.out.println(faqType+"/"+faqInfo);
+        //System.out.println(faqType+"/"+faqInfo);
         String return_json_string = JSONObject.toJSONString(type_find_faq._type_find_faq(faqType,faqInfo));
-        System.out.println("return:"+return_json_string);
+        //System.out.println("return:"+return_json_string);
         return return_json_string;
     }
 

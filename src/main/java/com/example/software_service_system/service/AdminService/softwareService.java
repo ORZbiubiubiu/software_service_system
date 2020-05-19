@@ -19,12 +19,8 @@ public class softwareService {
     serverMapper serverMapper;
 
     //得到所有的软件信息
-//    public List<software> getSoftwares(){
-//        return softwareMapper.querrSoftList();
-//    }
     public List<Map<String,String>> getSoftwares() throws ParseException {
         List<software> softList = softwareMapper.querrSoftList();
-        //System.out.println(softList);
         DateFormat sdf = new SimpleDateFormat(" yyyy-MM-dd");
         int i = softList.size();
         List<Map<String,String>> maps = new ArrayList<Map<String,String>>();

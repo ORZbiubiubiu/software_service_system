@@ -1,13 +1,13 @@
-var username;
+var servername;
 
 const name = new Vue({
     el: '#username',
     data:{
-        username:''
+        servername:''
     },
     mounted:function(){
-        username = sessionStorage.getItem("name");
-        this.username = sessionStorage.getItem("name");
+        servername = sessionStorage.getItem("name");
+        this.servername = sessionStorage.getItem("name");
     }
 });
 
@@ -76,7 +76,7 @@ const server_func = new Vue({
     methods: {
         getMsg(){
             axios.post(this.getMsgUrl, {
-                getName:this.userName,
+                getName:this.serverName,
             },{
                 headers:{
                             'token':this.token
@@ -92,7 +92,7 @@ const server_func = new Vue({
         },
         getService(){
              axios.post(this.getServiceUrl, {
-                    servername:this.userName
+                    servername:this.serverName
                 },{
                          headers:{
                                      'token':sessionStorage.getItem('token')
@@ -114,7 +114,7 @@ const server_func = new Vue({
              var now = year + "-" + mon + "-" +day;
                 axios.post(this.sendMsgUrl, {
                     getName:this.msg.receiver,
-                    sendName:this.userName,
+                    sendName:this.serverName,
                     justMessage:this.msg.msg,
                     messageDate:now
                     },{
@@ -235,6 +235,9 @@ const server_func = new Vue({
                   this.flag = key;
                   if (key == 1) {
                     this.getMsg();
+                  }
+                  if (key == 0) {
+                    this.getService();
                   }
                },
 

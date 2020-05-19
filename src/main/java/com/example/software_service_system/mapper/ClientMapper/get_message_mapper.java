@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface get_message_mapper {
-    @Select(value = "select * from message_table where getName=#{getName}")
+    @Select(value = "select * from message_table where getName=#{getName} order by id desc")
     @Results
             (value = {
                     @Result(id=true, column = "id", property = "id"),

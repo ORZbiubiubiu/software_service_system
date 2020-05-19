@@ -20,10 +20,8 @@ public class userPowerController {
     @Autowired
     userPowerService userPowerService;
 
-    //,method = {RequestMethod.GET}
     @RequestMapping("getCustomerList" )   //权限设置界面  返回客户列表
     public return_data<Map<String,String>>   queryFaqDbList(@RequestBody JSONObject jsonObject){
-        //System.out.println("前端来取数据了");
         List<Map<String,String>> userList = userPowerService.queryUserList(jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
         return_data<Map<String,String>> userreturn_data = new return_data<Map<String,String>>();
         userreturn_data.setList(userList);
@@ -45,10 +43,8 @@ public class userPowerController {
 
     @RequestMapping("/adduser")
     public return_json adduser(@RequestBody JSONObject jsonObject){  //添加用户
-        //System.out.println("来加人了");
         if(jsonObject.getString("usertype").equals("客户")){
             String rs = userPowerService.addUser(jsonObject.getString("username"),jsonObject.getString("password"),jsonObject.getString("usertype"),null);
-            System.out.println(rs);
             return_data<String> rsd = new return_data<String>();
             rsd.setMessage(rs);
             return_json rsj = new return_json();

@@ -20,7 +20,7 @@ public class search_faq {
         return_data<faq_List> myData = new return_data<faq_List>();
         List<faq_List> mylist = new ArrayList();   //这里注意，不然会报null错误
         mylist=search_faq_mapper._search_faq_mapper(faqInfo);
-        System.out.println(mylist.toString());
+        //System.out.println(mylist.toString());
         myData.setMessage("success");
         myData.setList(mylist);
         myreturn.setCode(200);

@@ -4,12 +4,13 @@ import com.example.software_service_system.Entity.ClientEntity.faq_List;
 import com.example.software_service_system.Entity.ClientEntity.return_data;
 import com.example.software_service_system.Entity.ClientEntity.return_json;
 import com.example.software_service_system.mapper.ClientMapper.search_faq_mapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Service
 public class type_find_faq {
     @Autowired
@@ -32,7 +33,7 @@ public class type_find_faq {
                 }
             }
         }
-        System.out.println(mylist.toString());
+       //System.out.println(mylist.toString());
         myData.setMessage("success");
         myData.setList(mylist);
         myreturn.setCode(200);

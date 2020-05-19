@@ -2,6 +2,8 @@ package com.example.software_service_system.controller.ClientController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.software_service_system.service.ClientService.*;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +30,9 @@ public class user_controller {
     @ResponseBody
     public String user_show_software(@RequestBody JSONObject jsonParam){
         String userName=(String)jsonParam.get("serverName");
-        System.out.println(userName);
+        //System.out.println(userName);
         String return_json_string = JSONObject.toJSONString(user_show_software._user_show_software(userName));
-        System.out.println(return_json_string);
+        //System.out.println(return_json_string);
         return return_json_string;
     }
 
@@ -41,11 +43,11 @@ public class user_controller {
         String softwareName=(String)jsonParam.get("softwareName");
         String serviceKind=(String)jsonParam.get("serviceKind");
         String serviceInfo=(String)jsonParam.get("serviceInfo");
-        System.out.println(userName);
-        System.out.println(softwareName);
-        System.out.println(serviceInfo);
+        //System.out.println(userName);
+        //System.out.println(softwareName);
+        //System.out.println(serviceInfo);
         String return_json_string = JSONObject.toJSONString(user_apply_service._user_apply_service(userName,softwareName,serviceKind,serviceInfo));
-        System.out.println(return_json_string);
+        //System.out.println(return_json_string);
         return return_json_string;
     }
 
@@ -53,9 +55,9 @@ public class user_controller {
     @ResponseBody
     public String search_user(@RequestBody JSONObject jsonParam) {
         String userName = (String)jsonParam.get("userName");
-        System.out.println(userName);
+        //System.out.println(userName);
         String return_json_string = JSONObject.toJSONString(user_search_service._user_search_service(userName));
-        System.out.println(return_json_string);
+        //System.out.println(return_json_string);
         return return_json_string;
     }
 
@@ -67,12 +69,12 @@ public class user_controller {
         String sendName = (String)jsonParam.get("sendName");
         String justMessage = (String)jsonParam.get("justMessage");
         String messageDate = (String)jsonParam.get("messageDate");
-        System.out.println(getName);
-        System.out.println(sendName);
-        System.out.println(justMessage);
-        System.out.println(messageDate);
+        //System.out.println(getName);
+        //System.out.println(sendName);
+        //System.out.println(justMessage);
+        //System.out.println(messageDate);
         String return_json_string = JSONObject.toJSONString(send_message._send_message(getName,sendName,justMessage,messageDate));
-        System.out.println("return:"+return_json_string);
+        //System.out.println("return:"+return_json_string);
         return return_json_string;
     }
 
@@ -80,9 +82,9 @@ public class user_controller {
     @ResponseBody
     public String user_get_message(@RequestBody JSONObject jsonParam) {
         String getname = (String)jsonParam.get("getName");
-        System.out.println(getname);
+        //System.out.println(getname);
         String return_json_string = JSONObject.toJSONString(get_message._get_message(getname));
-        System.out.println("return:"+return_json_string);
+        //System.out.println("return:"+return_json_string);
         return return_json_string;
     }
 
@@ -90,9 +92,9 @@ public class user_controller {
     @ResponseBody
     public String search_faq(@RequestBody JSONObject jsonParam) {
         String faqInfo = (String)jsonParam.get("faqInfo");
-        System.out.println(faqInfo);
+        //System.out.println(faqInfo);
         String return_json_string = JSONObject.toJSONString(search_faq._search_faq(faqInfo));
-        System.out.println("return:"+return_json_string);
+        //System.out.println("return:"+return_json_string);
         return return_json_string;
     }
 
@@ -100,9 +102,9 @@ public class user_controller {
     @ResponseBody
     public String show_update_info(@RequestBody JSONObject jsonParam) {
         String softwareName = (String)jsonParam.get("softwareName");
-        System.out.println(softwareName);
+        //System.out.println(softwareName);
         String return_json_string = JSONObject.toJSONString(show_update_info._show_update_info(softwareName));
-        System.out.println("return:"+return_json_string);
+        //System.out.println("return:"+return_json_string);
         return return_json_string;
     }
 
@@ -111,9 +113,9 @@ public class user_controller {
     public String show_stype_faq(@RequestBody JSONObject jsonParam){
         String faqType = (String)jsonParam.get("faqType");
         String faqInfo = (String)jsonParam.get("faqInfo");
-        System.out.println(faqType+"/"+faqInfo);
+        //System.out.println(faqType+"/"+faqInfo);
         String return_json_string = JSONObject.toJSONString(type_find_faq._type_find_faq(faqType,faqInfo));
-        System.out.println("return:"+return_json_string);
+        //System.out.println("return:"+return_json_string);
         return return_json_string;
     }
 

@@ -41,9 +41,6 @@ public interface serverMapper {
     @Select("select Max(id) from user_table")
     int getMaxId();
 
-//    @Insert("insert into server_table values(#{id},#{serverName},#{serverPassword},#{serverSoftware},#{serverState})")
-//    int addServer(int id, String serverName, String serverPassword, String serverSoftware, String serverState);
-
     @Insert("insert into server_table values(#{id},#{serverName},#{serverSoftware},#{serverState})")
     int addServer(int id, String serverName, String serverSoftware, String serverState);
 

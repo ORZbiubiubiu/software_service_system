@@ -22,9 +22,7 @@ public class messageController {
         int a ,b;
         a=jsonObject.getIntValue("pageNo");
         b=jsonObject.getIntValue("pageSize");
-
         List<ex> exList= messageService.Listex(a,b);
-
         return_data<ex> exreturn_data = new return_data<ex>();
         exreturn_data.setList(exList);
         exreturn_data.setMessage(String.valueOf(messageService.getNum()));
@@ -32,23 +30,5 @@ public class messageController {
         returnJson.setData(exreturn_data);
         return returnJson;
     }
-    /*@RequestMapping("/getExlist")
-    public return_json getex(){
-        List<ex> exList= messageService.Listex();
-        //System.out.println(exList);
-        return_data<ex> exreturn_data = new return_data<ex>();
-        exreturn_data.setList(exList);
-        return_json returnJson = new return_json();
-        returnJson.setData(exreturn_data);
-        return returnJson;
-    }*/
 
-    /*@RequestMapping("/deletemse")
-    public return_json deleteMessaage(@RequestBody JSONObject jsonObject){
-        int id = jsonObject.getIntValue("id");
-        return_data<message> deleteresoult = messageService.deleteAdmessage(id);
-        return_json deletereturnjson = new return_json();
-        deletereturnjson.setData(deleteresoult);
-        return deletereturnjson;
-    }*/
 }

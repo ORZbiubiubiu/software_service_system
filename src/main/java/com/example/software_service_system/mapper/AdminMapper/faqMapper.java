@@ -39,28 +39,15 @@ public interface faqMapper {
     int deleteFaq(int id);
 
 
-//    @Select(value = "select t.* from (select @rownum:=@rownum + 1 as rownum,e.*from (select @rownum:=0)r,faq_table e)t\n" +
-//            "            where rownum>#{page_s} \n" +
-//            "\t\t\t\tand rownum<=#{page_e} \n" +
-//            "\t\t\t\tand faqInfo like \n" +
-//            "\t\t\t\tconcat('%',#{faqInfo},'%') or faqName like concat('%',#{faqInfo},'%') or faqSoftware like concat('%',#{faqInfo},'%'）")
-//    @Results
-//            (value = {
-//                    @Result(id=true, column = "id", property = "id"),
-//                    @Result(property = "faqName",column = "faqName"),
-//                    @Result(property = "faqType",column = "faqType"),
-//                    @Result(property = "faqInfo",column = "faqInfo"),
-//                    @Result(property = "faqSoftware",column = "faqSoftware"),
-//                    @Result(property = "faqDate",column = "faqDate")
-//            })
-//    List<faq> searchfaq(@Param("faqInfo") String faqInfo,int page_s, int page_e);
 @Select(value ="select t.* from\n" +
         "(select @rownum:=@rownum + 1 as rownum,e.*from (select @rownum:=0)r,faq_table e)t\n" +
         "where rownum>#{page_s} \n" +
         "and rownum<=#{page_e} \n" +
         "and faqInfo like concat('%',#{faqInfo},'%') \n" +
         "or faqName like concat('%',#{faqInfo},'%') \n" +
-        "or faqSoftware like concat('%',#{faqInfo},'%')" )
+        "or faqSoftware like concat('%',#{faqInfo},'%')\n" +
+        "or faqType like concat('%',#{faqInfo},'%')\n" +
+        "or faqDescription like concat('%',#{faqInfo},'%')" )
 @Results
         (value = {
                 @Result(id=true, column = "id", property = "id"),
@@ -70,8 +57,7 @@ public interface faqMapper {
                 @Result(property = "faqSoftware",column = "faqSoftware"),
                 @Result(property = "faqDate",column = "faqDate")
         })
-List<faq> searchfaq(@Param("faqInfo") String faqInfo,int page_s, int page_e);
-
+List<faq> searchfaq(@Param("faqInfo") String faqInfo, int page_s, int page_e);
 
     @Select( "select count(*) from faq_table where faqInfo like concat('%',#{faqInfo},'%') or faqName like concat('%',#{faqInfo},'%') or faqSoftware like concat('%',#{faqInfo},'%')")
     int GetsearchNum(String faqInfo);

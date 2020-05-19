@@ -24,8 +24,6 @@ public interface messageMapper {
     List<message> findAdmessageList(int page_s, int page_e);
 
 
-
-
     @Delete("delete from message_table where id=#{id}")
     int deleteMessage(int id);
 

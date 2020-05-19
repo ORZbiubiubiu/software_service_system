@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface search_faq_mapper {
 
-    @Select(value = "select * from faq_table where faqInfo like concat('%',#{faqInfo},'%') or faqName like concat('%',#{faqInfo},'%') or faqSoftware like concat('%',#{faqInfo},'%')")
+    @Select(value = "select * from faq_table where faqInfo like concat('%',#{faqInfo},'%') or faqName like concat('%',#{faqInfo},'%') or faqSoftware like concat('%',#{faqInfo},'%') order by id desc")
     @Results
             (value = {
                     @Result(id=true, column = "id", property = "id"),

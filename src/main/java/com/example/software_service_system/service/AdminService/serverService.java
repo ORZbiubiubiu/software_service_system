@@ -4,6 +4,8 @@ import com.example.software_service_system.Entity.AdminEntity.return_data;
 import com.example.software_service_system.Entity.AdminEntity.server;
 import com.example.software_service_system.mapper.AdminMapper.serverMapper;
 import com.example.software_service_system.mapper.AdminMapper.userPowerMapper;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class serverService {
     @Autowired
@@ -53,6 +56,7 @@ public class serverService {
         return serverMapper.getNum();
     }
 
+    //修改售后服务状态
     public return_data<server> updateUser(String serverState,int id){
 
         return_data<server> result= new return_data<server>();
@@ -61,37 +65,21 @@ public class serverService {
             if (result!=null){
                 serverMapper.updateServer(serverState,id);
                 userPowerMapper.updateQUser(serverState,id);
-                //System.out.println(serverState+id);
+                String string = "Admin 修改维护人员"+id+" success 新状态为"+serverState;
+                log.info(string);
                 result.setMessage("维护人员权限修改成功！");
             }
             else {
+                String string = "Admin 修改维护人员"+id+" fail";
+                log.info(string);
                 result.setMessage("无此人员，无法提交修改");
             }
         }catch (Exception e){
+            log.error("Admin 修改维护人员 fail 数据库错误");
             result.setMessage(e.getMessage());
             e.printStackTrace();
         }
         return result;
     }
 
-    //修改售后服务人员的状态
-//    public return_data<server> updateUser(String serverState,int id){
-//
-//        return_data<server> result= new return_data<server>();
-//        try{
-//            server u1 = serverMapper.findserverbyId(id);
-//            if (result!=null){
-//                serverMapper.updateServer(serverState,id);
-//                System.out.println(serverState+id);
-//                result.setMessage("维护人员权限修改成功！");
-//            }
-//            else {
-//                result.setMessage("无此人员，无法提交修改");
-//            }
-//        }catch (Exception e){
-//            result.setMessage(e.getMessage());
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
 }

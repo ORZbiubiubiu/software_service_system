@@ -15,20 +15,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("admin")
 public class faqController {
-
     @Autowired
     faqService faqService;
 
     @RequestMapping("/getFaqList")
     public return_json queryFaqDbList(@RequestBody JSONObject jsonObject) throws ParseException {//返回faqlist
-        //System.out.println("来咯");
         List<Map<String,String>> faqList = faqService.queryFaqDbList(jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
-
         return_data<Map<String,String>> faqreturn_data = new return_data<Map<String,String>>();
-
         faqreturn_data.setList(faqList);
         faqreturn_data.setMessage(String.valueOf(faqService.getNum()));
-        System.out.println(faqList);
         return_json returnJson = new return_json();
         returnJson.setData(faqreturn_data);
         return returnJson;
@@ -41,10 +36,7 @@ public class faqController {
         // 设置新的faq id比当前的faq 最大id  大 1
         List<faq> list = faqService.queryAllFaqDbList();
         int id = list.get(list.size() -1).getId()+1;
-
         f.setId(id);
-
-
         return_data<faq> addresoult = faqService.addFaq(f);
         return_json addreturnjson = new return_json();
         addreturnjson.setData(addresoult);
@@ -73,51 +65,13 @@ public class faqController {
 
     @RequestMapping("/getsearchFaqList")
     public return_json searchFaqDbList(@RequestBody JSONObject jsonObject) throws ParseException {//返回faqlist
-        //System.out.println("来咯");
-        System.out.println("getseaarchFaqList");
-        System.out.println(jsonObject.getString("faqInfo")+ jsonObject.getIntValue("pageNo")+""+jsonObject.getIntValue("pageSize"));
-
         List<Map<String,String>> faqList = faqService.querysearchFaqDbList(jsonObject.getString("faqInfo"),jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
         return_data<Map<String,String>> faqreturn_data = new return_data<Map<String,String>>();
-
         faqreturn_data.setList(faqList);
         faqreturn_data.setMessage(String.valueOf(faqService.getsearchNum(jsonObject.getString("faqInfo"))));
-        System.out.println(faqList);
         return_json returnJson = new return_json();
         returnJson.setData(faqreturn_data);
         return returnJson;
     }
 
-
-   /* @RequestMapping("api/FAQmessage")
-    public return_json searchFaqList(@Param("jsonObject")@RequestBody JSONObject jsonObject){
-
-        System.out.println("来search了");
-        List<faq> searchfaqList = faqService.search(jsonObject.getString("faqName"));
-        System.out.println(jsonObject.getString("faqName"));
-        return_data<faq> faqreturn_data = new return_data<faq>();
-        faqreturn_data.setList(searchfaqList);
-        if (searchfaqList==null){
-            faqreturn_data.setMessage("未搜索到相关信息");
-        }
-        return_json returnJson = new return_json();
-        returnJson.setData(faqreturn_data);
-        return returnJson;
-    }
-    @RequestMapping("api/FAQmessage")
-    public return_json searchFaqList1(@RequestBody JSONObject jsonObject){
-
-        System.out.println("来search了");
-        List<faq> searchfaqList = faqService.search(jsonObject.getString("faqName"));
-        System.out.println(jsonObject.getString("faqName"));
-        System.out.println(searchfaqList);
-        return_data<faq> faqreturn_data = new return_data<faq>();
-        faqreturn_data.setList(searchfaqList);
-        if (searchfaqList==null){
-            faqreturn_data.setMessage("未搜索到相关信息");
-        }
-        return_json returnJson = new return_json();
-        returnJson.setData(faqreturn_data);
-        return returnJson;
-    }*/
 }

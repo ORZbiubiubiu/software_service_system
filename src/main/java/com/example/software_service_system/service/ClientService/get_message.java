@@ -20,7 +20,7 @@ public class get_message {
         return_data<get_message_List> myData = new return_data<get_message_List>();
         List<get_message_List> mylist = new ArrayList();   //这里注意，不然会报null错误
         mylist=get_message_mapper._get_message_mapper(getName);
-        System.out.println(mylist.toString());
+        //System.out.println(mylist.toString());
         myData.setMessage("success");
         myData.setList(mylist);
         myreturn.setCode(200);

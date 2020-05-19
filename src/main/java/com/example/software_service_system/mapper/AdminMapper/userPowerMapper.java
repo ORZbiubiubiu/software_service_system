@@ -29,8 +29,6 @@ public interface userPowerMapper {
     @Update("update user_table set userState=#{userState}  where id=#{id}" )
     int updateUser(String userState, int id);
 
-//    @Insert("insert into user_table values(#{id},#{userName},#{userPassword},#{userState})")
-//    int addUser(int id, String userName, String userPassword, String userState);
     @Insert("insert into user_table values(#{id},#{userName},#{userState})")
     int addUser(int id, String userName, String userState);
 
@@ -41,14 +39,9 @@ public interface userPowerMapper {
     int getMaxId();
 
 
-
     //权限分离体现功能
-//    @Insert("insert into user values(#{id},#{username},#{password})")
-//    int addQuser(int id, String username, String password);
-
-
     @Insert("insert into user values(#{id},#{username},#{password},#{userstate})")
-    int addQuser(int id, String username, String password,String userstate);
+    int addQuser(int id, String username, String password, String userstate);
 
 
 
@@ -67,15 +60,6 @@ public interface userPowerMapper {
     @Select("select count(*) from user")
     int getuserNUMs();
 
-
-//    @Update("update user set userState=#{userState}  where id=#{id}")
-//    int updateQUser(String userState, int id);
-
-
-//    @Update("update user set userState=#{userState}  where id=#{id}")
-//    int updateQUser(String userState, int id);
-@Update("update user set userstate=#{userState}  where id=#{id}")
-int updateQUser(String userState, int id);
-
-
+    @Update("update user set state=#{userState}  where id=#{id}")
+    int updateQUser(String userState, int id);
 }

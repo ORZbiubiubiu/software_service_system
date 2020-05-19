@@ -16,18 +16,6 @@ public class sofowareController {
     @Autowired
     softwareService softwareService;
 
-//    @RequestMapping("/GetSoftWareList")  // 软件表
-//    public return_json getPds(){
-//        return_data<software>  rs= new return_data<software>();
-//        List<software> list = softwareService.getSoftwares();
-//        rs.setList(list);
-//        rs.setMessage(String.valueOf(softwareService.getNum()));
-//        return_json returnJson = new return_json();
-//        returnJson.setData(rs);
-//        return returnJson;
-//    }
-
-
     @RequestMapping("/GetSoftWareList")  // 软件表
     public return_json getPds() throws ParseException {
         return_data<Map<String,String>>  rs= new return_data<Map<String,String>>();
@@ -54,17 +42,6 @@ public class sofowareController {
         returnJson.setData(rs);
         return returnJson;
     }
-    /*@RequestMapping("/getproducts")
-    public List<software>  getPds(){
-        System.out.println("来了producr");
-        return_data<software>  rs= new return_data<software>();
-        List<software> list = softwareService.getSoftwares();
-        System.out.println(list);
-        return list;
-        /*rs.setList(list);
-        return_json returnJson = new return_json();
-        returnJson.setData(rs);
-        return returnJson;*/
-    //}
+
 
 }
