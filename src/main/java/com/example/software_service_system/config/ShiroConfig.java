@@ -34,6 +34,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/js/**", "anon");
 
         filterChainDefinitionMap.put("/client/**","roles[client]");
+        filterChainDefinitionMap.put("/faq/**","roles[client]");
         filterChainDefinitionMap.put("/admin/**","roles[admin]");
         filterChainDefinitionMap.put("/server/**","roles[server]");
 //        filterChainDefinitionMap.put("/not_permit","authc");
