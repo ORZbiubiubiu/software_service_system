@@ -46,7 +46,7 @@ var validateReceiver = (rule, value, callback) => {
             }
         })
         if(!flag){
-            return callback(new Error("您只能给您的产品维护人员发信息"))
+            return callback(new Error("您只能给您维护的客户发信息"))
         }
       };
 

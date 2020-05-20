@@ -141,7 +141,7 @@ const server_func = new Vue({
             softwareName:[
                 {validator:validateSoftwareName,trigger: 'blur'}
             ],
-            description:[
+            desc:[
                 {validator:validateDescription,trigger:'blur'}
             ]
          },
@@ -223,15 +223,9 @@ const server_func = new Vue({
         viewDetail(sname){
             this.getService();
             this.index = 1;
-            //获取不到table
-            let table = this.$refs.serviceTable;
-            console.log(this.$refs.serviceTable);
-            this.serviceData.slice((this.currentPage-1)*this.pagesize,this.currentPage*this.pagesize).map((item) => {
-              if ( sname == item.softwareName) {
-                table.toggleRowExpansion(item, true);
-              }
-            });
+            detail(sname);
         },
+
         apply(sname){
             this.index = 2;
             this.form.softwareName = sname;
