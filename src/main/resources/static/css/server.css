@@ -22,8 +22,9 @@
 }
 
 #server-cards{
-    margin:50px;
+    margin:100px;
     position:relative;
+    min-height:800px;
 }
 
 .box-card{

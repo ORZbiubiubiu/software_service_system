@@ -48,7 +48,6 @@
                             <span slot="title">{{item.fncname}}</span>
                         </el-menu-item>
                     </el-menu>
-
                 </el-col>
             </div>
         </div>
@@ -81,7 +80,7 @@
                             <el-pagination
                                     background
                                     layout="prev, pager, next,jumper"
-                                    @current-change="handleCurrentChange"
+                                    @current-change="purchasedHandleCurrentChange"
                                     :current-page="currentPage"
                                     :page-size="pagesize"
                                     :total="orderData.length">
@@ -109,7 +108,7 @@
                     </el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button type="text" size="medium" @click="toogleExpand(scope.row)">{{scope.row.expansion ? '收起' : '查看详情'}}</el-button>
+                            <el-button type="text" size="medium" @click="toggleExpand(scope.row)">{{scope.row.expansion ? '收起' : '查看详情'}}</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column type="expand" width="1">
@@ -140,7 +139,7 @@
                     <el-pagination
                             background
                             layout="prev, pager, next,jumper"
-                            @current-change="handleCurrentChange"
+                            @current-change="serviceHandleCurrentChange"
                             :current-page="currentPage"
                             :page-size="pagesize"
                             :total="serviceData.length">
@@ -173,7 +172,7 @@
                                 <el-option label="登录异常" value="登录异常"></el-option>
                                 <el-option label="界面无法正常显示" value="界面无法正常显示"></el-option>
                                 <el-option label="界面信息显示有误" value="界面信息显示有误"></el-option>
-                                <el-option label="其它" value="其它"></el-option>
+                                <el-option label="其他" value="其他"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="问题描述" prop="desc">
@@ -235,7 +234,7 @@
                     <el-pagination
                             background
                             layout="prev, pager, next,jumper"
-                            @current-change="handleCurrentChange"
+                            @current-change="msgHandleCurrentChange"
                             :current-page="currentPage"
                             :page-size="pagesize"
                             :total="receiveMsg.length">
@@ -249,7 +248,7 @@
                 <div id="collapse">
                     <div class="nodata h-center" v-if="orderData.length == 0">暂无数据</div>
                     <el-collapse v-if="orderData.length != 0"  v-model="activeName"  @change="handleChange" accordion>
-                        <el-collapse-item  v-for="(item,index) in orderData.slice((currentPage-1)*pagesize,currentPage*pagesize)" :name="item.softwareName">
+                        <el-collapse-item  v-for="(item,index) in orderData.slice((currentPage-1)*3,currentPage*3)" :name="item.softwareName">
                             <template slot="title">
                                 {{item.softwareName}}
                             </template>
@@ -268,7 +267,7 @@
                         <el-pagination
                                 background
                                 layout="prev, pager, next,jumper"
-                                @current-change="handleCurrentChange"
+                                @current-change="updateHandleCurrentChange"
                                 :current-page="currentPage"
                                 :page-size="3"
                                 :total="orderData.length">
@@ -279,7 +278,6 @@
         </div>
     </div>
     <div class="footer">
-
             <span class="details"><a href="">咨询电话:8888-8888</a></span>
             <span class="details"><a href="">技术说明</a></span>
             <pspan class="details"><a href="">帮助中心</a></pspan>

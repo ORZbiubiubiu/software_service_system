@@ -67,6 +67,9 @@ var validateMessage = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('内容不能为空'));
         }
+        if(value.length > 50){
+          return callback(new Error('内容长度不能大于50'));
+        }
       };
 
 
@@ -88,6 +91,9 @@ var validateSoftwareName = (rule, value, callback) => {
 var validateDescription = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('问题描述不能为空'));
+        }
+        if(value.length > 50){
+            return callback(new Error('内容长度不能大于50'));
         }
       };
 
@@ -205,7 +211,7 @@ const server_func = new Vue({
                     console.log(error);
                 });
         },
-        toogleExpand(row) {
+        toggleExpand(row) {
            let table = this.$refs.serviceTable;
            console.log(this.$refs.serviceTable);
            this.serviceData.slice((this.currentPage-1)*this.pagesize,this.currentPage*this.pagesize).map((item) => {
@@ -425,7 +431,7 @@ const server_func = new Vue({
 
                   console.log(key, keyPath);
                   key = Number(key);
-
+                  this.currentPage=1;
                   this.index = key;
                   if (key == 0) {
                     this.getOrder();
@@ -440,9 +446,17 @@ const server_func = new Vue({
                     this.getMsg();
                   }
                },
-        handleCurrentChange: function(currentPage){
-                        this.currentPage = currentPage;
-                        console.log(this.currentPage)  //点击第几页
+        purchasedHandleCurrentChange: function(currentPage){
+               this.currentPage = currentPage;
                 },
+        serviceHandleCurrentChange: function(currentPage){
+               this.currentPage = currentPage;
+        },
+        msgHandleCurrentChange: function(currentPage){
+               this.currentPage = currentPage;
+        },
+        updateHandleCurrentChange: function(currentPage){
+               this.currentPage = currentPage;
+        },
     }
 })

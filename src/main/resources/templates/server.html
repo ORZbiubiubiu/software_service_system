@@ -47,7 +47,7 @@
         <div id="functions_area">
                     <div id="server-cards" v-if="flag == 0">
                         <div class="nodata" v-if="serviceItems.length == 0 ">暂无售后服务</div>
-                        <el-card class="box-card" v-for="item in serviceItems.slice((currentPage-1)*pagesize,currentPage*pagesize)" >
+                        <el-card class="box-card" v-for="item in serviceItems.slice((currentPage-1)*3,currentPage*3)" >
                             <el-row :gutter="20">
                                 <el-col :span="3">软件名称:</el-col>
                                 <el-col :span="5">{{item.softwareName}}</el-col>
@@ -74,7 +74,7 @@
                             <el-pagination
                                     background
                                     layout="prev, pager, next,jumper"
-                                    @current-change="handleCurrentChange"
+                                    @current-change="serviceHandleCurrentChange"
                                     :current-page="currentPage"
                                     :page-size="3"
                                     :total="serviceItems.length">
@@ -110,7 +110,7 @@
                             <el-pagination
                                     background
                                     layout="prev, pager, next,jumper"
-                                    @current-change="handleCurrentChange"
+                                    @current-change="msgHandleCurrentChange"
                                     :current-page="currentPage"
                                     :page-size="pagesize"
                                     :total="msgItems.length">
@@ -145,7 +145,7 @@
                         <el-pagination
                                 background
                                 layout="prev, pager, next,jumper"
-                                @current-change="handleCurrentChange"
+                                @current-change="serviceManageHandleCurrentChange"
                                 :current-page="currentPage"
                                 :page-size="pagesize"
                                 :total="serviceItems.length">

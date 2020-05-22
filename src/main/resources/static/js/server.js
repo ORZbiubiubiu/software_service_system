@@ -54,6 +54,9 @@ var validateMessage = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('内容不能为空'));
         }
+        if(value.length > 50){
+          return callback(new Error('内容长度不能大于50'));
+        }
       };
 
 const server_func = new Vue({
@@ -218,6 +221,7 @@ const server_func = new Vue({
                                                            type: 'success',
                                                            message: '修改成功!'
                                                      });
+                                                     this.getService();
                                                  }else{
                                                     this.$message({
                                                            type: 'error',
@@ -255,6 +259,7 @@ const server_func = new Vue({
                                     type: 'success',
                                     message: '申请成功,请等待管理员审核!'
                                 });
+                                this.getService();
                             }else{
                                   this.$message({
                                     type: 'error',
@@ -299,7 +304,7 @@ const server_func = new Vue({
 
                   console.log(key, keyPath);
                   key = Number(key);
-
+                  this.currentPage=1;
                   this.flag = key;
                   if (key == 1) {
                     this.getMsg();
@@ -307,11 +312,16 @@ const server_func = new Vue({
                   if (key == 0) {
                     this.getService();
                   }
-               },
+        },
 
-        handleCurrentChange: function(currentPage){
-                        this.currentPage = currentPage;
-                        console.log(this.currentPage)  //点击第几页
-                },
+        serviceHandleCurrentChange: function(currentPage){
+             this.currentPage = currentPage;
+        },
+        msgHandleCurrentChange: function(currentPage){
+             this.currentPage = currentPage;
+        },
+        serviceManageHandleCurrentChange: function(currentPage){
+             this.currentPage = currentPage;
+        },
     }
 })
