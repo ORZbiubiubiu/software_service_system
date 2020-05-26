@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view name="headr"></router-view>
+    <router-view name="header"></router-view>
   
   
   <router-view></router-view>
@@ -23,6 +23,37 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+}
+.el-menu {
+      border-right: 0;
+    }
+
+.el-menu-item {
+      text-align: left;
+    }
+
+.v-center{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.h-center{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.clearfix{
+    *zoom: 1;
+}
+
+.clearfix::after{
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
 }
 </style>

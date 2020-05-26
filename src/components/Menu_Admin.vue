@@ -4,7 +4,7 @@
   <div class="hello">
     
      <myheader>
-         </myheader>
+     </myheader>
      <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen"
                     @close="handleClose" background-color="#88cccc" text-color="#666" active-text-color="#ffd04b"
                     id="el_funcmenu" style="border: 0; width:300px">
@@ -12,9 +12,7 @@
                         <i class="el-icon-setting"></i>
                         <span slot="title">{{item.fncname}}</span>
                     </el-menu-item>
-
-
-        </el-menu>
+    </el-menu>
         <router-view></router-view>
          
   </div>
@@ -23,11 +21,8 @@
 <script>
  import  myheader  from "./Header";
 export default {
-   
- 
-     components: {
-    myheader} ,
-     
+
+     components: {myheader} ,
     data:() =>{
         return {
             id:"",

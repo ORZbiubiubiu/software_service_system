@@ -6,8 +6,8 @@ import login from "../components/login.vue"
 import Menu_Admin from "../components/Menu_Admin.vue"
 import ServiceTable from "../components/ServiceTable.vue"
 import Server from '../components/Server.vue'
-import Client from '../components/Client.vue'
-import myheader from '../components/Header.vue'
+import Client from '../components/client/Client.vue'
+import Purchased from "../components/client/Purchased.vue";
 const routes = [
     {
         path: '/server',
@@ -24,9 +24,13 @@ const routes = [
         meta: {
                  title: "客户"
              },
+        name:"client",
         component: Client,
          children:[
-
+            {
+                path:"purchased",
+                component:Purchased
+            }
          ]
     },
     {
@@ -62,29 +66,20 @@ const routes = [
            }
          ]
 
-    } , {
-    path: '',  //默认值
-   
-    redirect: '/login',
+    } , 
+    {
+        path: '',  //默认值
+        redirect: '/login',
+    }, 
+    {
+        path: '/login', //默认值
+        meta: {
+            title: "登录"
+        },
+        component: login,
+    }  
+]
 
-}, {
-    path: '/login', //默认值
-    meta: {
-        title: "登录"
-    },
-    component: login,
-
-}, {
-    path: '/header', 
-    meta: {
-        title: "头部"
-    },
-    component: myheader,
-    beforeRouteEnter:(t,f,n)=>{
-        console.log("头部")
-    }
-
-}]
 const router = new VueRouter({
     routes, // (缩写) 相当于 routes: routes
     mode:"history"
