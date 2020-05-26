@@ -34,6 +34,19 @@ const routes = [
         meta:{
             title:"管理员"
         },
+        name: "Admin",
+         beforeEnter: (to, from, next) => {
+            // to.component.id = to.params.name;
+
+            // console.log(to.component)
+             // ...
+             console.log(to.params.name + "beforeEnter");
+            next();
+
+         },
+         afterEach: (to, from) =>{
+
+         } ,
         component: Menu_Admin,
          children:[
            {
@@ -41,6 +54,7 @@ const routes = [
                  meta: {
                      title: "管理员"
                  },
+                 
                 component: ServiceTable
            }, {
                path: '',
@@ -72,7 +86,7 @@ const routes = [
 
 }]
 const router = new VueRouter({
-    routes ,// (缩写) 相当于 routes: routes
+    routes, // (缩写) 相当于 routes: routes
     mode:"history"
 })
 router.beforeEach((to, from, next) => {
@@ -85,4 +99,5 @@ router.beforeEach((to, from, next) => {
     
     next();
 })
+
 export default router

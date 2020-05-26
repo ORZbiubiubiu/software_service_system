@@ -2,11 +2,12 @@
 <template>
 
   <div class="hello">
+    
      <myheader>
          </myheader>
      <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen"
                     @close="handleClose" background-color="#88cccc" text-color="#666" active-text-color="#ffd04b"
-                    id="el_funcmenu" style="border: 0;">
+                    id="el_funcmenu" style="border: 0; width:300px">
                     <el-menu-item v-bind:index="item.index" :key="item.fncname" v-for="item in funcs">
                         <i class="el-icon-setting"></i>
                         <span slot="title">{{item.fncname}}</span>
@@ -14,7 +15,8 @@
 
 
         </el-menu>
-        <router-view>13213211231</router-view>
+        <router-view></router-view>
+         
   </div>
 </template>
 
@@ -28,6 +30,7 @@ export default {
      
     data:() =>{
         return {
+            id:"",
             funcs: [{
                         fncname: "售后服务异常处理",
                         index: "0"
@@ -63,9 +66,9 @@ export default {
 methods: {
     handleSelect(key, keyPath) {
  
-     /*    //this.$router.push('./bar').catch(err=>{
+          this.$router.push('/admin/ServiceTable').catch(err=>{
 
-        }) */
+        })  
 
          
         //menuSelect(Number(key));

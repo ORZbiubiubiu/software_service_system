@@ -8,7 +8,7 @@
             <div id="userHead">
 
                 <div class="el-icon-s-custom" id="head_icon"></div>
-                <div id="userName">{{username}}</div>
+                <div id="userName"> {{this.$route.params.name}}</div>
                 <span id="logout">退出</span>
 
  
@@ -27,15 +27,10 @@ export default {
     } ,
   name: 'myheader',
   mounted:()=>{
-         console.log( "mounted ");
-        
-      this.username= this.$router.query.name;
-      console.log( this.$router.query.name+"mounted ");
+         
   },
   beforeUpdate:()=>{
- console.log( "beforeUpdate ");
-  this.username=sessionStorage.getItem("name");
-      console.log(sessionStorage.getItem("name")+"beforeUpdate");
+    
   },
 
 methods: {
