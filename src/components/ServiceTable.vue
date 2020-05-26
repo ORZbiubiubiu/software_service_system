@@ -136,22 +136,49 @@ export default {
     },
     methods: {
             handleCurrentChange:function (index) {  
+                 service_error_page_getdata(this.current_page);
                 //
             },  
             solution(serviceId, serviceState, Applicant, Application_reason, solution, mesid) {
-               
-            //console.log(serviceId+serviceState+Applicants+Application_reason+solution)
+           //console.log(serviceId+serviceState+Applicants+Application_reason+solution)
                 if (solution == "") {
-                    alert("请选择解决方式！");
+                    this.$message({
+                        message: '请选择解决方式！',
+                        type: 'warning'
+                    });
+                      
                 } else {
-                this.msgid = mesid;
-                this.serviceId=serviceId;
-                this.Applicant=Applicant;
-                this.Application_reason=Application_reason;
-                this.serviceState=serviceState;
-                this.dia_title=solution;
+                    this.msgid = mesid;
+                    this.serviceId=serviceId;
+                    this.Applicant=Applicant;
+                    this.Application_reason=Application_reason;
+                    this.serviceState=serviceState;
+                    this.dia_title=solution;
                 //获取更换人员名单
-                this.$axios.post("/admin/getReplaceName",).then(res=>{
+                var data={
+                        serverName: Applicant
+                    }
+                this.$axios.post("/admin/getReplaceName",data,{
+                    headers:{
+                        'token':this.$route.params.token
+                    }}).then(res=>{
+                        var list = res.data.list;
+                         this.serverlist = [];
+                            for (let index = 0; index < list.length; index++) {
+                                const element = list[index];
+                               
+                                this.serverlist.push({
+                                  name:element
+                                })
+                                
+                            }
+                            if ( list.length==0) {
+                                this.change_name="";
+                                this.$message({
+                                    message: '没有可更换人员!',
+                                    type: 'warning'
+                                });
+                            }
                     
                 })
 
@@ -162,47 +189,89 @@ export default {
 
             },
              commit: function () {
-
-                var tmp = JSON.stringify({
+                    if (this.change_name=="") {
+                         this.$message({
+                                    message: '没有可更换人员!',
+                                    type: 'warning'
+                                });
+                    }
+                var tmp =  {
                     msgid: this.msgid,
                     serverName: this.change_name,
                     serviceid: this.serviceId
-                });
-               /*  $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    url: "/admin/huanren",
-                    headers: {
-                        "token": sessionStorage.getItem("token")
-                    },
-                    data: tmp,
-                    success: function (response) {
-
-
-                        if (response.data.message == "更新成功") {
+                } ;
+                 this.$axios.post("/admin/huanren",tmp,{
+                    headers:{
+                        'token':this.$route.params.token
+                    }}).then(res=>{
+                        if (res.data.message == "更新成功") {
                             this.$message({
-                                message: "更换售后服务人员" +  change_name + "成功!",
+                                message: "更换售后服务人员" +  this.change_name + "成功!",
                                 type: 'success'
                             });
                             
 
                         } else {
-                            this.$message.error("更换售后服务人员" +  change_name + "失败!");
+                            this.$message.error("更换售后服务人员" +  this.change_name + "失败!");
 
                         }
+                       
                         
-                        //service_error_page_getdata(service_page_vm.current_page);
-                    }
-                }); */
+                        service_error_page_getdata(this.current_page);
+                    
+                })
+                 this.dialogFormVisible = false;
+               
 
 
-                this.dialogFormVisible = false;
+                
 
             }
 
         }
 }
+
+
+
+function service_error_page_getdata(i) { // //根据页数获取售后服务人员信息
+        //参数i ：用户点击下方分页器的页数
+        //从服务器获取数据
+        var data_temp = {
+            pageNo: i,
+            pageSize: this.page_size
+        }; this.current_page = i;
+        //console.log(data_temp)
+        this.$axios.post("/admin/ServiceInfList",data_temp,{
+                    headers:{
+                        'token':this.$route.params.token
+                    }}).then(res=>{
+                           var list = res.data.list;
+                            var total = res.message;
+                            this.total = total;
+                           
+                            this.tableData = [];
+                
+                for (var index = 0; index < list.length; index++) {
+                    var element = list[index];
+                            this.tableData.push({
+                                 mesid: element.mesid,
+                                "serviceId": element.serviceid,
+                                "serviceState": "element.serviceState",
+                                "Applicants": element.getName,
+                                "Application_reason": element.reason
+                            });
+                    
+                    console.log(this.tableData[index])
+
+                }
+                       
+                        
+                        
+                    
+                })
+        
+
+    }
 </script>
 <style scoped>
  .function{
