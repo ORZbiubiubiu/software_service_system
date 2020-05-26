@@ -5,9 +5,9 @@
     
      <myheader>
          </myheader>
-     <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen"
+     <el-menu   default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen"
                     @close="handleClose" background-color="#88cccc" text-color="#666" active-text-color="#ffd04b"
-                    id="el_funcmenu" style="border: 0; width:300px">
+                    id="el_funcmenu" style="">
                     <el-menu-item v-bind:index="item.index" :key="item.fncname" v-for="item in funcs">
                         <i class="el-icon-setting"></i>
                         <span slot="title">{{item.fncname}}</span>
@@ -90,5 +90,9 @@ methods: {
 
  
 <style scoped>
- 
+ #el_funcmenu{
+     display: block;
+     border: 0;
+      width:300px;
+ }
 </style>
