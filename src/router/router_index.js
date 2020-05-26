@@ -33,14 +33,10 @@ const routes = [
         path: '/admin',
         meta:{
             title:"管理员"
-        },
-        name: "Admin",
+        } ,
+        //name: "Admin",
          beforeEnter: (to, from, next) => {
-            // to.component.id = to.params.name;
-
-            // console.log(to.component)
-             // ...
-             console.log(to.params.name + "beforeEnter");
+            
             next();
 
          },
@@ -51,6 +47,7 @@ const routes = [
          children:[
            {
                 path: 'ServiceTable',
+                name: "ServiceTable",
                  meta: {
                      title: "管理员"
                  },

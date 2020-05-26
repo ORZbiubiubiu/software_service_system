@@ -8,8 +8,8 @@
             <div id="userHead">
 
                 <div class="el-icon-s-custom" id="head_icon"></div>
-                <div id="userName"> {{this.$route.params.name}}</div>
-                <span id="logout">退出</span>
+                <div id="userName"  > {{username}}</div>
+                <span id="logout" @click="logout">退出</span>
 
  
             </div>
@@ -18,26 +18,59 @@
 
 <script>
  
-export default {
-    data:() =>{
-        return {
-             username:""
-        }
+    
+    export default {
+        data:() =>{
+            return {
+                username:"1" 
+            }
+            
+        } ,
+    name: 'myheader',
+    mounted:function (){
+        console.log("mounted -h")
         
+             this.username=this.$route.params.name;
     } ,
-  name: 'myheader',
-  mounted:()=>{
-         
-  },
-  beforeUpdate:()=>{
-    
-  },
 
-methods: {
+    methods: {
+        
+
+        logout: function () {
+            console.log(this.$route.params.name+"logout");
+                this.$axios.get('http://rap2api.taobao.org/app/mock/23080/resources/search',{
+                    params: {
+                        id: 5
+                    }
+                })
+                .then(res => {
+                    console.log('数据是:', res);
+                })
+                .catch((e) => {
+                    console.log('获取数据失败');
+                });
+             this.$router.replace('/login').catch(err=>{
+
+        })  
+         /*    type: "GET", */
+            // contentType: "application/json; charset=utf-8",
+            // dataType: "json",
+           /*  url: "/logout",
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }, */
+            // data: JSON.stringify({
+            //     username:name
+            // }),
+          /*   success: function (response) {
+                location.href = "login"
+            }
+        }); */
+          }
+        
+    }
     
-}
-  
-}
+    }
 </script>
 
  
@@ -47,7 +80,7 @@ methods: {
   width: 100%;
     height: 83px;
     position: relative;
-    top:   -50px;
+    top:   0px;
     background-color: rgba(39, 110, 81, 1);
  }
  #title{
@@ -60,6 +93,7 @@ methods: {
     float: right;
     
     margin-top:  30px;
+     margin-right: 50px;
     height: 60px;
     color: #fff;
 }
@@ -77,4 +111,6 @@ methods: {
     color: #ffd04b;
     cursor: pointer;
 }
+
+
 </style>
