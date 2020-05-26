@@ -56,24 +56,24 @@ export default {
 
     ,
   name: 'Menu_Admin',
-        mounted:()=>{
-             console.log( "Menu_Admin");
-            
-        },
+    mounted:()=>{
+            console.log( "Menu_Admin");
+        
+    },
 methods: {
     handleSelect(key, keyPath) {
  
-        this.$router.push('./bar').catch(err=>{
+     /*    //this.$router.push('./bar').catch(err=>{
 
-        })
+        }) */
 
          
         //menuSelect(Number(key));
     },
     handleOpen(key, keyPath) {
-          this.$router.push('./bar').catch(err=>{
+     /*      this.$router.push('./bar').catch(err=>{
 
-        })
+        }) */
 
         //menuSelect(Number(key));
     },

@@ -61,7 +61,7 @@ const routes = [
     component: login,
 
 }, {
-    path: '/header', //默认值
+    path: '/header', 
     meta: {
         title: "头部"
     },
