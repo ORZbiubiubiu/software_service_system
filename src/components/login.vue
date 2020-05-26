@@ -3,13 +3,13 @@
   <div  >
     
    <el-form     label-width="80px" id="loginform">
-            <el-form-item label="用户名">
+            <el-form-item label="">
                 <el-input v-model="userName" placeholder="请输入用户名" maxlength="18"></el-input>
             </el-form-item>
-            <el-form-item label="用户密码">
+            <el-form-item label="">
                 <el-input v-model="passWord" show-password placeholder="请输入密码" maxlength="18"></el-input>
             </el-form-item>
-            <el-form-item label="用户类型">
+            <el-form-item label="">
                 <el-select v-model="Character" placeholder="请选择用户登录类型" clearable>
                     <el-option v-for="item in type" :key="item.key" :label="item.key" :value="item.key">
                     </el-option>
@@ -128,8 +128,14 @@ export default {
                             console.log( sessionStorage.getItem("name"))
                             
                             sessionStorage.setItem("token", "session");
+<<<<<<< HEAD
                             sessionStorage.setItem("role", "Client");
                             this.$router.push(  {name:'client',params:{name:this.userName}})
+=======
+                            sessionStorage.setItem("role", "admin");
+                            this.$router.push("/client");
+                           // this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
+>>>>>>> b66817e1920a2d4363a2cfaaca23a9504e197861
                            
                          
                              //this.$router.push('/admin') 
@@ -204,5 +210,6 @@ export default {
     top:200px;
     width: 500px;
     left: 35%;
+    color:#fff;
 }
 </style>

@@ -1,20 +1,27 @@
 
 <template>
 
-  <div class="hello">
+<div>
+  <myheader>
+  </myheader>
+  <div class="">
     
-     <myheader>
-     </myheader>
-     <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen"
-                    @close="handleClose" background-color="#88cccc" text-color="#666" active-text-color="#ffd04b"
-                    id="el_funcmenu" style="border: 0; width:300px">
-                    <el-menu-item v-bind:index="item.index" :key="item.fncname" v-for="item in funcs">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">{{item.fncname}}</span>
-                    </el-menu-item>
-    </el-menu>
+            
+     <el-menu   default-active="0" class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen"
+                    @close="handleClose" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b"
+                    id="el_funcmenu" style="">
+                    <p></p>
+            <el-menu-item v-bind:index="item.index" :key="item.fncname" v-for="item in funcs">
+                <i class="el-icon-setting"></i>
+                <span slot="title">{{item.fncname}}</span>
+            </el-menu-item>
+
+
+        </el-menu>
+        
         <router-view></router-view>
          
+  </div>
   </div>
 </template>
 
@@ -25,7 +32,7 @@ export default {
      components: {myheader} ,
     data:() =>{
         return {
-            id:"",
+            
             funcs: [{
                         fncname: "售后服务异常处理",
                         index: "0"
@@ -54,14 +61,15 @@ export default {
 
     ,
   name: 'Menu_Admin',
-    mounted:()=>{
+    mounted:function () {
             console.log( "Menu_Admin");
         
     },
 methods: {
     handleSelect(key, keyPath) {
  
-          this.$router.push('/admin/ServiceTable').catch(err=>{
+            //this.$router.push(  {name:'Admin',params:{name:this.userName}})
+          this.$router.push({path:'/admin/ServiceTable' }).catch(err=>{
 
         })  
 
@@ -85,5 +93,11 @@ methods: {
 
  
 <style scoped>
- 
+ #el_funcmenu{
+     display: block;
+     border: 0;
+      width:300px;
+      top:0px;
+      border-right: 1px solid #ffffff;
+       }
 </style>
