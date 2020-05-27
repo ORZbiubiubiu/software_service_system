@@ -114,12 +114,14 @@ export default {
                             var pwd = this.passWord;
                             // pwd = hex_md5(pwd);
                             // pwd = hex_md5(pwd);
-                            console.log("51654664545");
-                            var tmp = JSON.stringify({
-                                "name": this.userName,
-                                "pwd": pwd,
 
-                            });
+                            // xss 处理
+                              this.userName=this.$xss( this.userName)
+                            var tmp = {
+                                "name": this.userName,
+                                "pwd":this.$xss( pwd),
+
+                            };
 
 
                             // 假设登录成功 用户为管理员
@@ -127,10 +129,11 @@ export default {
                             sessionStorage.setItem("name", this.userName);
                             console.log( sessionStorage.getItem("name"))
                             
-                            sessionStorage.setItem("token", "session");
+                            sessionStorage.setItem("token", "session123");
                             sessionStorage.setItem("role", "admin");
                             //this.$router.push("/client");
-                             this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
+                           
+                            this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
                            
                          
                              //this.$router.push('/admin') 

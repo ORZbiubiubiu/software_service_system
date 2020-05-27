@@ -72,9 +72,16 @@ methods: {
     handleSelect(key, keyPath) {
  
             //this.$router.push(  {name:'Admin',params:{name:this.userName}})
-          this.$router.push({path:'/admin/ServiceTable' }).catch(err=>{
+        
+        if (key=="0") {
+                this.$router.push({path:'/admin/ServiceTable' }).catch(err=>{
 
-        })  
+            })  
+        }else if (key=="1") {
+                 this.$router.push({path:'/admin/AccssTable' }).catch(err=>{
+
+            })  
+        }
 
          
         //menuSelect(Number(key));

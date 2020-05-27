@@ -90,6 +90,13 @@ export default {
   props: {
     msg: String
   } ,
+   mounted:function () {
+                console.log("ST mounted")  
+    } ,
+    created:function () {
+                console.log("ST mounted") ;
+                service_error_page_getdata(1,this);
+    } ,
     data:function () {  
 
       return {
@@ -135,13 +142,20 @@ export default {
             }
     },
     methods: {
+      
             handleCurrentChange:function (index) {  
-                 service_error_page_getdata(this.current_page);
+                 let that = this;
+                  console.log("handleCurrentChange");
+                
+                 this.current_page=index;
+                  
+                 service_error_page_getdata(this.current_page,that);
                 //
             },  
             solution(serviceId, serviceState, Applicant, Application_reason, solution, mesid) {
            //console.log(serviceId+serviceState+Applicants+Application_reason+solution)
-                if (solution == "") {
+                 console.log("solution");
+               if (solution == "") {
                     this.$message({
                         message: '请选择解决方式！',
                         type: 'warning'
@@ -160,7 +174,7 @@ export default {
                     }
                 this.$axios.post("/admin/getReplaceName",data,{
                     headers:{
-                        'token':this.$route.params.token
+                        'token':sessionStorage.getItem("token")
                     }}).then(res=>{
                         var list = res.data.list;
                          this.serverlist = [];
@@ -178,6 +192,8 @@ export default {
                                     message: '没有可更换人员!',
                                     type: 'warning'
                                 });
+                                 
+                              
                             }
                     
                 })
@@ -189,7 +205,9 @@ export default {
 
             },
              commit: function () {
-                    if (this.change_name=="") {
+                 console.log("commit");
+                 
+                    if (this.serverlist.length=="") {
                          this.$message({
                                     message: '没有可更换人员!',
                                     type: 'warning'
@@ -202,7 +220,7 @@ export default {
                 } ;
                  this.$axios.post("/admin/huanren",tmp,{
                     headers:{
-                        'token':this.$route.params.token
+                        'token':sessionStorage.getItem("token")
                     }}).then(res=>{
                         if (res.data.message == "更新成功") {
                             this.$message({
@@ -217,7 +235,7 @@ export default {
                         }
                        
                         
-                        service_error_page_getdata(this.current_page);
+                        service_error_page_getdata(this.current_page,this);
                     
                 })
                  this.dialogFormVisible = false;
@@ -233,37 +251,40 @@ export default {
 
 
 
-function service_error_page_getdata(i) { // //根据页数获取售后服务人员信息
+function service_error_page_getdata(i,that) { // //根据页数获取售后服务人员信息
         //参数i ：用户点击下方分页器的页数
         //从服务器获取数据
+        console.log(" service_error_page_getdata");
         var data_temp = {
             pageNo: i,
-            pageSize: this.page_size
-        }; this.current_page = i;
+            pageSize: that.page_size
+        }; 
+       // that.current_page = i;
         //console.log(data_temp)
-        this.$axios.post("/admin/ServiceInfList",data_temp,{
+       console.log(sessionStorage.getItem("token"))
+        that.$axios.post("/admin/ServiceInfList",data_temp,{
                     headers:{
-                        'token':this.$route.params.token
+                        'token':sessionStorage.getItem("token")
                     }}).then(res=>{
                            var list = res.data.list;
                             var total = res.message;
-                            this.total = total;
+                            that.total = total;
                            
-                            this.tableData = [];
-                
-                for (var index = 0; index < list.length; index++) {
-                    var element = list[index];
-                            this.tableData.push({
-                                 mesid: element.mesid,
-                                "serviceId": element.serviceid,
-                                "serviceState": "element.serviceState",
-                                "Applicants": element.getName,
-                                "Application_reason": element.reason
-                            });
-                    
-                    console.log(this.tableData[index])
+                            that.tableData = [];
+                           
+                    for (var index = 0; index < list.length; index++) {
+                        var element = list[index];
+                                that.tableData.push({
+                                    mesid: element.mesid,
+                                    "serviceId": element.serviceid,
+                                    "serviceState": "element.serviceState",
+                                    "Applicants": element.getName,
+                                    "Application_reason": element.reason
+                                });
+                        
+                        console.log(that.tableData[index])
 
-                }
+                    }
                        
                         
                         
@@ -276,13 +297,14 @@ function service_error_page_getdata(i) { // //根据页数获取售后服务人�
 <style scoped>
  .function{
 
-     position: absolute;
-     top: 130px;
+     position: relative;
+     top: -260px;
      left: 600px;
+     width: 900px;
      
  }
  #service_page{
      position: relative;
-     left: 37%;
+      left: 350px;
  }
 </style>

@@ -31,6 +31,9 @@
         console.log("mounted -h")
         
              this.username=this.$route.params.name;
+             console.log(this.$route.params.token);
+            
+                console.log(   sessionStorage.getItem("role"));
     } ,
 
     methods: {

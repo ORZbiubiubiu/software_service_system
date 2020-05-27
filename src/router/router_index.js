@@ -8,6 +8,7 @@ import ServiceTable from "../components/ServiceTable.vue"
 import Server from '../components/Server.vue'
 import Client from '../components/Client.vue'
 import myheader from '../components/Header.vue'
+import   AccssTable  from "../components/AccssTable.vue";
 const routes = [
     {
         path: '/server',
@@ -54,6 +55,14 @@ const routes = [
                  
                 component: ServiceTable
            }, {
+                path: 'AccssTable',
+                name: "AccssTable",
+                meta: {
+                    title: "管理员"
+                },
+
+                component: AccssTable
+            }, {
                path: '',
                redirect: 'ServiceTable',
            }
