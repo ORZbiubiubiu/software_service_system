@@ -129,11 +129,15 @@ export default {
                             sessionStorage.setItem("name", this.userName);
                             console.log( sessionStorage.getItem("name"))
                             
-                            sessionStorage.setItem("token", "session123");
+                            sessionStorage.setItem("token", "session");
+ 
+                            //sessionStorage.setItem("role", "Client");
+                            this.$router.push(  {name:'admin',params:{name:this.userName}})
+
                             sessionStorage.setItem("role", "admin");
-                            //this.$router.push("/client");
-                           
-                            this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
+                           // this.$router.push("/client");
+                           // this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
+
                            
                          
                              //this.$router.push('/admin') 

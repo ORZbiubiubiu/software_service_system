@@ -28,11 +28,8 @@
 <script>
  import  myheader  from "./Header";
 export default {
-   
- 
-     components: {
-    myheader} ,
-     
+
+     components: {myheader} ,
     data:() =>{
         return {
             
