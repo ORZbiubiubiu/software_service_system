@@ -46,13 +46,15 @@ export default {
                   {
                     fncname: "软件更新信息" , index:"5"
                   }
-                 ]
+                 ],
+              orderData:[],
         }
         
     } ,
   name: 'client',
 
 methods: {
+     
      handleSelect(key, keyPath) {
               
                     if(key==1){

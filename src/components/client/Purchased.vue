@@ -43,7 +43,7 @@ export default {
     name:"purchased",
     data(){
         return{
-            orderData:[],
+            
             currentPage:1,
             pagesize:7
         }
@@ -93,7 +93,7 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
-        }
+        },
     }
 
 }
