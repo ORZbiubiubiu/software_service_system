@@ -61,5 +61,6 @@ export default {
 }
 body{
   margin: 0;
+  background-color: rgb(84, 92, 100);;
 }
 </style>

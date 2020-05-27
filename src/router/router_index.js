@@ -5,9 +5,13 @@ Vue.use(VueRouter)
 import login from "../components/login.vue"
 import Menu_Admin from "../components/Menu_Admin.vue"
 import ServiceTable from "../components/ServiceTable.vue"
+import AccssTable from '../components/AccssTable.vue'
 import Server from '../components/Server.vue'
 import Client from '../components/client/Client.vue'
 import Purchased from "../components/client/Purchased.vue";
+import FaqTable from "../components/FaqTable.vue"
+import SWTable from "../components/SWTable.vue"
+import AddUserForm from '../components/AddUserForm.vue'
 const routes = [
     {
         path: '/server',
@@ -39,8 +43,11 @@ const routes = [
             title:"管理员"
         } ,
         //name: "Admin",
-         beforeEnter: (to, from, next) => {
-            
+         beforeEnter:function   (to, from, next)   {
+            console.log("beforeEnter-Admin ")
+            let router_path = to.path
+            console.log(router_path) 
+             console.log(from.path)
             next();
 
          },
@@ -54,6 +61,10 @@ const routes = [
                 name: "ServiceTable",
                  meta: {
                      title: "管理员"
+                 }, beforeEnter: (to, from, next) => {
+                     console.log("beforeEnter-ServiceTable ")
+                     next();
+
                  },
                  
                 component: ServiceTable
@@ -62,9 +73,38 @@ const routes = [
                 name: "AccssTable",
                 meta: {
                     title: "管理员"
+                   
+                }, beforeEnter: (to, from, next) => {
+                    console.log("beforeEnter-AccssTable ")
+                    next();
+
                 },
 
                 component: AccssTable
+            } ,{
+                path: 'FaqTable',
+                name: "FaqTable",
+                meta: {
+                    title: "管理员"
+                },
+
+                component: FaqTable
+            }, {
+                path: 'SWTable',
+                name: "SWTable",
+                meta: {
+                    title: "管理员"
+                },
+
+                component: SWTable
+            }, {
+                path: 'AddUserForm',
+                name: "AddUserForm",
+                meta: {
+                    title: "管理员"
+                },
+
+                component: AddUserForm
             }, {
                path: '',
                redirect: 'ServiceTable',

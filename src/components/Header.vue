@@ -41,17 +41,7 @@
 
         logout: function () {
             console.log(this.$route.params.name+"logout");
-                this.$axios.get('http://rap2api.taobao.org/app/mock/23080/resources/search',{
-                    params: {
-                        id: 5
-                    }
-                })
-                .then(res => {
-                    console.log('数据是:', res);
-                })
-                .catch((e) => {
-                    console.log('获取数据失败');
-                });
+                
              this.$router.replace('/login').catch(err=>{
 
         })  
