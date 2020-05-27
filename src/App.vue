@@ -1,10 +1,6 @@
 <template>
   <div id="app">
-<<<<<<< HEAD
-    <router-view name="header"></router-view>
-=======
     
->>>>>>> b66817e1920a2d4363a2cfaaca23a9504e197861
   
   
   <router-view></router-view>
@@ -59,9 +55,6 @@ export default {
     display: block;
     height: 0;
     visibility: hidden;
-  background-color: #545c64;
-  margin-top: 0px;
-  height: 937px;
 }
 body{
   margin: 0;

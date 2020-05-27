@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 
 import './plugins/element.js'
- import axios from 'axios'
+import axios from 'axios'
 import router from './router/router_index.js'
 import App from './App'
 

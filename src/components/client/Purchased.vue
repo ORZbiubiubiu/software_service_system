@@ -47,12 +47,66 @@ export default {
             currentPage:1,
             pagesize:7
         }
+    },
+    mounted:function(){
+        this.getOrder();
+    },
+    methods:{
+        getOrder(){
+             axios.post(this.getOrderUrl, {
+                    serverName:this.userName
+                },{
+                      headers:{
+                          'token':this.token
+                      },
+                   withCredentials : true
+                 })
+                .then((response) => {
+                    var data = response.data.data.list;
+                    var msg = response.data.data.message.split('#');
+
+                    softwareNames=[];
+                   this.orderData = data.filter(function(item,index){
+                        for(var i = 0;i < msg.length;i++){
+
+                            if (msg[i]==item.softwareName){
+                                item.serviceState = 1;
+                                return item;
+                            }
+                            else {
+                                item.serviceState = 0;
+                            }
+                        }
+
+                        return item;
+                   })
+
+                    for(var i=0 ;i<this.orderData.length;i++){
+                        console.log(this.orderData[i].serviceState==0);
+                        if(this.orderData[i].serviceState==0){
+                             softwareNames.push({"value":this.orderData[i].softwareName});//动态获取没有申请售后的软件名称
+                        }
+                    }
+
+                    console.log(softwareNames);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
     }
+
 }
 </script>
 
 <style>
 #purchased{
     position:relative;
+}
+.el-header{
+    background-color: #B3C0D1;
+    color: #fff;
+    font-size:24px;
+    line-height: 60px;
 }
 </style>

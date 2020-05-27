@@ -15,15 +15,16 @@
                 </el-col>
             </div>
     </div>
-    <Main></Main>
+    <div id="main">
+          <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
  import Header from "./Header";
- import Main from "./Main";
 export default {
-    components:{Header,Main},
+    components:{Header},
     data() {
         return {
              funcs: [
@@ -53,22 +54,23 @@ export default {
 
 methods: {
      handleSelect(key, keyPath) {
-
-                    console.log(key, keyPath);
-                    //   key = Number(key);
-                    //   this.currentPage=1;
-                    //   if (key == 0) {
-                    //     this.getOrder();
-                    //   }
-                    //   if (key == 1 || key==3) {
-                    //     this.getService();
-                    //   }
-                    //   if (key != 2) {
-                    //     this.form.softwareName="";
-                    //   }
-                    //   if (key == 4){
-                    //     this.getMsg();
-                    //   }
+              
+                    if(key==1){
+                      this.$router.push({path:'/client/service' })
+                    }
+                    if(key==2){
+                      this.$router.push({path:'/client/apply' })
+                    }
+                    if(key==3){
+                      this.$router.push({path:'/client/sendMsg' })
+                    }
+                    if(key==4){
+                      this.$router.push({path:'/client/receiveMsg' })
+                    }
+                    if(key==5){
+                      this.$router.push({path:'/client/updateInfo' })
+                    }
+                    
         }
 }
   
@@ -85,14 +87,22 @@ methods: {
     float:left;
     height: 90%;
     width:20%;
-    
     margin: 0;
     background-color: #545c64;
 }
 #nav{
     float:left;
     width: 300px;
+    height:90%;
     margin-top: 50px;
     margin-left: 50px;
-}   
+}
+#main{
+    float: right;
+    width: 80%;
+    height: 90%;     
+    margin: 0;
+}
+
+
 </style>

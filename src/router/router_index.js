@@ -8,6 +8,11 @@ import ServiceTable from "../components/ServiceTable.vue"
 import Server from '../components/Server.vue'
 import Client from '../components/client/Client.vue'
 import Purchased from "../components/client/Purchased.vue";
+import Service from "../components/client/Service";
+import Apply from "../components/client/Apply";
+import SendMsg from "../components/client/SendMsg";
+import ReceiveMsg from "../components/client/ReceiveMsg";
+import UpdateInfo from "../components/client/UpdateInfo";
 const routes = [
     {
         path: '/server',
@@ -30,6 +35,30 @@ const routes = [
             {
                 path:"purchased",
                 component:Purchased
+            },
+            {
+                path:"",
+                component:Purchased
+            },
+            {
+                path:"service",
+                component:Service
+            },
+            {
+                path:"apply",
+                component:Apply
+            },
+            {
+                path:"sendMsg",
+                component:SendMsg
+            },
+            {
+                path:"receiveMsg",
+                component:ReceiveMsg
+            },
+            {
+                path:"updateInfo",
+                component:UpdateInfo
             }
          ]
     },
