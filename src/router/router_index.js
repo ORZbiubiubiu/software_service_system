@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 import login from "../components/login.vue"
 import Menu_Admin from "../components/Menu_Admin.vue"
 import ServiceTable from "../components/ServiceTable.vue"
-import Server from '../components/Server.vue'
+import Server from '../components/server/Server.vue'
 import Client from '../components/client/Client.vue'
 import Purchased from "../components/client/Purchased.vue";
 import Service from "../components/client/Service";
@@ -13,6 +13,10 @@ import Apply from "../components/client/Apply";
 import SendMsg from "../components/client/SendMsg";
 import ReceiveMsg from "../components/client/ReceiveMsg";
 import UpdateInfo from "../components/client/UpdateInfo";
+import MyService from "../components/server/MyService";
+// import GetMsg from "../components/server/GetMsg";
+import Management from "../components/server/Management";
+
 const routes = [
     {
         path: '/server',
@@ -20,8 +24,27 @@ const routes = [
             title: "售后服务人员"
         },
         component: Server,
-        children: [
-
+        children: [ 
+            {
+                path:"myService",
+                component: MyService
+            },
+            {
+                path:"",
+                component: MyService
+            },
+            {
+                path:"getMsg",
+                component: ReceiveMsg
+            },
+            {
+                path:"management",
+                component: Management
+            },
+            {
+                path:"sendMsg",
+                component: SendMsg
+            }
         ]
     },
     {

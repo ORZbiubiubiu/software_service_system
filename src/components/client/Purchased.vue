@@ -43,9 +43,16 @@ export default {
     name:"purchased",
     data(){
         return{
-            
             currentPage:1,
             pagesize:7
+        }
+    },
+    computed:{
+        username(){
+            return this.$store.state.username
+        },
+        orderData(){
+            return this.$store.state.orderData
         }
     },
     mounted:function(){
@@ -53,8 +60,8 @@ export default {
     },
     methods:{
         getOrder(){
-             axios.post(this.getOrderUrl, {
-                    serverName:this.userName
+             this.$axios.post("/client/user_show_software",{
+                    serverName:this.username
                 },{
                       headers:{
                           'token':this.token
@@ -65,8 +72,8 @@ export default {
                     var data = response.data.data.list;
                     var msg = response.data.data.message.split('#');
 
-                    softwareNames=[];
-                   this.orderData = data.filter(function(item,index){
+                    // this.$store.state.softwareNames=[];
+                   data = data.filter(function(item,index){
                         for(var i = 0;i < msg.length;i++){
 
                             if (msg[i]==item.softwareName){
@@ -80,15 +87,15 @@ export default {
 
                         return item;
                    })
+                    this.$store.commit("updateOrder",data);
+                    // for(var i=0 ;i<this.orderData.length;i++){
+                    //     console.log(this.orderData[i].serviceState==0);
+                    //     if(this.orderData[i].serviceState==0){
+                    //          softwareNames.push({"value":this.orderData[i].softwareName});//动态获取没有申请售后的软件名称
+                    //     }
+                    // }
 
-                    for(var i=0 ;i<this.orderData.length;i++){
-                        console.log(this.orderData[i].serviceState==0);
-                        if(this.orderData[i].serviceState==0){
-                             softwareNames.push({"value":this.orderData[i].softwareName});//动态获取没有申请售后的软件名称
-                        }
-                    }
-
-                    console.log(softwareNames);
+                    // console.log(softwareNames);
                 })
                 .catch(function (error) {
                     console.log(error);
