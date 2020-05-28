@@ -27,7 +27,7 @@
 </template>
 
 <script>
- 
+ import hex_md5 from '../plugins/md5.js'
 export default {
      name: 'login',
     data:() =>{
@@ -112,31 +112,78 @@ export default {
                             
                             // location.href = "administrator.html?" + "username=" + this.userName;
                             var pwd = this.passWord;
-                            // pwd = hex_md5(pwd);
-                            // pwd = hex_md5(pwd);
+                             console.log(pwd)
+                              pwd = hex_md5(pwd);
+                              pwd = hex_md5(pwd);
 
+                                //console.log(pwd)
                             // xss 处理
-                              this.userName=this.$xss( this.userName)
+                           // this.userName=this.$xss( this.userName)
                             var tmp = {
                                 "name": this.userName,
-                                "pwd":this.$xss( pwd),
+                                "pwd":pwd,
 
                             };
 
+                        this.$axios.post("/login",tmp,{
+                    headers:{
+                         
+                    }}).then(res=>{
+                          if (res.data != null || res.msg== null && res.data.msg == "success" ) {
+                                       
+                                    
+                                        var type = res.data.role;
+                                        var session = res.data.session_id;
+                                        //console.log(type + "    " + session)
+                                        if (type=="1") {
+                                            sessionStorage.setItem("name", this.userName);
+                                            sessionStorage.setItem("token", session);
+                                            sessionStorage.setItem("role", "Client")
+                                            window.location.href = "client";
+                                        } else if (type =="2") {
+                                            sessionStorage.setItem("name", this.userName);
+                                            sessionStorage.setItem("token", session);
+                                            window.location.href = "server";
+                                        } else if (type == "3"){
+                                            sessionStorage.setItem("name", this.userName);
+                                            sessionStorage.setItem("token", session);
+                                             sessionStorage.setItem("role", "Admin");
+                                            this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
+                                        }
+                                         this.$message({
+                                            message: "登录成功！！",
+                                            type: 'success'
+                                        });
+
+                                    } else {
+                                        if (res.msg == "账号已冻结") {
+                                            this.$message({
+                                                message: "账号已冻结",
+                                                type: 'error'
+                                            });
+                                             
+                                        } else if (res.msg == "账户或者密码错误") {
+                                            this.$message({
+                                                message: "账户或密码错误",
+                                                type: 'error'
+                                            });
+                                            this.message = "账户或密码错误！"
+                                        }
+                                        
+                                    }
+                    
+                })
 
                             // 假设登录成功 用户为管理员
                            
-                            sessionStorage.setItem("name", this.userName);
-                            console.log( sessionStorage.getItem("name"))
-                            
-                            sessionStorage.setItem("token", "session");
+                           
  
                             //sessionStorage.setItem("role", "Client");
                             //this.$router.push(  {name:'admin',params:{name:this.userName}})
 
-                            sessionStorage.setItem("role", "admin");
+                            
                            // this.$router.push("/client");
-                            this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
+                            
 
                            
                          
@@ -201,6 +248,7 @@ export default {
 }
   
 }
+
 </script>
 
  
