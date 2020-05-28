@@ -20,7 +20,10 @@
                         </el-select>
 
                     </el-form-item>
-                    <el-form-item label="负责软件" v-if="usertype === '售后服务人员'">
+                    <el-form-item label="负责软件" v-if="usertype === '售后服务人员'"  v-loading="loading_SWLT"
+                        element-loading-text="拼命加载中"
+                        element-loading-spinner="el-icon-loading"
+                        element-loading-background="rgba(0, 0, 0, 0.8)">
                         <el-select v-model="serverSoftware" placeholder="请选择" clearable>
                             <el-option v-for="item in list" :key="item.name" :label="item.name" :value="item.name">
                             </el-option>
@@ -40,15 +43,16 @@
 </template>
 
 <script>
- 
+  import hex_md5 from '../plugins/md5.js'
 export default { 
     mounted:function () { 
+        this.loading_SWLTtre;
         this.$axios.post("/admin/GetSoftWareList",{},{
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
                           console.log(res.data);
-                     var list = res.data.list;
+                     var list = res.data.data.list;
                      this.list=[];
                      for (let index = 0; index < list.length; index++) {
                           const element = list[index];
@@ -58,6 +62,7 @@ export default {
                         
                         
                      }
+                     this.loading_SWLT=false;
                     
                 });
 
@@ -68,6 +73,9 @@ export default {
     data:() =>{
        
         return {
+            loading_SWLT:true,
+            //
+
               username: "",
             password: "",
             password_check: "",
@@ -153,8 +161,8 @@ methods: {
                 if (this.message == "") {
                     // console.log(this.username + this.password + this.usertype + this.serverSoftware)
                     var pwd = this.password;
-                  /*   pwd = hex_md5(pwd);
-                    pwd = hex_md5(pwd); */
+                      pwd = hex_md5(pwd);
+                    pwd = hex_md5(pwd);  
                     var tmp =  {
                         username: this.username,
                         password: pwd,
@@ -165,7 +173,7 @@ methods: {
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
-                          if (res.data.message == "success") {
+                          if (res.data.data.message == "success") {
                                 this.$message({
                                     message: this.username + "  " + "添加成功!",
                                     type: 'success'

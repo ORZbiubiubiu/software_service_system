@@ -126,6 +126,7 @@ methods: {
       border-right: 1px solid #ffffff;
 }
 #adminarea{
-    background-color: rgb(84, 92, 100); ;
+    background-color: rgb(84, 92, 100); 
+    height: 1000px;
 }
 </style>

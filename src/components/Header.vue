@@ -28,12 +28,18 @@
         } ,
     name: 'myheader',
     mounted:function (){
-        console.log("mounted -h")
-        
-             this.username=this.$route.params.name;
-             console.log(this.$route.params.token);
+        console.log("mounted -h"+sessionStorage.getItem("name"))
+        var a=sessionStorage.getItem("token");
+        if (a!=null) {
+             this.username=sessionStorage.getItem("name");
+        }else{
+            console.log("token null")
+            this.$router.push({name:"Login"});
+        }
+             
+             
             
-                console.log(   sessionStorage.getItem("role"));
+            
     } ,
 
     methods: {
@@ -41,10 +47,17 @@
 
         logout: function () {
             console.log(this.$route.params.name+"logout");
-                
-             this.$router.replace('/login').catch(err=>{
+                sessionStorage.removeItem("token");
+                 this.$axios.post("/logout",{data:0},{
+                    headers:{
+                        'token': sessionStorage.getItem("token")
+                    }}).then(res=>{
+                           this.$router.replace('/login').catch(err=>{
 
         })  
+                    
+                });
+            
          /*    type: "GET", */
             // contentType: "application/json; charset=utf-8",
             // dataType: "json",
@@ -104,6 +117,11 @@
     color: #ffd04b;
     cursor: pointer;
 }
-
+ #head_icon{
+margin-right: 10px;
+ }
+#userName{
+margin-right: 10px;
+}
 
 </style>

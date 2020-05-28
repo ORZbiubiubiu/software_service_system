@@ -26,7 +26,10 @@
                     </div>
 
                         <div id="modifylist">
-                            <el-table :data="items" style="width: 100%">
+                            <el-table :data="items" style="width: 100%"  v-loading="loading"
+                            element-loading-text="拼命加载中"
+                            element-loading-spinner="el-icon-loading"
+                            element-loading-background="rgba(0, 0, 0, 0.8)">
                                 <el-table-column label="标题" width="130">
                                     <template slot-scope="scope">
                             
@@ -37,9 +40,9 @@
                             
                                 <el-table-column label="类型" width="130">
                                     <template slot-scope="scope">
-                                        <el-popover trigger="hover" placement="top">
+                                        <el-popover  >
                             
-                                            <div slot="reference" class="name-wrapper">
+                                            <div    >
                                                 <el-tag size="medium">{{ scope.row.faqType }}</el-tag>
                                             </div>
                                         </el-popover>
@@ -73,8 +76,11 @@
                     <div id="addarea" class="faqarea" v-if="addshow">
                         <el-form id="faqForm" label-width="80px">
                           
-                            <el-form-item label="目标软件" id="faqtarget">
-                                <el-select v-model="faqSoftware" placeholder="请选择目标软件">
+                            <el-form-item label="目标软件" id="faqtarget"  >
+                                <el-select v-model="faqSoftware" placeholder="请选择目标软件" v-loading="loading_targetsoftware"
+                                element-loading-text="拼命加载中"
+                                element-loading-spinner="el-icon-loading"
+                                element-loading-background="rgba(0, 0, 0, 0.8)">
                                     <el-option v-bind:key="item.targetsoftware" v-bind:label="item.targetsoftware" v-bind:value="item.targetsoftware" v-for="item in items_add"></el-option>
 
                                 </el-select>
@@ -117,8 +123,15 @@
 <script>
  
 export default {
+
+    mounted:function () { 
+        let that = this;
+        faq_page_getdata(1,that);
+     },
     data:() =>{
         return {
+            loading:true,
+            loading_targetsoftware:true,
                 //nav
              activeIndex: '0',
              //table
@@ -188,8 +201,8 @@ methods: {
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
-                  if (res.data.code != 500) {
-                            faq_page_getdata(this.current_page);
+                  if (res.data.data.code != 500) {
+                            faq_page_getdata(this.current_page,this);
 
                             this.$message({
                                 message: '修改成功！',
@@ -212,7 +225,7 @@ methods: {
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
                   if (res.data.code != 500) {
-                            faq_page_getdata(this.current_page);
+                            faq_page_getdata(this.current_page,this);
                             this.$message({
                                 message: '删除成功！',
                                 type: 'success'
@@ -221,30 +234,7 @@ methods: {
                         }
                     
                 });
-               /*  $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    url: "/admin/FaqDelete",
-                    headers: {
-                        "token": sessionStorage.getItem("token")
-                    },
-                    data:  {
-                        "id": id,
-
-                    } ,
-                    success: function (response) {
-                        if (response.data.code != 500) {
-                            faq_page_getdata(this.current_page);
-                            this.$message({
-                                message: '删除成功！',
-                                type: 'success'
-                            });
-
-                        }
-
-                    }
-                }); */
+               
             },
             handleSelect(key, keyPath) {
                 
@@ -256,12 +246,13 @@ methods: {
                 } else if (key == "1") {
                     this.addshow=true;
                     this.modifyshow=false;
+                    this.loading_targetsoftware=true;
                      this.$axios.post("/admin/GetSoftWareList",{data:0},{
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
                            console.log(res.data);
-                            var list = res.data.list;
+                            var list = res.data.data.list;
                             this.items_add=[];
                             for (let index = 0; index < list.length; index++) {
                                 const element = list[index];
@@ -271,6 +262,7 @@ methods: {
                                 })
                               
                             }
+                              this.loading_targetsoftware=false;
                     
                 });
                      
@@ -304,7 +296,7 @@ methods: {
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
-                          if (res.data.message == "success") {
+                          if (res.data.data.message == "success") {
                                 console.log(res.data);
                                 this.$message({
                                     message: '添加成功！',
@@ -353,6 +345,7 @@ methods: {
 }
 
  function faq_page_getdata(i,that) {
+     that.loading=true;
         //参数i ：用户点击下方分页器的页数
         //从服务器获取数据
         console.log(" faq_page_getdata")
@@ -366,14 +359,16 @@ methods: {
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
-                         var list = res.data.list;
-                that.total = Number(res.data.message);
+                         var list = res.data.data.list;
+                           console.log(res.data.data)
+                that.total = Number(res.data.data.message);
                 that.items = [];
                  console.log("faq");
                 for (var index = 0; index < list.length; index++) {
-                   var element = length[index];
+                   var element = list[index];
+                  //console.log(element.id);
                     that.items.push({
-                         id: element.id,
+                         "id": element.id,
                         "faqtitle": element.faqName,
                         faqType: element.faqType,
                         "faqdetails": element.faqInfo,
@@ -383,6 +378,7 @@ methods: {
                     console.log(that.items[index]);
 
                 }
+                  that.loading=false;
                     
                 });
        
@@ -438,5 +434,8 @@ methods: {
  #faqForm{
      margin-top: 20px;
      
+ }
+ #addarea{
+     padding-bottom: 50px;
  }
 </style>

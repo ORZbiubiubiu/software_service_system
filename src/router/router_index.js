@@ -99,10 +99,16 @@ const routes = [
         //name: "Admin",
          beforeEnter:function   (to, from, next)   {
             console.log("beforeEnter-Admin ")
-            let router_path = to.path
-            console.log(router_path) 
-             console.log(from.path)
-            next();
+           
+           if (sessionStorage.getItem("role") == "Admin") {
+               next();  
+
+           } else {
+               alert("你没有权限访问改页面！");
+               
+              next(false)
+           }
+            
 
          },
          afterEach: (to, from) =>{
@@ -114,10 +120,16 @@ const routes = [
                 path: 'ServiceTable',
                 name: "ServiceTable",
                  meta: {
-                     title: "管理员"
+                     title: "管理员",
+                    role: ["Admin"] //课访问改组件的角色
                  }, beforeEnter: (to, from, next) => {
-                     console.log("beforeEnter-ServiceTable ")
-                     next();
+                      if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                         next();
+                     } else {
+                         alert("你没有权限访问改页面！");
+                        next(false)
+                     }
+                    
 
                  },
                  
@@ -126,11 +138,18 @@ const routes = [
                 path: 'AccssTable',
                 name: "AccssTable",
                 meta: {
-                    title: "管理员"
+                    title: "管理员",
+                     role: ["Admin"] //课访问改组件的角色
                    
-                }, beforeEnter: (to, from, next) => {
-                    console.log("beforeEnter-AccssTable ")
-                    next();
+                }, beforeEnter: function  (to, from, next)   {
+                     if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                       next();
+
+                   } else {
+                       alert("你没有权限访问改页面！");
+
+                       next(false)
+                   }
 
                 },
 
@@ -139,7 +158,19 @@ const routes = [
                 path: 'FaqTable',
                 name: "FaqTable",
                 meta: {
-                    title: "管理员"
+                    title: "管理员",
+                    role: ["Admin"] //课访问改组件的角色
+                }, 
+                 beforeEnter: (to, from, next) => {
+                    if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                        next();
+
+                    } else {
+                         alert("你没有权限访问改页面！");
+
+                         next(false)
+                    }
+
                 },
 
                 component: FaqTable
@@ -147,7 +178,19 @@ const routes = [
                 path: 'SWTable',
                 name: "SWTable",
                 meta: {
-                    title: "管理员"
+                    title: "管理员",
+                    role:["Admin"] //课访问改组件的角色
+                }, beforeEnter: (to, from, next) => {
+                   
+                    if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                        next();
+
+                    } else {
+                        alert("你没有权限访问改页面！");
+
+                        next(false)
+                    }
+
                 },
 
                 component: SWTable
@@ -155,7 +198,18 @@ const routes = [
                 path: 'AddUserForm',
                 name: "AddUserForm",
                 meta: {
-                    title: "管理员"
+                    title: "管理员",
+                     role: ["Admin"] //课访问改组件的角色
+                }, beforeEnter: (to, from, next) => {
+                     if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                        next();
+
+                    } else {
+                        alert("你没有权限访问改页面！");
+
+                        next(false)
+                    }
+
                 },
 
                 component: AddUserForm
@@ -175,20 +229,26 @@ const routes = [
         meta: {
             title: "登录"
         },
+        name:"Login",
         component: login,
     }  
 ]
+
+ 
 
 const router = new VueRouter({
     routes, // (缩写) 相当于 routes: routes
     mode:"history"
 })
 router.beforeEach((to, from, next) => {
+    
    // console.log(to)
     if (to.meta.title==null) {  //改网页标题
          document.title="登录"
     }else{
         document.title = to.meta.title;
+       
+        
     }
     
     next();
