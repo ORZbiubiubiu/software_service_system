@@ -24,6 +24,7 @@ import AddUserForm from '../components/AddUserForm.vue'
 const routes = [
     {
         path: '/server',
+        name: 'server',
         meta: {
             title: "售后服务人员"
         },
@@ -52,7 +53,7 @@ const routes = [
         ]
     },
     {
-         path: '/client',
+        path: '/client',
         meta: {
                  title: "客户"
              },

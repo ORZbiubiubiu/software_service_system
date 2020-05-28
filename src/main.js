@@ -18,7 +18,7 @@ import myheader from './components/Header.vue'
 // import xss from  'xss'
 
 Vue.config.productionTip = false
-Vue.prototype.$axios = axios;
+// Vue.prototype.$axios = axios;
 //  Vue.prototype.$xss = xss;
 new Vue({
     router: router,

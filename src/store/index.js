@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     orderData:[],
     softwareNames:[],
-    username:'cli_hhy',
+    username:'',
     token:'',
 
   },
