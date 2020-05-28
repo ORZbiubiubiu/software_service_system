@@ -35,7 +35,10 @@
                     </el-dialog>
                 </div>
                 <div id="access_setting_holder">
-                    <el-table :data="tableData" style="width:100%"    >
+                    <el-table :data="tableData" style="width:100%"     v-loading="loading"
+                        element-loading-text="拼命加载中"
+                        element-loading-spinner="el-icon-loading"
+                        element-loading-background="rgba(0, 0, 0, 0.8)">
                         <el-table-column label="用户账户" width="205">
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
@@ -103,6 +106,8 @@ export default {
      },
     data:() =>{
         return {
+
+            loading:true,
                 //导航栏
             activeIndex: '1',
             currentIndx: '1 ',
@@ -153,19 +158,21 @@ export default {
 methods: {
         commit: function () {
              console.log("commit");
-            var data ={
+            
+            console.log(data)
+                if (this.userRole == "客户") {
+                    var data ={
                 "id": this.id,
                 "userState": this.changeState,
             }
-                if (this.userRole == "客户") {
                       console.log("CustomerPermissionSettingReques");
 
                      this.$axios.post("/admin/CustomerPermissionSettingRequest",data,{
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(response=>{
-                        
-                            if (response.data.message == "用户权限修改成功！") {
+                       
+                            if (response.data.data.message == "用户权限修改成功！") {
                                 this.dialogFormVisible = false;
                                 this.$message({
                                     message: '客户权限修改成功！',
@@ -185,13 +192,18 @@ methods: {
                    
 
                 } else if (this.userRole == "售后服务人员") {
+                       data ={
+                "id": this.id,
+                "serverState": this.changeState,
+            }
                       console.log("permissionSettingserverRequest");
                      this.$axios.post("/admin/permissionSettingserverRequest",data,{
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(response=>{
-                        
-                            if (response.data.message == "维护人员权限修改成功！") {
+                         console.log(response.data.data.message+"6666")
+                         
+                            if (response.data.data.message == "维护人员权限修改成功！") {
                                 this.dialogFormVisible = false;
                                 this.$message({
                                     message: '售后服务人员权限修改成功',
@@ -284,6 +296,7 @@ methods: {
 
  function access_setting_page_getdata(i,that) { //根据页数获取售后服务人员信息 function access_setting_page_getdata(i) { //根据页数获取售后服务人员信息
           console.log("access_setting_page_getdata");
+          that.loading=true;
          var data = {
             pageNo: i,
             pageSize: that.page_size
@@ -294,8 +307,9 @@ methods: {
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
-                         var list = res.list;
-                that.total = Number(res.message);
+                        console.log(res.data)
+                         var list = res.data.list;
+                that.total = Number(res.data.message);
                 that.tableData = [];
                  console.log("售后服务人员列表：");
                 for (var index = 0; index < list.length; index++) {
@@ -312,6 +326,7 @@ methods: {
                     console.log(that.tableData[index]);
 
                 }
+                  that.loading=false;
                     
                 });
 
@@ -319,7 +334,7 @@ methods: {
  }
  function access_setting_page_getdata1(i,that) {//获取客户列表
       console.log("access_setting_page_getdata1");
-      
+        that.loading=true;
          console.log( that.$route.params.token);
         var data = {
             pageNo: i,
@@ -330,8 +345,9 @@ methods: {
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
-                        var list = res.list;
-                that.total = Number(res.message);
+                        var list = res.data.list;
+                         console.log(res.data.message);
+                that.total = Number(res.data.message);
                 that.tableData = [];
                  console.log("客户列表：");
 
@@ -348,6 +364,7 @@ methods: {
                     console.log(that.tableData[index]);
 
                 }
+                  that.loading=false;
 
                     });
 

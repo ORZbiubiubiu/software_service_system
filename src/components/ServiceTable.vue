@@ -33,7 +33,10 @@
                         <el-button type="primary" @click="commit">确 定</el-button>
                     </div>
         </el-dialog>
-         <el-table :data="tableData" style="width: 100%">
+         <el-table :data="tableData" style="width: 100%"   v-loading="loading"
+                            element-loading-text="拼命加载中"
+                            element-loading-spinner="el-icon-loading"
+                            element-loading-background="rgba(0, 0, 0, 0.8)">
                     <el-table-column label="软件售后服务编号" width="180">
                         <template slot-scope="scope">
                             <div slot="reference" class="name-wrapper">
@@ -100,6 +103,7 @@ export default {
     data:function () {  
 
       return {
+          loading:true,
             //每页显示 11 个
           current_page:1,
           page_size:11,
@@ -176,7 +180,8 @@ export default {
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(res=>{
-                        var list = res.data.list;
+                        console.log(res.data)
+                        var list = res.data.data.list;
                          this.serverlist = [];
                             for (let index = 0; index < list.length; index++) {
                                 const element = list[index];
@@ -194,11 +199,13 @@ export default {
                                 });
                                  
                               
+                            }else{
+                                 this.dialogFormVisible=true;
                             }
                     
                 })
 
-                this.dialogFormVisible=true;
+               
 
                 }
 
@@ -222,7 +229,7 @@ export default {
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(res=>{
-                        if (res.data.message == "更新成功") {
+                        if (res.data.data.message == "更新成功") {
                             this.$message({
                                 message: "更换售后服务人员" +  this.change_name + "成功!",
                                 type: 'success'
@@ -254,6 +261,7 @@ export default {
 function service_error_page_getdata(i,that) { // //根据页数获取售后服务人员信息
         //参数i ：用户点击下方分页器的页数
         //从服务器获取数据
+        that.loading=true;
         console.log(" service_error_page_getdata");
         var data_temp = {
             pageNo: i,
@@ -266,8 +274,8 @@ function service_error_page_getdata(i,that) { // //根据页数获取售后服�
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(res=>{
-                           var list = res.data.list;
-                            var total = res.message;
+                           var list = res.data.data.list; 
+                            var total = res.data.message;
                             that.total = total;
                            
                             that.tableData = [];
@@ -285,6 +293,7 @@ function service_error_page_getdata(i,that) { // //根据页数获取售后服�
                         console.log(that.tableData[index])
 
                     }
+                      that.loading=false;
                        
                         
                         

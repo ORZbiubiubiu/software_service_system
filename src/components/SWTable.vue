@@ -2,7 +2,10 @@
 <template>
   <div class="function">
     
-    <el-table :data="tableData" height="750" style="width: 100%">
+    <el-table :data="tableData" height="750" style="width: 100%"  v-loading="loading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+            element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-table-column prop="id" label="软件ID" width="180">
         </el-table-column>
         <el-table-column prop="softwareName" label="软件名" width="180">
@@ -20,11 +23,12 @@
 export default {
     mounted:function () { 
 
+                this.loading=true;
             this.$axios.post("/admin/GetSoftWareList",{},{
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(res=>{
-                        var list = res.data.list;
+                        var list = res.data.data.list;
 
                             this.tableData = [];
                             console.log("售后服务软件信息：");
@@ -40,122 +44,17 @@ export default {
                               
 
                             }
+                             this.loading=false;
                     
                 })
 
-     /*      $.ajax({
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        url: "/admin/GetSoftWareList",
-                        headers: {
-                            "token": sessionStorage.getItem("token")
-                        },
-                        data: {},   
-                        success: function (response) {
-                            var list = response.data.list;
-
-                            softwareinf_vm.tableData = [];
-                            console.log("售后服务软件信息：");
-                              console.log(list );
-                            for (let index = 0; index < list.length; index++) {
-                                const element = list[index];
-                                Vue.set(softwareinf_vm.tableData, index, {
-                                    id: element.id,
-                                    softwareName: element.softwareName,
-                                    softwareInfo: element.softwareInfo,
-                                    updateDate: element.updateDate
-
-                                })
-
-                            }
-                        }
-                    }); */
+     
      },
 
     data:() =>{
         return {
-              tableData: [{
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            },{
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }, {
-                id: "id",
-                softwareName: "softwareName",
-                softwareInfo: "softwareInfo",
-                updateDate: "updateDate"
-            }]
+            loading:true,
+              tableData: [  ]
         }
         
     } ,

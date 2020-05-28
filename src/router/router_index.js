@@ -5,26 +5,55 @@ Vue.use(VueRouter)
 import login from "../components/login.vue"
 import Menu_Admin from "../components/Menu_Admin.vue"
 import ServiceTable from "../components/ServiceTable.vue"
-import AccssTable from '../components/AccssTable.vue'
-import Server from '../components/Server.vue'
+import Server from '../components/server/Server.vue'
 import Client from '../components/client/Client.vue'
 import Purchased from "../components/client/Purchased.vue";
+import Service from "../components/client/Service";
+import Apply from "../components/client/Apply";
+import SendMsg from "../components/client/SendMsg";
+import ReceiveMsg from "../components/client/ReceiveMsg";
+import UpdateInfo from "../components/client/UpdateInfo";
+import MyService from "../components/server/MyService";
+// import GetMsg from "../components/server/GetMsg";
+import Management from "../components/server/Management";
+
+import AccssTable from '../components/AccssTable.vue'
 import FaqTable from "../components/FaqTable.vue"
 import SWTable from "../components/SWTable.vue"
 import AddUserForm from '../components/AddUserForm.vue'
 const routes = [
     {
         path: '/server',
+        name: 'server',
         meta: {
             title: "售后服务人员"
         },
         component: Server,
-        children: [
-
+        children: [ 
+            {
+                path:"myService",
+                component: MyService
+            },
+            {
+                path:"",
+                component: MyService
+            },
+            {
+                path:"getMsg",
+                component: ReceiveMsg
+            },
+            {
+                path:"management",
+                component: Management
+            },
+            {
+                path:"sendMsg",
+                component: SendMsg
+            }
         ]
     },
     {
-         path: '/client',
+        path: '/client',
         meta: {
                  title: "客户"
              },
@@ -34,6 +63,30 @@ const routes = [
             {
                 path:"purchased",
                 component:Purchased
+            },
+            {
+                path:"",
+                component:Purchased
+            },
+            {
+                path:"service",
+                component:Service
+            },
+            {
+                path:"apply",
+                component:Apply
+            },
+            {
+                path:"sendMsg",
+                component:SendMsg
+            },
+            {
+                path:"receiveMsg",
+                component:ReceiveMsg
+            },
+            {
+                path:"updateInfo",
+                component:UpdateInfo
             }
          ]
     },
@@ -45,10 +98,16 @@ const routes = [
         //name: "Admin",
          beforeEnter:function   (to, from, next)   {
             console.log("beforeEnter-Admin ")
-            let router_path = to.path
-            console.log(router_path) 
-             console.log(from.path)
-            next();
+           
+           if (sessionStorage.getItem("role") == "Admin") {
+               next();  
+
+           } else {
+               alert("你没有权限访问改页面！");
+               
+              next(false)
+           }
+            
 
          },
          afterEach: (to, from) =>{
@@ -60,10 +119,16 @@ const routes = [
                 path: 'ServiceTable',
                 name: "ServiceTable",
                  meta: {
-                     title: "管理员"
+                     title: "管理员",
+                    role: ["Admin"] //课访问改组件的角色
                  }, beforeEnter: (to, from, next) => {
-                     console.log("beforeEnter-ServiceTable ")
-                     next();
+                      if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                         next();
+                     } else {
+                         alert("你没有权限访问改页面！");
+                        next(false)
+                     }
+                    
 
                  },
                  
@@ -72,11 +137,18 @@ const routes = [
                 path: 'AccssTable',
                 name: "AccssTable",
                 meta: {
-                    title: "管理员"
+                    title: "管理员",
+                     role: ["Admin"] //课访问改组件的角色
                    
-                }, beforeEnter: (to, from, next) => {
-                    console.log("beforeEnter-AccssTable ")
-                    next();
+                }, beforeEnter: function  (to, from, next)   {
+                     if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                       next();
+
+                   } else {
+                       alert("你没有权限访问改页面！");
+
+                       next(false)
+                   }
 
                 },
 
@@ -85,7 +157,19 @@ const routes = [
                 path: 'FaqTable',
                 name: "FaqTable",
                 meta: {
-                    title: "管理员"
+                    title: "管理员",
+                    role: ["Admin"] //课访问改组件的角色
+                }, 
+                 beforeEnter: (to, from, next) => {
+                    if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                        next();
+
+                    } else {
+                         alert("你没有权限访问改页面！");
+
+                         next(false)
+                    }
+
                 },
 
                 component: FaqTable
@@ -93,7 +177,19 @@ const routes = [
                 path: 'SWTable',
                 name: "SWTable",
                 meta: {
-                    title: "管理员"
+                    title: "管理员",
+                    role:["Admin"] //课访问改组件的角色
+                }, beforeEnter: (to, from, next) => {
+                   
+                    if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                        next();
+
+                    } else {
+                        alert("你没有权限访问改页面！");
+
+                        next(false)
+                    }
+
                 },
 
                 component: SWTable
@@ -101,7 +197,18 @@ const routes = [
                 path: 'AddUserForm',
                 name: "AddUserForm",
                 meta: {
-                    title: "管理员"
+                    title: "管理员",
+                     role: ["Admin"] //课访问改组件的角色
+                }, beforeEnter: (to, from, next) => {
+                     if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                        next();
+
+                    } else {
+                        alert("你没有权限访问改页面！");
+
+                        next(false)
+                    }
+
                 },
 
                 component: AddUserForm
@@ -121,20 +228,26 @@ const routes = [
         meta: {
             title: "登录"
         },
+        name:"Login",
         component: login,
     }  
 ]
+
+ 
 
 const router = new VueRouter({
     routes, // (缩写) 相当于 routes: routes
     mode:"history"
 })
 router.beforeEach((to, from, next) => {
+    
    // console.log(to)
     if (to.meta.title==null) {  //改网页标题
          document.title="登录"
     }else{
         document.title = to.meta.title;
+       
+        
     }
     
     next();

@@ -1,6 +1,6 @@
 
 <template>
-  <div  >
+  <div>
     
    <el-form     label-width="80px" id="loginform">
             <el-form-item label="">
@@ -131,20 +131,20 @@ export default {
                     }}).then(res=>{
                           if (res.data != null || res.msg== null && res.data.msg == "success" ) {
                                        
-                                    
-                                    
+                                        
                                         var type = res.data.data.role;
                                         var session = res.data.data.session_id;
-                                        //console.log(type + "    " + session)
+                                        
                                         if (type=="1") {
                                             sessionStorage.setItem("name", this.userName);
                                             sessionStorage.setItem("token", session);
                                             sessionStorage.setItem("role", "Client")
-                                            window.location.href = "client";
+                                            this.$router.push(  {name:'client',params:{name:this.userName}})
                                         } else if (type =="2") {
                                             sessionStorage.setItem("name", this.userName);
                                             sessionStorage.setItem("token", session);
-                                            window.location.href = "server";
+                                            sessionStorage.setItem("role", "Server")
+                                            this.$router.push(  {name:'server',params:{name:this.userName}})
                                         } else if (type == "3"){
                                             sessionStorage.setItem("name", this.userName);
                                             sessionStorage.setItem("token", session);
@@ -185,7 +185,6 @@ export default {
                             
                            // this.$router.push("/client");
                             
-
                            
                          
                              //this.$router.push('/admin') 

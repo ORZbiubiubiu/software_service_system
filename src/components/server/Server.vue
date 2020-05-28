@@ -22,68 +22,51 @@
 </template>
 
 <script>
- import Header from "./Header";
+import Header from "../client/Header";
 export default {
+    name:"server",
     components:{Header},
-    data() {
-        return {
-             funcs: [
+    data(){
+        return{
+            funcs: [
                   {
-                    fncname: "购买过的产品",index:"0"
+                    fncname: "我的售后",index:"0"
                   },
                   {
-                    fncname: "已申请售后的产品", index: "1"
+                    fncname: "售后提醒", index: "1"
                   },
                   {
-                    fncname: "申请售后", index: "2"
+                    fncname: "售后管理", index:"2"
                   },
                   {
-                    fncname: "发送消息", index:"3"
+                    fncname: "用户交互", index: "3"
                   },
-                  {
-                    fncname: "我的消息", index: "4"
-                  },
-                  {
-                    fncname: "软件更新信息" , index:"5"
-                  }
-                 ],
-              orderData:[],
+                ]
         }
-        
-    } ,
-  name: 'client',
-
+    },
+    
 methods: {
      
      handleSelect(key, keyPath) {
               console.log(key,keyPath);
                     if(key==0){
-                      this.$router.push({path:'/client/purchased'})
+                      this.$router.push({path:'/server/myService'})
                     }
                     if(key==1){
-                      this.$router.push({path:'/client/service' })
+                      this.$router.push({path:'/server/getMsg' })
                     }
                     if(key==2){
-                      this.$router.push({path:'/client/apply' })
+                      this.$router.push({path:'/server/management' })
                     }
                     if(key==3){
-                      this.$router.push({path:'/client/sendMsg' })
+                      this.$router.push({path:'/server/sendMsg' })
                     }
-                    if(key==4){
-                      this.$router.push({path:'/client/receiveMsg' })
-                    }
-                    if(key==5){
-                      this.$router.push({path:'/client/updateInfo' })
-                    }
-                    
         }
 }
-  
 }
 </script>
 
- 
-<style scoped>
+<style>
 #content{
   width: 100%;
   height: 100%;
@@ -108,6 +91,4 @@ methods: {
     height: 90%;     
     margin: 0;
 }
-
-
 </style>
