@@ -27,7 +27,7 @@
                             <el-pagination
                                     background
                                     layout="prev, pager, next,jumper"
-                                    @current-change="purchasedHandleCurrentChange"
+                                    @current-change="handleCurrentChange"
                                     :current-page="currentPage"
                                     :page-size="pagesize"
                                     :total="orderData.length">
@@ -51,11 +51,21 @@ export default {
         username(){
             return this.$store.state.username
         },
+        token(){
+            return this.$store.state.token
+        },
         orderData(){
             return this.$store.state.orderData
         }
     },
+    created:function(){
+        var username = sessionStorage.getItem("name");
+        var token = sessionStorage.getItem("token");
+        this.$store.commit("setUsername",username);
+        this.$store.commit("setToken",token);
+    },
     mounted:function(){
+        
         this.getOrder();
     },
     methods:{
@@ -101,6 +111,9 @@ export default {
                     console.log(error);
                 });
         },
+        handleCurrentChange: function(currentPage){
+               this.currentPage = currentPage;
+                },
     }
 
 }

@@ -29,18 +29,16 @@
 export default {
     data:() =>{
         return {
-             username:"",
              searchInfo:""
         }
         
     } ,
+    computed:{
+        username(){
+            return this.$store.state.username;
+        }
+    },
   name: 'myheader',
-  mounted:()=>{   
-      this.username = sessionStorage.getItem("name");
-  },
-  beforeUpdate:()=>{
-    
-  },
 
 methods: {
     search(){

@@ -22,7 +22,9 @@
 </template>
 
 <script>
- import Header from "./Header";
+import Header from "./Header";
+
+
 export default {
     components:{Header},
     data() {
@@ -52,6 +54,12 @@ export default {
         
     } ,
   name: 'client',
+  mounted:function(){
+    var username = sessionStorage.getItem("name");
+    var token = sessionStorage.getItem("token");
+    this.$store.commit("setUsername",username);
+    this.$store.commit("setToken",token);
+  },
 
 methods: {
      

@@ -139,7 +139,7 @@ export default {
                                             sessionStorage.setItem("name", this.userName);
                                             sessionStorage.setItem("token", session);
                                             sessionStorage.setItem("role", "Client")
-                                            this.$router.push(  {name:'client',params:{name:this.userName}})
+                                            this.$router.push(  {name:'purchased',params:{name:this.userName}})
                                         } else if (type =="2") {
                                             sessionStorage.setItem("name", this.userName);
                                             sessionStorage.setItem("token", session);
