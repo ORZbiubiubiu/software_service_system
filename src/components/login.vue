@@ -132,8 +132,9 @@ export default {
                           if (res.data != null || res.msg== null && res.data.msg == "success" ) {
                                        
                                     
-                                        var type = res.data.role;
-                                        var session = res.data.session_id;
+                                    
+                                        var type = res.data.data.role;
+                                        var session = res.data.data.session_id;
                                         //console.log(type + "    " + session)
                                         if (type=="1") {
                                             sessionStorage.setItem("name", this.userName);
