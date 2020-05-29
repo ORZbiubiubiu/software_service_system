@@ -4,12 +4,7 @@
             <h1 id="title" class="v-center" >
                 软件售后服务系统
             </h1>
-            <div id="search" class="v-center">
-                <el-row :gutter="20">
-                    <el-col :span="16"><el-input v-model="searchInfo"></el-input></el-col>
-                    <el-col :span="8"><el-button type="primary" @click="search" icon="el-icon-search">搜索</el-button></el-col>
-                </el-row>
-            </div>
+            
             <div id="userinfo" class="v-center">
                 <div id="avatar">
                     <i class="el-icon-s-custom"></i>
@@ -36,6 +31,9 @@ export default {
     computed:{
         username(){
             return this.$store.state.username;
+        },
+        token(){
+            return this.$store.state.token;
         }
     },
   name: 'myheader',
@@ -47,14 +45,14 @@ methods: {
     },
     logout(){
 
-            // axios.post(this.url,{
-            //     token:this.token
-            // }).then( (response)=>{
+            this.$axios.post("/logout",{
+                token:this.token
+            }).then( (response)=>{
 
-            //     window.location.href = "/login";
-            // }).catch(function (error) {
-            //     console.log(error);
-            // });
+                window.location.href = "/login";
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
 }
   
@@ -65,6 +63,7 @@ methods: {
 <style scoped>
  
  .header {
+     
     margin:0;
     position: relative;
     background-color: rgba(39, 110, 81, 1);

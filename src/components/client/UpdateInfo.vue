@@ -11,7 +11,7 @@
                                 {{item.softwareName}}
                             </template>
                             <div class="update-data-error" v-if="updateData.length == 0">暂无更新信息</div>
-                            <div class="updateInfo" v-for="(item,index) in updateData" :key="index">
+                            <div class="updateInfo" v-for="(upd,index) in updateData" :key="index">
                                 <span class="updateDate">更新时间:</span>
                                 <span>{{upd.updateDate}}</span>
                                 <br>
@@ -25,9 +25,9 @@
                         <el-pagination
                                 background
                                 layout="prev, pager, next,jumper"
-                                @current-change="updateHandleCurrentChange"
+                                @current-change="handleCurrentChange"
                                 :current-page="currentPage"
-                                :page-size="3"
+                                :page-size=pagesize
                                 :total="orderData.length">
                         </el-pagination>
                     </div>
@@ -40,30 +40,41 @@ export default {
     name:"updateInfo",
     data(){
         return{
-            orderData:[],
             updateData:[],
             currentPage: 1,
-            pagesize:3
+            pagesize:5
         }
+    },
+    computed:{
+        username(){
+            return this.$store.state.username
+        },
+        token(){
+            return this.$store.state.token
+        },
+        orderData(){
+            return this.$store.state.orderData
+        }
+        
     },
     methods:{
         handleChange(data){
-                    // axios.post(this.getUpdateInfoUrl, {
-                    //    softwareName:data
-                    // },{
-                    //        headers:{
-                    //                    'token':sessionStorage.getItem('token')
-                    //        },
-                    //        withCredentials : true
-                    // })
-                    // .then((response) => {
-                    //    this.updateData = response.data.data.list ;
-                    // })
-                    // .catch(function (error) {
-                    //    console.log(error);
-                    //  });
+                    this.$axios.post("/client/show_update_info", {
+                       softwareName:data
+                    },{
+                           headers:{
+                                       'token':this.token
+                           },
+                           withCredentials : true
+                    })
+                    .then((response) => {
+                       this.updateData = response.data.data.list ;
+                    })
+                    .catch(function (error) {
+                       console.log(error);
+                     });
         },
-         updateHandleCurrentChange: function(currentPage){
+        handleCurrentChange: function(currentPage){
                this.currentPage = currentPage;
         }
     }

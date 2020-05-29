@@ -27,7 +27,7 @@
                             <el-pagination
                                     background
                                     layout="prev, pager, next,jumper"
-                                    @current-change="msgHandleCurrentChange"
+                                    @current-change="handleCurrentChange"
                                     :current-page="currentPage"
                                     :page-size="pagesize"
                                     :total="msgItems.length">
@@ -46,10 +46,21 @@ export default {
             pagesize:7
         }
     },
+    computed:{
+        username(){
+            return this.$store.state.username
+        },
+        token(){
+            return this.$store.state.token
+        }
+    },
+    mounted:function(){
+        this.getMsg();
+    },
     methods:{
         getMsg(){
-            this.axios.post("/server/show_messages", {
-                getName:this.serverName,
+            this.$axios.post("/server/show_messages", {
+                getName:this.username,
             },{
                 headers:{
                             'token':this.token
@@ -63,6 +74,9 @@ export default {
                     console.log(error);
                 });
         },
+        handleCurrentChange: function(currentPage){
+             this.currentPage = currentPage;
+        }
     }
 }
 </script>
@@ -70,10 +84,9 @@ export default {
 <style>
 #emails{
     position:relative;
-    width:800px;
-    margin:50px 90px;
-    min-height:800px;
-    padding:10px;
+    width:1000px;
+    margin:100px;
+    padding-left:200px;
 }
 
 .demo-table-expand{

@@ -27,7 +27,7 @@
                     <el-pagination
                             background
                             layout="prev, pager, next,jumper"
-                            @current-change="msgHandleCurrentChange"
+                            @current-change="handleCurrentChange"
                             :current-page="currentPage"
                             :page-size="pagesize"
                             :total="receiveMsg.length">
@@ -46,25 +46,36 @@ export default {
             pagesize:7
         }
     },
+    computed:{
+        username(){
+            return this.$store.state.username
+        },
+        token(){
+            return this.$store.state.token
+        }
+    },
+    mounted:function(){
+        this.getMsg();
+    },
     methods:{
-         msgHandleCurrentChange: function(currentPage){
+        handleCurrentChange: function(currentPage){
                this.currentPage = currentPage;
         },
         getMsg(){
-                    //  axios.post(this.getMsgUrl, {
-                    //      getName:this.userName
-                    //      },{
-                    //             headers:{
-                    //                        'token':sessionStorage.getItem('token')
-                    //                     },
-                    //             withCredentials : true
-                    //      })
-                    //      .then((response) => {
-                    //          this.receiveMsg = response.data.data.list ;
-                    //      })
-                    //      .catch(function (error) {
-                    //          console.log(error);
-                    //      });
+                     this.$axios.post("/client/show_user_messages", {
+                         getName:this.username
+                         },{
+                                headers:{
+                                           'token':this.token
+                                        },
+                                withCredentials : true
+                         })
+                         .then((response) => {
+                             this.receiveMsg = response.data.data.list ;
+                         })
+                         .catch(function (error) {
+                             console.log(error);
+                         });
                  }
     }
 }

@@ -15,6 +15,7 @@
                 </el-col>
             </div>
     </div>
+    
     <div id="main">
           <router-view></router-view>
     </div>
@@ -47,6 +48,9 @@ export default {
                   },
                   {
                     fncname: "软件更新信息" , index:"5"
+                  },
+                  {
+                    fncname:"faq搜索",index:"6"
                   }
                  ],
               orderData:[],
@@ -82,6 +86,9 @@ methods: {
                     }
                     if(key==5){
                       this.$router.push({path:'/client/updateInfo' })
+                    }
+                    if(key==6){
+                      this.$router.push({path:'/client/faq' })
                     }
                     
         }
