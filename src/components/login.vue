@@ -129,7 +129,8 @@ export default {
                     headers:{
                          
                     }}).then(res=>{
-                          if (res.data != null || res.msg== null && res.data.msg == "success" ) {
+                        console.log(res)
+                          if (res.data.msg == "success"&&res.data.data != null || res.data.msg== null    ) {
                                        
                                         
                                         var type = res.data.data.role;
@@ -150,20 +151,20 @@ export default {
                                             sessionStorage.setItem("token", session);
                                              sessionStorage.setItem("role", "Admin");
                                             this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
-                                        }
+                                        }   
                                          this.$message({
                                             message: "登录成功！！",
                                             type: 'success'
                                         });
 
                                     } else {
-                                        if (res.msg == "账号已冻结") {
+                                        if (res.data.msg == "账号已冻结") {
                                             this.$message({
                                                 message: "账号已冻结",
                                                 type: 'error'
                                             });
                                              
-                                        } else if (res.msg == "账户或者密码错误") {
+                                        } else if (res.data.msg == "账户或者密码错误") {
                                             this.$message({
                                                 message: "账户或密码错误",
                                                 type: 'error'

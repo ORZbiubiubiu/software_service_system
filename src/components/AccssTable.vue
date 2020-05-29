@@ -39,14 +39,14 @@
                         element-loading-text="拼命加载中"
                         element-loading-spinner="el-icon-loading"
                         element-loading-background="rgba(0, 0, 0, 0.8)">
-                        <el-table-column label="用户账户" width="205">
+                        <el-table-column label="用户账户" width="185">
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
                                     <el-tag size="medium">{{ scope.row.userId }}</el-tag>
                                 </div>
                             </template>
                         </el-table-column>
-                        <el-table-column label="角色" width="205">
+                        <el-table-column label="角色" width="255">
                             <template slot-scope="scope">
 
 
@@ -56,24 +56,25 @@
 
                             </template>
                         </el-table-column>
-                        <el-table-column label="账号状态" width="205">
+                        <el-table-column label="账号状态" width="100">
                             <template slot-scope="scope">
                                 <span>{{ scope.row.accountStatus }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="解决方式" width="205">
+                        <el-table-column label="解决方式" width="295">
                             <template slot-scope="scope">
-                                <select name="" width="164" v-model="scope.row.values" placeholder="请选择">
+                                <select name="" width="164" v-model="scope.row.values"  >
                                     <option value="" selected:disabled style="display:none">请选择</option>
                                     <option value="冻结" v-if="current === '售后服务人员'">冻结</option>
-
+                                     <option value="升级为高级服务人员" v-if=" Upgradeable(scope.row.userRole)">升级为高级服务人员</option>
+                                     <option value="降级为普通服务人员" v-if=" Releasable(scope.row.userRole)">降级为普通服务人员</option>
                                     <option value="在职" v-if="current === '售后服务人员'">在职</option>
                                     <option value="正常" v-if="current === '客户'">正常</option>
                                     <option value="冻结" v-if="current === '客户'">冻结</option>
 
 
                                 </select>
-                                <el-button size="mini"
+                                <el-button size="mini" id="accessBtn"
                                     @click="solution( scope.row.id,scope.row.userId ,scope.row.userRole, scope.row.accountStatus ,scope.row.values)">
                                     提交</el-button>
                             </template>
@@ -104,6 +105,10 @@ export default {
         access_setting_page_getdata(1,this);
         
      },
+       computed: {
+    // 计算属性的 getter
+   
+  },
     data:() =>{
         return {
 
@@ -156,6 +161,26 @@ export default {
   name: 'AccessTable',
 
 methods: {
+         Upgradeable: function (role ) {
+        
+            if (role=="售后服务人员") {
+                return true
+            }
+            
+        
+       
+      return false
+    },
+    Releasable:function (role ) {
+       
+            if (role=="服务人员") {
+                return true
+            }
+            
+       
+       
+      return false
+    },
         commit: function () {
              console.log("commit");
             
@@ -319,7 +344,7 @@ methods: {
                     that.tableData.push({
                          "id": element.id,
                         "userId": element.name,
-                        "userRole": element.role,
+                        "userRole":  element.role ,
                         "accountStatus": element.userState
                     })
                  
@@ -386,5 +411,7 @@ methods: {
     position: relative;
      left: 400px;
  }
-
+#accessBtn{
+    margin-left: 15px;
+}
 </style>

@@ -65,8 +65,8 @@
                     </el-table-column>
                     <el-table-column label="解决方式" width="180">
                         <template slot-scope="scope">
-                            <select name="" width="180" v-model="scope.row.solution">
-                                <option value="" selected:disabled style="display:none">请选择</option>
+                            <select name="" width="180" v-model="scope.row.solution" placeholder="请选择" clearable>
+                               <!--  <option value="" selected:disabled style="display:none">请选择</option> -->
 
                                 <option value="换人">换人</option>
 
