@@ -16,7 +16,7 @@
                     <div id="modifyfaqarea"   v-if="modifyshow">
                     <div id="search" class="v-center">
                          
-                            <el-input  id="search-bar" maxlength="40" @change="fff"
+                            <el-input  id="search-bar" maxlength="40" @change="faqsearch"
                                 placeholder="请输入内容" v-model="keyword">
                                 <i slot="prefix" class="el-input__icon el-icon-search"></i>
                             </el-input>
@@ -30,7 +30,7 @@
                             element-loading-text="拼命加载中"
                             element-loading-spinner="el-icon-loading"
                             element-loading-background="rgba(0, 0, 0, 0.8)">
-                                <el-table-column label="标题" width="130">
+                                <el-table-column label="标题" width="150">
                                     <template slot-scope="scope">
                             
                                         <span style="margin-left: 10px">{{ scope.row.faqtitle }}</span>
@@ -38,14 +38,15 @@
                                 </el-table-column>
                             
                             
-                                <el-table-column label="类型" width="130">
+                                <el-table-column label="类型" width="150">
                                     <template slot-scope="scope">
-                                        <el-popover  >
+                                        <span style="margin-left: 10px">{{ scope.row.faqType }}</span>
+                                      <!--   <el-popover  >
                             
                                             <div    >
                                                 <el-tag size="medium">{{ scope.row.faqType }}</el-tag>
                                             </div>
-                                        </el-popover>
+                                        </el-popover> -->
                                     </template>
                                 </el-table-column>
                                 <el-table-column label="详细信息" width="370">
@@ -326,9 +327,17 @@ methods: {
                 this.faqType = "";
 
             },
-            fff :function (keyword) { 
-                console.log(keyword);
-                 console.log(this.keyword);
+            faqsearch :function (keyWord) { 
+                console.log("faqsearch:s"+keyWord)
+                this.last = keyWord;
+                    if (keyWord=="") {
+                        faq_page_getdata(1,this);
+                    }else{
+                        console.log("btnSearch" + keyWord);
+                    
+                        faqserch(keyWord, 1,this);
+                    }
+                    
              },
             //page
              handleCurrentChange: function (p) {
@@ -336,13 +345,86 @@ methods: {
                     this.current_page = p;
                     faq_page_getdata(p,this);
                 }else{
-                    //faqserch(this.last,p);
+                    //
+                    faqserch(this.last,p,this);
                 }
            
             }
 }
   
 }
+
+//搜索
+    function faqserch(keyWord, pageNo,that) {
+        var data = {
+            faqInfo: keyWord,
+            pageNo: pageNo,
+            pageSize: that.page_size
+        };
+        that.current_page = pageNo;
+        console.log("faqserch"  )
+        console.log(data );
+        that.$axios.post("/admin/getsearchFaqList",data,{
+                    headers:{
+                        'token': sessionStorage.getItem("token")
+                    }}).then(response=>{
+                          var list = response.data.data.list;
+                            //console.log(response.data);
+                            console.log(Number(response.data.data.message)+"totle");
+                            that.total = Number(response.data.data.message);
+                            console.log(list.length);
+
+                            that.items = [];
+                for (let index = 0; index < list.length; index++) {
+                    
+                    const element = list[index];
+                    that.items.push({
+                         id: element.id,
+                        "faqtitle": element.faqName,
+                        faqType: element.faqType,
+                        "faqdetails": element.faqInfo,
+                        "faqdate": element.faqDate
+                    })
+                    
+                }
+                 
+                    
+                });
+        /* $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: "/admin/getsearchFaqList",
+            data: JSON.stringify(data),
+            headers: { "token": sessionStorage.getItem("token")},
+            success: function (response) {
+
+                var list = response.data.list;
+                console.log(response.data);
+                console.log(Number(response.data.message));
+                faq_page_vm.total = Number(response.data.message);
+                console.log(list.length);
+
+                faq_vm.items = [];
+                $.each(list, function (indexInArray, element) {
+
+                    Vue.set(faq_vm.items, indexInArray, {
+                        id: element.id,
+                        "faqtitle": element.faqName,
+                        faqType: element.faqType,
+                        "faqdetails": element.faqInfo,
+                        "faqdate": element.faqDate
+                    });
+
+
+                });
+
+
+            }
+        }); */
+
+
+    }   
 
  function faq_page_getdata(i,that) {
      that.loading=true;
@@ -370,7 +452,7 @@ methods: {
                     that.items.push({
                          "id": element.id,
                         "faqtitle": element.faqName,
-                        faqType: element.faqType,
+                        "faqType": element.faqType,
                         "faqdetails": element.faqInfo,
                         "faqdate": element.faqDate
                     })
