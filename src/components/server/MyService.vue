@@ -28,9 +28,9 @@
                             <el-pagination
                                     background
                                     layout="prev, pager, next,jumper"
-                                    @current-change="serviceHandleCurrentChange"
+                                    @current-change="handleCurrentChange"
                                     :current-page="currentPage"
-                                    :page-size="3"
+                                    :page-size=pagesize
                                     :total="serviceItems.length">
                             </el-pagination>
                         </div>
@@ -42,9 +42,67 @@ export default {
     name:"myService",
     data(){
         return{
-            serviceItems:[],
+            
             currentPage:1,
             pagesize:3,
+        }
+    },
+    created:function(){
+        var username = sessionStorage.getItem("name");
+        var token = sessionStorage.getItem("token");
+        this.$store.commit("setUsername",username);
+        this.$store.commit("setToken",token);
+    },
+    mounted:function(){
+        this.getService();
+    },
+    computed:{
+        username(){
+            return this.$store.state.username
+        },
+        token(){
+            return this.$store.state.token
+        },
+        receivers(){
+            return this.$store.state.receivers
+        },
+        serviceItems(){
+            return this.$store.state.serviceItems
+        }
+        
+    },
+    methods:{
+        getService(){
+             this.$axios.post("/server/search", {
+                    servername:this.username
+                },{
+                         headers:{
+                                     'token':this.token
+                                 },
+                         withCredentials : true
+                })
+                .then((response) => {
+                    console.log(response.data.data.list);
+                    this.$store.commit("setServiceItems",response.data.data.list);
+                    //动态获取收件人的输入建议
+                    var receivers=[];      //获取之前先清空
+                    this.serviceItems.map(item => {
+                         receivers.push({"value":item.userName});
+                    })
+                    this.$store.commit("setReceivers",receivers);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        isServer(state){
+                    if (state == "yes"){
+                        return true;
+                    }
+                    else return false;
+                },
+        handleCurrentChange: function(currentPage){
+             this.currentPage = currentPage;
         }
     }
 }
@@ -58,9 +116,9 @@ export default {
 }
 
 #server-cards{
-    margin:100px;
+    margin-top:50px;
+    padding-left: 300px;
     position:relative;
-    
 }
 
 .box-card{

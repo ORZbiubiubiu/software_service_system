@@ -22,7 +22,7 @@
 </template>
 
 <script>
-var adress =[]
+var adress = [];
 var validateReceiver = (rule, value, callback) => {
         var flag = false;
         if (!value) {
@@ -34,7 +34,7 @@ var validateReceiver = (rule, value, callback) => {
             }
         })
         if(!flag){
-            return callback(new Error("您只能给您的产品维护人员发信息"))
+            return callback(new Error("您只能给申请维护的客户发信息"))
         }
       };
 
@@ -48,7 +48,7 @@ var validateMessage = (rule, value, callback) => {
       };
 
 export default {
-    name:"sendmsg",
+    name:"server-sendmsg",
     data(){
         return{
             msg: {
@@ -67,6 +67,9 @@ export default {
             justMessage:""
         }
     },
+    mounted:function(){
+        adress = this.receivers;
+    },
     computed:{
         username(){
             return this.$store.state.username
@@ -77,9 +80,6 @@ export default {
         receivers(){
             return this.$store.state.receivers
         }
-    },
-    mounted:function(){
-        adress = this.receivers;
     },
     methods:{
         sendMsg(){
@@ -92,7 +92,7 @@ export default {
                      this.getName=this.escape(this.msg.receiver);
                      this.justMessage=this.escape(this.msg.msg);
 
-                        this.$axios.post("/client/send_user_message", {
+                        this.$axios.post("/server/send_server_message", {
                             getName:this.getName,
                             sendName:this.username,
                             justMessage:this.justMessage,

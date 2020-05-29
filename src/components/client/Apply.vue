@@ -42,13 +42,13 @@
 </template>
 
 <script>
-var softwareNames=[];
+var softwarenames=[];
 var validateSoftwareName = (rule, value, callback) => {
         var flag = false;
         if (!value) {
           return callback(new Error('软件名称不能为空'));
         }
-        softwareNames.map((item) =>{
+        softwarenames.map((item) =>{
             if (item.value==value){
                 flag=true;
             }
@@ -86,42 +86,64 @@ export default {
          }
         }
     },
+    mounted:function(){
+        softwarenames=this.softwareNames;
+        if (this.softwareName!=null){
+            this.form.softwareName=this.softwareName;
+            this.$store.commit("setSoftwareName",null);
+        }
+    },
+    computed:{
+        username(){
+            return this.$store.state.username
+        },
+        token(){
+            return this.$store.state.token
+        },
+        softwareNames(){
+            return this.$store.state.softwareNames
+        },
+        softwareName(){
+            return this.$store.state.softwareName
+        }
+        
+    },
     methods:{
-        // applyforService(){
-        //         axios.post(this.applyServiceUrl, {
-        //                             userName:this.userName,
-        //                             softwareName:this.form.softwareName,
-        //                             serviceKind:this.form.kind,
-        //                             serviceInfo:this.escape(this.form.desc)
-        //                         },{
-        //                               headers:{
-        //                                         'token':sessionStorage.getItem('token')
-        //                                       },
-        //                               withCredentials : true
-        //                         })
-        //                         .then((response) => {
+        applyforService(){
+                this.$axios.post("/client/apply_service", {
+                                    userName:this.username,
+                                    softwareName:this.form.softwareName,
+                                    serviceKind:this.form.kind,
+                                    serviceInfo:this.escape(this.form.desc)
+                                },{
+                                      headers:{
+                                                'token':this.token
+                                              },
+                                      withCredentials : true
+                                })
+                                .then((response) => {
 
-        //                             console.log(response.data.data.message);
-        //                             if(response.data.data.message=="success"){
-        //                                 this.$message({
-        //                                      type: 'success',
-        //                                      message: '申请成功,请耐心等待维护!'
-        //                                 });
-        //                                 this.form.softwareName = "";
-        //                                 this.form.desc = "";
-        //                                 this.form.kind = "";
+                                    console.log(response.data.data.message);
+                                    if(response.data.data.message=="success"){
+                                        this.$message({
+                                             type: 'success',
+                                             message: '申请成功,请耐心等待维护!'
+                                        });
+                                        this.form.softwareName = "";
+                                        this.form.desc = "";
+                                        this.form.kind = "";
 
-        //                             }else{
-        //                                 this.$message({
-        //                                      type: 'error',
-        //                                      message: '服务器发生异常，请稍后再试!'
-        //                                 });
-        //                             }
-        //                         })
-        //                         .catch(function (error) {
-        //                             console.log(error);
-        //                         });
-        // },
+                                    }else{
+                                        this.$message({
+                                             type: 'error',
+                                             message: '服务器发生异常，请稍后再试!'
+                                        });
+                                    }
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+        },
         resetApplyForm() {
                 this.form.softwareName='';
                 this.form.kind='';
@@ -134,7 +156,24 @@ export default {
                     rs=rs+str.substr(i,1).replace(pattern,'');
                 }
                 return rs;
-        }
+        },
+        querySearchAsyncSoftware(queryString, cb) {
+            var softwareName = this.softwareNames;
+            var results = queryString ? softwareName.filter(this.createStateFilter(queryString)) : softwareName;
+
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+              cb(results);
+            }, 3000 * Math.random());
+        },
+        softwareNameSelect(item) {
+                console.log(item);
+        },
+        createStateFilter(queryString) {
+                return (state) => {
+                  return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
+        },
     }
 }
 </script>

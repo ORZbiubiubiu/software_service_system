@@ -27,7 +27,7 @@
                             <el-pagination
                                     background
                                     layout="prev, pager, next,jumper"
-                                    @current-change="purchasedHandleCurrentChange"
+                                    @current-change="handleCurrentChange"
                                     :current-page="currentPage"
                                     :page-size="pagesize"
                                     :total="orderData.length">
@@ -51,11 +51,21 @@ export default {
         username(){
             return this.$store.state.username
         },
+        token(){
+            return this.$store.state.token
+        },
         orderData(){
             return this.$store.state.orderData
         }
     },
+    created:function(){
+        var username = sessionStorage.getItem("name");
+        var token = sessionStorage.getItem("token");
+        this.$store.commit("setUsername",username);
+        this.$store.commit("setToken",token);
+    },
     mounted:function(){
+        
         this.getOrder();
     },
     methods:{
@@ -87,20 +97,34 @@ export default {
 
                         return item;
                    })
-                    this.$store.commit("updateOrder",data);
-                    // for(var i=0 ;i<this.orderData.length;i++){
-                    //     console.log(this.orderData[i].serviceState==0);
-                    //     if(this.orderData[i].serviceState==0){
-                    //          softwareNames.push({"value":this.orderData[i].softwareName});//动态获取没有申请售后的软件名称
-                    //     }
-                    // }
+                    this.$store.commit("setOrder",data);
 
-                    // console.log(softwareNames);
+                    var softwareNames=[];
+                    for(var i=0 ;i<this.orderData.length;i++){
+                        
+                        if(this.orderData[i].serviceState==0){
+                             softwareNames.push({"value":this.orderData[i].softwareName});//动态获取没有申请售后的软件名称
+                        }
+                    }
+
+                    console.log(softwareNames);
+                    this.$store.commit("setSoftwareNames",softwareNames);
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         },
+        handleCurrentChange: function(currentPage){
+               this.currentPage = currentPage;
+        },
+        viewDetail(sname){
+            this.$router.push({path:'/client/service' });
+        },
+
+        apply(sname){
+            this.$router.push({path:'/client/apply' })
+            this.$store.commit("setSoftwareName",sname);
+        }
     }
 
 }

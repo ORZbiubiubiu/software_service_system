@@ -49,7 +49,7 @@
                     <el-pagination
                             background
                             layout="prev, pager, next,jumper"
-                            @current-change="serviceHandleCurrentChange"
+                            @current-change="handleCurrentChange"
                             :current-page="currentPage"
                             :page-size="pagesize"
                             :total="serviceData.length">
@@ -65,10 +65,49 @@ export default {
         return{
             currentPage:1,
             pagesize:7,
-            serviceData:[]
+        }
+        
+    },
+    computed:{
+        username(){
+            return this.$store.state.username
+        },
+        token(){
+            return this.$store.state.token
+        },
+        serviceData(){
+            return this.$store.state.serviceData
         }
     },
+    mounted:function(){
+        this.getService();
+    },
     methods:{
+        getService(){
+                     this.$axios.post("/client/user_search", {
+                         userName:this.username
+                         },{
+                                headers:{
+                                           'token':this.token
+                                        },
+                                withCredentials : true
+                         })
+                         .then((response) => {
+                             this.$store.commit("setServiceData",response.data.data.list) ;
+                             console.log(this.serviceData);
+                             //动态获取收件人的输入建议
+                             var receivers=[];
+                             this.serviceData.map(item => {
+                                   item.expansion = false;
+                                   receivers.push({"value":item.serverName});
+                                 });
+                             this.$store.commit("setReceivers",receivers);
+                             console.log(receivers);
+                         })
+                         .catch(function (error) {
+                             console.log(error);
+                         });
+        },
         toggleExpand(row) {
            let table = this.$refs.serviceTable;
            console.log(this.$refs.serviceTable);
@@ -82,6 +121,20 @@ export default {
              }
            })
            table.toggleRowExpansion(row);
+        },
+        handleCurrentChange: function(currentPage){
+               this.currentPage = currentPage;
+        },
+        serverState(state){
+            if (state == "yes"){
+                return 1;
+            }
+            if (state == "no"){
+                return -1;
+            }
+            if (state == "finish"){
+                return 0;
+            }
         }
     }
 }

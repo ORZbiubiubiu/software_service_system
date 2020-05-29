@@ -15,6 +15,7 @@
                 </el-col>
             </div>
     </div>
+    
     <div id="main">
           <router-view></router-view>
     </div>
@@ -22,7 +23,9 @@
 </template>
 
 <script>
- import Header from "./Header";
+import Header from "./Header";
+
+
 export default {
     components:{Header},
     data() {
@@ -45,6 +48,9 @@ export default {
                   },
                   {
                     fncname: "软件更新信息" , index:"5"
+                  },
+                  {
+                    fncname:"faq搜索",index:"6"
                   }
                  ],
               orderData:[],
@@ -52,6 +58,12 @@ export default {
         
     } ,
   name: 'client',
+  mounted:function(){
+    var username = sessionStorage.getItem("name");
+    var token = sessionStorage.getItem("token");
+    this.$store.commit("setUsername",username);
+    this.$store.commit("setToken",token);
+  },
 
 methods: {
      
@@ -74,6 +86,9 @@ methods: {
                     }
                     if(key==5){
                       this.$router.push({path:'/client/updateInfo' })
+                    }
+                    if(key==6){
+                      this.$router.push({path:'/client/faq' })
                     }
                     
         }

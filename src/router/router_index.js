@@ -11,10 +11,12 @@ import Purchased from "../components/client/Purchased.vue";
 import Service from "../components/client/Service";
 import Apply from "../components/client/Apply";
 import SendMsg from "../components/client/SendMsg";
+import Server_SendMsg from "../components/server/SendMsg";
 import ReceiveMsg from "../components/client/ReceiveMsg";
+import GetMsg from "../components/server/GetMsg";
 import UpdateInfo from "../components/client/UpdateInfo";
 import MyService from "../components/server/MyService";
-// import GetMsg from "../components/server/GetMsg";
+import FAQ from "../components/client/Faq";
 import Management from "../components/server/Management";
 
 import AccssTable from '../components/AccssTable.vue'
@@ -36,11 +38,12 @@ const routes = [
             },
             {
                 path:"",
+                name:"myService",
                 component: MyService
             },
             {
                 path:"getMsg",
-                component: ReceiveMsg
+                component: GetMsg
             },
             {
                 path:"management",
@@ -48,7 +51,7 @@ const routes = [
             },
             {
                 path:"sendMsg",
-                component: SendMsg
+                component: Server_SendMsg
             }
         ]
     },
@@ -62,10 +65,14 @@ const routes = [
          children:[
             {
                 path:"purchased",
-                component:Purchased
+                component:Purchased,
+                meta: {
+                    title: "客户"
+                },
             },
             {
                 path:"",
+                name:"purchased",
                 component:Purchased
             },
             {
@@ -87,6 +94,10 @@ const routes = [
             {
                 path:"updateInfo",
                 component:UpdateInfo
+            },
+            {
+                path:"faq",
+                component:FAQ
             }
          ]
     },

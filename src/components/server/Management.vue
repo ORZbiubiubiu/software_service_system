@@ -1,11 +1,11 @@
 <template>
   <div id="service-management" >
                     <el-table :data="serviceItems.slice((currentPage-1)*pagesize,currentPage*pagesize)"  key="1">
-                        <el-table-column show-overflow-tooltip prop="softwareName" label="软件名称" width="150">
+                        <el-table-column show-overflow-tooltip prop="softwareName" label="软件名称" width="200">
                         </el-table-column>
-                        <el-table-column prop="userName"  label="申请用户"  width="150">
+                        <el-table-column prop="userName"  label="申请用户"  width="200">
                         </el-table-column>
-                        <el-table-column prop="serviceKind" label="问题类型" width="100">
+                        <el-table-column prop="serviceKind" label="问题类型" width="200">
                         </el-table-column>
                         <el-table-column label="当前状态">
                             <template slot-scope="scope">
@@ -26,7 +26,7 @@
                         <el-pagination
                                 background
                                 layout="prev, pager, next,jumper"
-                                @current-change="serviceManageHandleCurrentChange"
+                                @current-change="handleCurrentChange"
                                 :current-page="currentPage"
                                 :page-size="pagesize"
                                 :total="serviceItems.length">
@@ -40,10 +40,121 @@ export default {
     name:"management",
     data(){
         return{
-            serviceItems:[],
+            userName:'',
+            softwareName:'',
+            
             currentPage:1,
             pagesize:7
         }
+    },
+    computed:{
+        username(){
+            return this.$store.state.username
+        },
+        token(){
+            return this.$store.state.token
+        },
+        serviceItems(){
+            return this.$store.state.serviceItems
+        }
+        
+    },
+    methods:{
+        handleCurrentChange: function(currentPage){
+             this.currentPage = currentPage;
+        },
+        isServer(state){
+                    if (state == "yes"){
+                        return true;
+                    }
+                    else return false;
+        },
+        finish(sname,uname){
+                this.softwareName=sname;
+                this.userName=uname;
+                this.$confirm('确定要修改该服务状态为完成吗?', '提示', {
+                          confirmButtonText: '确定',
+                          cancelButtonText: '取消',
+                          type: 'warning'
+                        }).then(() => {
+                            this.$axios.post("/server/update_state", {
+                                                userName:this.userName,//客户名
+                                                servername:this.username,//该用户用户名 即服务人员的用户名
+                                                serverstate:"finish",
+                                                softwareName:this.softwareName
+                                            },{
+                                                    headers:{
+                                                               'token':this.token
+                                                    },
+                                                    withCredentials : true
+                                             })
+                                            .then((response) => {
+                                                 if(response.data.data.message == 'success'){
+                                                     this.$message({
+                                                           type: 'success',
+                                                           message: '修改成功!'
+                                                     });
+                                                     this.getService();
+                                                 }else{
+                                                    this.$message({
+                                                           type: 'error',
+                                                           message: '修改失败，请稍后再试!'
+                                                    });
+                                                 }
+                                            })
+                                            .catch(function (error) {
+                                                console.log(error);
+                                            });
+                        }).catch(() => {
+                          this.$message({
+                            type: 'info',
+                            message: '修改请求已取消'
+                          });
+                        });
+
+        },
+        change(sname,uname){
+             this.softwareName=sname;
+             this.userName=uname;
+             this.$confirm('确定提交换人申请吗?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+             }).then(() => {
+                      this.$axios.post("/server/update_state", {
+                            userName:this.userName,
+                            servername:this.username,
+                            serverstate:"no",
+                            softwareName:this.softwareName
+                      },{
+                            headers:{
+                                        'token':this.token
+                                    },
+                            withCredentials : true
+                        }).then((response) => {
+                            if(response.data.data.message == 'success'){
+                                this.$message({
+                                    type: 'success',
+                                    message: '申请成功,请等待管理员审核!'
+                                });
+                                this.getService();
+                            }else{
+                                  this.$message({
+                                    type: 'error',
+                                    message: '申请失败，请稍后再试!'
+                                  });
+                            }
+                      }).catch(function (error) {
+                              console.log(error);
+                         });
+
+             }).catch(() => {
+                  this.$message({
+                        type: 'info',
+                        message: '请求已取消'
+                  });
+             });
+        },
     }
 }
 </script>
