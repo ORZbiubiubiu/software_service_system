@@ -73,6 +73,9 @@ const routes = [
             {
                 path:"",
                 name:"purchased",
+                 meta: {
+                     title: "客户"
+                 },
                 component:Purchased
             },
             {
@@ -114,9 +117,11 @@ const routes = [
                next();  
 
            } else {
-               alert("你没有权限访问改页面！");
+               alert("你没有权限访问改页面！，即将跳转到登录界面！");
                
-              next(false)
+              next({
+                  name: 'Login'
+              })
            }
             
 
@@ -236,10 +241,11 @@ const routes = [
     }, 
     {
         path: '/login', //默认值
+        name:"Login",
         meta: {
             title: "登录"
         },
-        name:"Login",
+        
         component: login,
     }  
 ]
@@ -252,7 +258,7 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
     
-   // console.log(to)
+    console.log("to.meta.title:" + to.meta.title);
     if (to.meta.title==null) {  //改网页标题
          document.title="登录"
     }else{
