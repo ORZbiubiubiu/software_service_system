@@ -39,8 +39,10 @@ export default new Vuex.Store({
     },
     setSoftwareName(state,sname){
       state.softwareName=sname;
+    },
+    clearToken(state){
+      state.token="";
     }
-    
   },
   actions: {
   },

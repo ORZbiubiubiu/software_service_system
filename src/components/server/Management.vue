@@ -132,7 +132,7 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
              }).then(() => {
-                      this.$axios.post("/server/update_state", {
+                      this.$axios.post("/senSer/update_state", {
                             userName:this.userName,
                             servername:this.username,
                             serverstate:"no",
@@ -162,7 +162,13 @@ export default {
                                     message: '申请失败，请稍后再试!'
                                   });
                             }
-                      }).catch(function (error) {
+                      }).catch( (error) => {
+                            if(error.response.status==401){
+                                this.$message({
+                                    type: 'error',
+                                    message: '很抱歉，您暂时无权进行此操作!'
+                                });
+                            }  
                               console.log(error);
                          });
 
