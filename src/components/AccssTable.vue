@@ -183,13 +183,13 @@ methods: {
     },
         commit: function () {
              console.log("commit");
-            
-            console.log(data)
-                if (this.userRole == "客户") {
-                    var data ={
+                var data ={
                 "id": this.id,
                 "userState": this.changeState,
             }
+             
+                if (this.userRole == "客户") {
+                    
                       console.log("CustomerPermissionSettingReques");
 
                      this.$axios.post("/admin/CustomerPermissionSettingRequest",data,{
@@ -217,11 +217,12 @@ methods: {
                    
 
                 } else if (this.userRole == "普通售后"||this.userRole =="高级售后") {
-                       data ={
-                "id": this.id,
-                "serverState": this.changeState,
-            }
-                      console.log("permissionSettingserverRequest");
+                    if (this.changeState=="在职"||this.changeState=="冻结") {
+                        data ={
+                            "id": this.id,
+                            "serverState": this.changeState,
+                        }
+                      console.log("permissionSettingserverRequest "+this.changeState);
                      this.$axios.post("/admin/permissionSettingserverRequest",data,{
                     headers:{
                         'token':sessionStorage.getItem("token")
@@ -245,6 +246,38 @@ methods: {
                             }
                     
                     });
+                    }else{
+                        var data_tmp={
+                            id:this.id,
+                            message:this.changeState
+
+                        }
+                         this.$axios.post("/admin/updateServerRole",data_tmp,{
+                    headers:{
+                        'token':sessionStorage.getItem("token")
+                    }}).then(response=>{
+                         //console.log(response.data.data.message+"6666")
+                         
+                            if (response.data.code == 0) {
+                                this.dialogFormVisible = false;
+                                this.$message({
+                                    message: '售后服务人员权限修改成功',
+                                    type: 'success'
+                                });
+
+                                access_setting_page_getdata(this.current_page,this);
+                            } else {
+                               
+                                this.$message({
+                                    message: '售后服务人员权限修改失败！',
+                                    type: 'error'
+                                });
+                            }
+                    
+                    });
+
+                    }
+                       
 
                    
                 }
@@ -336,6 +369,7 @@ methods: {
                          var list = res.data.list;
                 that.total = Number(res.data.message);
                 that.tableData = [];
+              
                  console.log("售后服务人员列表：");
                 for (var index = 0; index < list.length; index++) {
                     var element = list[index];
