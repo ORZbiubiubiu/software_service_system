@@ -63,7 +63,7 @@ methods: {
 <style scoped>
  
  .header {
-     
+    
     margin:0;
     position: relative;
     background-color: rgba(39, 110, 81, 1);

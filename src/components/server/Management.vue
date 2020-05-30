@@ -89,13 +89,24 @@ export default {
                                                     withCredentials : true
                                              })
                                             .then((response) => {
-                                                 if(response.data.data.message == 'success'){
-                                                     this.$message({
-                                                           type: 'success',
-                                                           message: '修改成功!'
-                                                     });
-                                                     this.getService();
-                                                 }else{
+                                                if(response.data.data.message == 'success'){
+                                                    this.$message({
+                                                          type: 'success',
+                                                          message: '修改成功!'
+                                                    });
+                                                    var serviceitem = this.serviceItems
+                                                    var tempItem=[];
+                                                    
+                                                    for(var i=0;i<serviceitem.length;i++){
+                                                        if(serviceitem[i].softwareName == this.softwareName && serviceitem[i].userName == this.userName){
+                                                            continue;
+                                                        }else{
+                                                            tempItem.push(serviceitem[i]);
+                                                        }
+                                                    }
+                                                     this.$store.commit("setServiceItems",tempItem);
+                                                }
+                                                else{
                                                     this.$message({
                                                            type: 'error',
                                                            message: '修改失败，请稍后再试!'
@@ -137,7 +148,14 @@ export default {
                                     type: 'success',
                                     message: '申请成功,请等待管理员审核!'
                                 });
-                                this.getService();
+                                var serviceitem = this.serviceItems
+                                serviceitem.map(item => {
+                                                    if(item.softwareName == this.softwareName && item.userName == this.userName){
+                                                        item.serviceState="no";
+                                                  }
+                                });
+                                this.$store.commit("setServiceItems",serviceitem);
+                                
                             }else{
                                   this.$message({
                                     type: 'error',
