@@ -22,7 +22,7 @@ public class ShiroConfig {
         //需要登录的没登录的接口
         shiroFilterFactoryBean.setLoginUrl("/login");
         //无权限跳转的url
-        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/not_permit");
         //拦截器路径
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 
