@@ -149,7 +149,7 @@ export default {
                                         } else if (type == "3"){
                                             sessionStorage.setItem("name", this.userName);
                                             sessionStorage.setItem("token", session);
-                                             sessionStorage.setItem("role", "Admin");
+                                            sessionStorage.setItem("role", "Admin");
                                             this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
                                         }   
                                          this.$message({

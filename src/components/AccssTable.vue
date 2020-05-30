@@ -163,7 +163,7 @@ export default {
 methods: {
          Upgradeable: function (role ) {
         
-            if (role=="售后服务人员") {
+            if (role=="普通售后") {
                 return true
             }
             
@@ -173,7 +173,7 @@ methods: {
     },
     Releasable:function (role ) {
        
-            if (role=="服务人员") {
+            if (role=="高级售后") {
                 return true
             }
             
@@ -226,7 +226,7 @@ methods: {
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(response=>{
-                         console.log(response.data.data.message+"6666")
+                         //console.log(response.data.data.message+"6666")
                          
                             if (response.data.data.message == "维护人员权限修改成功！") {
                                 this.dialogFormVisible = false;
@@ -341,12 +341,26 @@ methods: {
                     var element = list[index];
                     // var totalPage = data.totalPage;
                     // access_page_vm.total = totalPage * data_temp.access_page_vm.pageSize;
-                    that.tableData.push({
-                         "id": element.id,
-                        "userId": element.name,
-                        "userRole":  element.role ,
-                        "accountStatus": element.userState
-                    })
+                   var userRoleList= element.role;
+                   var item;
+                   if (userRoleList.includes(4)) {
+                         item={ 
+                             "id": element.id,
+                                "userId": element.name,
+                                "userRole":  "高级售后" ,
+                                "accountStatus": element.userState
+                            }
+                   }else{
+                           item={ 
+                               "id": element.id,
+                                "userId": element.name,
+                                "userRole":  "普通售后" ,
+                                "accountStatus": element.userState
+                            }
+                   }
+                   
+
+                   that.tableData.push(item)
                  
                     console.log(that.tableData[index]);
 
