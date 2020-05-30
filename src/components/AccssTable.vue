@@ -64,7 +64,7 @@
                         <el-table-column label="解决方式" width="295">
                             <template slot-scope="scope">
                                 <select name="" width="164" v-model="scope.row.values"  >
-                                    <option value="" selected:disabled style="display:none">请选择</option>
+                                    
                                     <option value="冻结" v-if="current === '售后服务人员'">冻结</option>
                                      <option value="升级为高级服务人员" v-if=" Upgradeable(scope.row.userRole)">升级为高级服务人员</option>
                                      <option value="降级为普通服务人员" v-if=" Releasable(scope.row.userRole)">降级为普通服务人员</option>
@@ -216,7 +216,7 @@ methods: {
                     });
                    
 
-                } else if (this.userRole == "售后服务人员") {
+                } else if (this.userRole == "普通售后"||this.userRole =="高级售后") {
                        data ={
                 "id": this.id,
                 "serverState": this.changeState,
@@ -270,7 +270,7 @@ methods: {
         }
     },
     solution(Id, userId, userRole, accountStatus, way) {//表格按钮提交
-      console.log("solution");
+      console.log("solution:"+way);
         this.changeState = way;
         this.id = Id;
         this.userId = userId;
@@ -348,14 +348,16 @@ methods: {
                              "id": element.id,
                                 "userId": element.name,
                                 "userRole":  "高级售后" ,
-                                "accountStatus": element.userState
+                                "accountStatus": element.userState,
+                                values:""
                             }
                    }else{
                            item={ 
                                "id": element.id,
                                 "userId": element.name,
                                 "userRole":  "普通售后" ,
-                                "accountStatus": element.userState
+                                "accountStatus": element.userState,
+                                values:""
                             }
                    }
                    

@@ -200,8 +200,9 @@ export default {
                                  
                               
                             }else{
-                                 this.dialogFormVisible=true;
+                                this.dialogFormVisible=true;
                             }
+                            
                     
                 })
 
@@ -287,7 +288,8 @@ function service_error_page_getdata(i,that) { // //根据页数获取售后服�
                                     "serviceId": element.serviceid,
                                     "serviceState": "element.serviceState",
                                     "Applicants": element.getName,
-                                    "Application_reason": element.reason
+                                    "Application_reason": element.reason,
+                                    solution:""
                                 });
                         
                         console.log(that.tableData[index])
