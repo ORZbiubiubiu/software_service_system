@@ -26,4 +26,5 @@ public interface update_service_mapper {
     @Update("UPDATE service_table SET serviceState=#{serviceState} WHERE softwareName=#{softwareName} and serverName = #{serverName} and userName = #{userName}")
     int update(@Param("softwareName") String softwareName, @Param("serviceState") String serviceState, @Param("serverName") String serverName, @Param("userName") String userName);
 
+
 }

@@ -54,7 +54,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         System.out.println("认证 doGetAuthenticationInfo");
-        //从token获取用户登录信息，token代表用户输入
+        //从authenticationToken获取用户登录信息，authenticationToken代表用户输入
         String username = (String)authenticationToken.getPrincipal();
         User user = userService.findAllUserInfoByUserName(username);
         //取密码

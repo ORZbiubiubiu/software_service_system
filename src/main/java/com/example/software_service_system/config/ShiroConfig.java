@@ -15,7 +15,7 @@ import java.util.Map;
 public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
-        System.out.print("执行ShiroFilterFactoryBean");
+//        System.out.print("执行ShiroFilterFactoryBean");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -33,11 +33,16 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
 
-        filterChainDefinitionMap.put("/client/**","roles[client]");
-        filterChainDefinitionMap.put("/faq/**","roles[client]");
-        filterChainDefinitionMap.put("/admin/**","roles[admin]");
-        filterChainDefinitionMap.put("/server/**","roles[server]");
-//        filterChainDefinitionMap.put("/not_permit","authc");
+//        filterChainDefinitionMap.put("/client/**","roles[client]");
+//        filterChainDefinitionMap.put("/faq/**","roles[client]");
+//        filterChainDefinitionMap.put("/admin/**","roles[admin]");
+//        filterChainDefinitionMap.put("/server/**","roles[server]");
+        filterChainDefinitionMap.put("/faq/**","perms[per_faq]");
+        filterChainDefinitionMap.put("/client/**","perms[per_cli]");
+        filterChainDefinitionMap.put("/server/**","perms[per_ser]");
+        filterChainDefinitionMap.put("/admin/**","perms[per_adm]");
+        filterChainDefinitionMap.put("/senSer/**","perms[per_senSer]");
+//        filterChainDefinitionMap.put("/**","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

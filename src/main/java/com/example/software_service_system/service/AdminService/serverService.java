@@ -5,7 +5,9 @@ import com.example.software_service_system.Entity.AdminEntity.server;
 import com.example.software_service_system.mapper.AdminMapper.serverMapper;
 import com.example.software_service_system.mapper.AdminMapper.userPowerMapper;
 
+import com.example.software_service_system.service.LoginService.UserService;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class serverService {
     serverMapper serverMapper;
     @Autowired
     com.example.software_service_system.mapper.AdminMapper.userPowerMapper userPowerMapper;
+
+    @Autowired
+    UserService userService;
     //获得替换人名单
     public return_data<String> getrpName(String serverName){ ;
         return_data<String> rs = new return_data<String>();
@@ -37,14 +42,15 @@ public class serverService {
 
 
     //返回服务人员状态
-    public List<Map<String,String>> queryUserList(int page, int size){
+    public List<Map<String,Object>> queryUserList(int page, int size){
         List<server> userList = serverMapper.queryUserList((page-1)*size,size*page);
-        List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+        List<Map<String,Object>> list = new ArrayList<>();
         for (server u:userList){
-            Map<String, String> map = new HashMap<String, String>();
+            Map<String,Object> map = new HashMap<String,Object>();
             map.put("id", String.valueOf(u.getId()));
             map.put("name",u.getServerName());
-            map.put("role","售后服务人员");
+            List<Integer> rolelist = userService.findSimpleRoleIdById(u.getId());
+            map.put("role",rolelist);
             map.put("userState",u.getServerState());
             list.add(map);
         }
@@ -81,5 +87,17 @@ public class serverService {
         }
         return result;
     }
+
+    public Integer upServer(Integer id){
+        int result = serverMapper.upServer(id);
+        return result;
+    }
+
+    public Integer downServer(Integer id){
+        int result = serverMapper.downServer(id);
+        return result;
+    }
+
+
 
 }

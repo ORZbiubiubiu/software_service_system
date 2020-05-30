@@ -7,9 +7,7 @@ public class server {
     private String serverState;
 
     public server(int id, String serverName, String serverSoftware, String serverState) {
-        this.id
-
-                = id;
+        this.id = id;
         this.serverName = serverName;
         this.serverSoftware = serverSoftware;
         this.serverState = serverState;

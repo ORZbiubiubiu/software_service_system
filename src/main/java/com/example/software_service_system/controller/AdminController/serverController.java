@@ -2,6 +2,7 @@ package com.example.software_service_system.controller.AdminController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.software_service_system.Entity.AdminEntity.*;
+import com.example.software_service_system.Entity.LoginEntity.JsonData;
 import com.example.software_service_system.service.AdminService.serverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,9 +28,9 @@ public class serverController {
     }
 
     @RequestMapping("/getServerList" ) //权限设置界面服务人员名单
-    public return_data<Map<String,String>>   queryFaqDbList(@RequestBody JSONObject jsonObject){
-        List<Map<String,String>> userList = serverService.queryUserList(jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
-        return_data<Map<String,String>> userreturn_data = new return_data<Map<String,String>>();
+    public return_data<Map<String,Object>>   queryFaqDbList(@RequestBody JSONObject jsonObject){
+        List<Map<String,Object>> userList = serverService.queryUserList(jsonObject.getIntValue("pageNo"),jsonObject.getIntValue("pageSize"));
+        return_data<Map<String,Object>> userreturn_data = new return_data<Map<String,Object>>();
         userreturn_data.setList(userList);
         userreturn_data.setMessage(String.valueOf(serverService.getNum()));
         return_json returnJson = new return_json();
@@ -45,5 +46,26 @@ public class serverController {
         return_json updatereturnjson = new return_json();
         updatereturnjson.setData(updateresoult);
         return updatereturnjson;
+    }
+
+    @RequestMapping("/updateServerRole")
+    public JsonData updateServerRole(@RequestBody JSONObject json){
+        int id = json.getIntValue("id");
+        String message = json.getString("message");
+        if(message.equals("升级为高级服务人员")){
+            int result = serverService.upServer(id);
+            if(result == 0){
+                return JsonData.buildError("error");
+            }else{
+                return JsonData.buildSuccess();
+            }
+        }else{
+            int result  = serverService.downServer(id);
+            if(result == 0){
+                return JsonData.buildError("error");
+            }else{
+                return JsonData.buildSuccess();
+            }
+        }
     }
 }

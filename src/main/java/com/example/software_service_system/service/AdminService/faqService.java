@@ -25,18 +25,20 @@ public class faqService {
         int i = faqList.size();
         List<Map<String,String>> maps = new ArrayList<Map<String,String>>();
         for(int j=0;j<i;j++){
-            String nowTime = sdf.format(faqList.get(j).getFaqDate());
-            Date time = sdf.parse(nowTime);
-            faqList.get(j).setFaqDate(time);
-            Map<String,String> map = new HashMap<String, String>();
-            map.put("id",String.valueOf(faqList.get(j).getId()));
-            map.put("faqName",faqList.get(j).getFaqName());
-            map.put("faqType",faqList.get(j).getFaqType());
-            map.put("faqDescription",faqList.get(j).getFaqDescription());
-            map.put("faqInfo",faqList.get(j).getFaqInfo());
-            map.put("faqSoftware",faqList.get(j).getFaqSoftware());
-            map.put("faqDate",sdf.format(faqList.get(j).getFaqDate()));
-            maps.add(map);
+            if (j>=((page-1)*size)&&j<(size*page)) {
+                String nowTime = sdf.format(faqList.get(j).getFaqDate());
+                Date time = sdf.parse(nowTime);
+                faqList.get(j).setFaqDate(time);
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("id", String.valueOf(faqList.get(j).getId()));
+                map.put("faqName", faqList.get(j).getFaqName());
+                map.put("faqType", faqList.get(j).getFaqType());
+                map.put("faqDescription", faqList.get(j).getFaqDescription());
+                map.put("faqInfo", faqList.get(j).getFaqInfo());
+                map.put("faqSoftware", faqList.get(j).getFaqSoftware());
+                map.put("faqDate", sdf.format(faqList.get(j).getFaqDate()));
+                maps.add(map);
+            }
         }
 
         return maps;

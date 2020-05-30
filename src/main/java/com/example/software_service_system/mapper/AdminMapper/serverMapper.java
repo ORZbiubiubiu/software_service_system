@@ -2,10 +2,7 @@ package com.example.software_service_system.mapper.AdminMapper;
 
 
 import com.example.software_service_system.Entity.AdminEntity.server;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,4 +43,10 @@ public interface serverMapper {
 
     @Select("select count(*) from server_table where serverSoftware=#{software}")
     int getSoftwareCount(String software);
+
+    @Insert("INSERT into  user_role (user_id,role_id) values(#{id},4)")
+    int upServer(@Param("id") Integer id);
+
+    @Delete("Delete from user_role where user_id = #{id} and role_id = 4")
+    int downServer(@Param("id") Integer id);
 }

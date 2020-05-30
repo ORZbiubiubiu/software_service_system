@@ -16,5 +16,5 @@ public class User {
     private String username;
     private String password;
     private List<Role> roleList;
-//    private List<Permission> permissionList;
+    private List<Permission> permissionList;
 }
