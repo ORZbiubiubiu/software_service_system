@@ -64,28 +64,28 @@ export default {
              logTableShow:false,
              SWTableShow:false,
              
-             faqTable:[{
+             faqTable:[/* {
                      faqType: "faqType",
                     "faqName": "faqtitle1",
                     "faqInfo": "faqdetails",
                     "faqDate": "20/03/05",
                     faqSoftware:"111"
-             }],
+             } */],
              
-              logTable:[{
+              logTable:[/* {
                   log_level:"info",
                   logdetail:"",
                   java_class:"",
                   thread:"",
                   log_time:""
-              }],
+              } */],
              
-              SWTable:[{
+              SWTable:[/* {
                     id: "element.id",
                     softwarename: "element.softwareName",
                     softwareinfo: "element.softwareInfo",
                     updatedate: "element.updateDate"
-              }]
+              } */]
         }
         
     } ,
