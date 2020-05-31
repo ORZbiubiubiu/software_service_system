@@ -98,7 +98,7 @@ methods: {
             console.log("faq搜索:"+this.keyWord);
             this.faqTableLoading=true;
               data={   faq_search: this.keyWord  };
-              this.$axios.post("/e_faq_search",data,{
+              this.$axios.post("/admin/e_faq_search",data,{
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
@@ -119,7 +119,7 @@ methods: {
                data={   log_search: this.keyWord  };
             
           this.logTableLoading=true;
-            this.$axios.post("/e_faq_search",data,{
+            this.$axios.post("/admin/e_faq_search",data,{
                 headers:{
                     'token': sessionStorage.getItem("token")
                 }}).then(res=>{
@@ -142,7 +142,7 @@ methods: {
            
 
             //sw
-             this.$axios.post("/e_software_search",data,{
+             this.$axios.post("/admin/e_software_search",data,{
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
@@ -176,7 +176,7 @@ methods: {
 
 
             //search
-            this.$axios.post("/e_faq_search",data,{
+            this.$axios.post("/admin/e_faq_search",data,{
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
@@ -201,7 +201,7 @@ methods: {
             this.logTableShow=true;
             this.SWTableShow=false;
           
-            this.$axios.post("/e_log_search",data,{
+            this.$axios.post("/admin/e_log_search",data,{
             headers:{
                 'token': sessionStorage.getItem("token")
             }}).then(res=>{
@@ -227,7 +227,7 @@ methods: {
             this.SWTableShow=true;
 
             //sw
-             this.$axios.post("/e_software_search",data,{
+             this.$axios.post("/admin/e_software_search",data,{
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
