@@ -82,7 +82,7 @@ export default {
                     var data = response.data.data.list;
                     var msg = response.data.data.message.split('#');
 
-                    // this.$store.state.softwareNames=[];
+                    
                    data = data.filter(function(item,index){
                         for(var i = 0;i < msg.length;i++){
 

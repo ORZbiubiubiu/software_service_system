@@ -22,6 +22,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  position: relative;
   height: 100%;
 }
 .el-menu {
@@ -55,8 +56,10 @@ export default {
     height: 0;
     visibility: hidden;
 }
-body{
-  margin: 0;
-  
-}
+
+    html,body{
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
 </style>

@@ -1,23 +1,23 @@
 <template>
     <div id="search">
-        <div id="search-bar-content" class="h-center">
+        <div id="search-bar-content" >
             <el-row :gutter="20">
                 <el-col :span="16"><el-input v-model="faqInfo" placeholder="请输入内容"></el-input></el-col>
                 <el-col :span="6"><el-button type="primary" @click="getFaq" icon="el-icon-search">搜索</el-button></el-col>
             </el-row>
         </div>
         <div id="type-nav" class="clearfix">
-            <el-col :span="24" class="clearfix">
+            
                 <el-menu default-active="0" class="nav-center el-menu-demo" @select="handleSelect" mode="horizontal">
                     <el-menu-item v-bind:index="item.index" :key="index" v-for="(item, index) in types">
                         {{item.name}}
                     </el-menu-item>
                 </el-menu>
-            </el-col>
+            
         </div>
         
         <div id="posts" >
-            <el-divider></el-divider>
+            
             <div id="result">搜索结果:</div>
             <div class="nodata" v-if="faqData.length == 0">很抱歉,暂时没有与{{searchHistory}}相匹配的搜索结果。</div>
             <div class="post" :key="index" v-for="(item,index) in faqData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
@@ -143,21 +143,22 @@ export default {
 #search{
     margin: 0;
     padding-top: 1px;
+    min-height: 90%;
     position: relative;
 }
 #search-bar-content{
+    margin-left: 500px;
     width:500px;
     margin-top: 49px;
 }
 
 #type-nav{
-    margin-top:100px;
-   
+    margin-top:20px;
 }
 
-.nav-center{
-    position: absolute;
-    left: 30%;
+.nav-center{    
+    padding-left: 500px;
+    
 }
 
 

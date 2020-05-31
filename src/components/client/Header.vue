@@ -13,7 +13,7 @@
                         {{username}}
                     </span>
                 <div id="logout">
-                    <a href="" @click="logout" id="btn-logout" >退出</a>
+                     <el-link @click="logout" :underline="false">退出</el-link>
                 </div>
             </div>
     </div>
@@ -24,7 +24,7 @@
 export default {
     data:() =>{
         return {
-             searchInfo:""
+             
         }
         
     } ,
@@ -39,19 +39,24 @@ export default {
   name: 'myheader',
 
 methods: {
-    search(){
-            sessionStorage.setItem("searchInfo",this.searchInfo);
-            window.location.href = "/faq";
-    },
+    
     logout(){
 
             this.$axios.post("/logout",{
                 token:this.token
             }).then( (response)=>{
-
-                window.location.href = "/login";
+                
+                sessionStorage.clear();
+                this.$store.commit("clearToken");
+                this.$router.push("/login");
+                this.$message({
+                    type: 'success',
+                    message: '退出成功!'
+                });
+                
             }).catch(function (error) {
                 console.log(error);
+                
             });
         }
 }
@@ -63,11 +68,16 @@ methods: {
 <style scoped>
  
  .header {
-     
     margin:0;
     position: relative;
     background-color: rgba(39, 110, 81, 1);
-    height: 10%;
+    height: 100px;
+    
+}
+
+.el-link.el-link--default {
+    color: white;
+    font-size: 16px;
 }
 
 #title{
@@ -76,13 +86,8 @@ methods: {
     color: #fff;
 }
 
-#search{
-    left:40%;
-    width: 550px;
-}
-
 #userinfo{
-    right: 5%;
+    right: 3%;
 }
 
 #username{
@@ -100,11 +105,5 @@ methods: {
     display: inline-block;
     margin-left: 20px;
 }
-
-#btn-logout{
-    text-decoration: none;
-    color: white;
-}
-
 
 </style>

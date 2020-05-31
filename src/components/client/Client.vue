@@ -106,20 +106,18 @@ methods: {
 #menu{
     float:left;
     height: 90%;
-    width:20%;
+    width:15%;
     margin: 0;
     background-color: #545c64;
 }
 #nav{
-    float:left;
-    width: 300px;
-    height:90%;
+    width: 100%;
+    height:90%; 
     margin-top: 50px;
-    margin-left: 50px;
 }
 #main{
     float: right;
-    width: 80%;
+    width: 85%;
     height: 90%;     
     margin: 0;
 }

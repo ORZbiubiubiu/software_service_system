@@ -1,7 +1,7 @@
 <template>
             <div id="apply-service">
                 <div id="card">
-                    <el-card class="box-card h-center">
+                    <el-card class="box-card">
                         <span>亲爱的用户:</span>
                         <el-divider></el-divider>
                         <p>
@@ -178,7 +178,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #apply-form{
     width:600px;
     padding-left:400px;
@@ -192,6 +192,7 @@ export default {
 .box-card{
     width:700px;
     margin-top:50px;
+    margin-left: 300px;
 }
 
 #btn-commit{

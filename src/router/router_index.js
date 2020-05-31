@@ -278,6 +278,14 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
     
+        // 1.如果访问的是登录页面（无需权限），直接放行
+        if (to.path === '/login') return next()
+        // 2.如果访问的是有登录权限的页面，先要获取token
+        const tokenStr = window.sessionStorage.getItem('token')
+        // 2.1如果token为空，强制跳转到登录页面；否则，直接放行
+        if (!tokenStr) return next('/login')
+
+
     console.log("to.meta.title:" + to.meta.title);
     if (to.meta.title==null) {  //改网页标题
          document.title="登录"
