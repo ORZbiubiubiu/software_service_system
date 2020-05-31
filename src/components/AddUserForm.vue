@@ -158,10 +158,18 @@ methods: {
                         }
                     }
                 }
+                //xss
+                if (escape(this.username)!=this.username) {
+                     this.$message({
+                                message: "用户名不可包含敏感字符",
+                                type: 'warning'
+                            });
+                            this.message = "用户名不可包含敏感字符";
+                }
                 if (this.message == "") {
                     // console.log(this.username + this.password + this.usertype + this.serverSoftware)
                     var pwd = this.password;
-                      pwd = hex_md5(pwd);
+                    pwd = hex_md5(pwd);
                     pwd = hex_md5(pwd);  
                     var tmp =  {
                         username: this.username,
@@ -211,6 +219,14 @@ methods: {
 }
   
 }
+function   escape(str){
+                var pattern = new RegExp("[`~@#$^&*()=|{}':;'\\[\\].<>/~@#￥……&*（）——|{}【】‘”“']");
+                var rs='';
+                for (var i =0;i < str.length;i++){
+                    rs=rs+str.substr(i,1).replace(pattern,'');
+                }
+                return rs;
+}
 </script>
 
  
@@ -218,7 +234,7 @@ methods: {
   .function{
 padding-top: 70px;
      position: relative;
-     top: -260px;
+     top: -320px;
      left: 600px;
      width: 900px;
      background-color: #fff;

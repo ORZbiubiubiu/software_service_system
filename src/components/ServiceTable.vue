@@ -180,7 +180,7 @@ export default {
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(res=>{
-                        console.log(res.data)
+                        //console.log(res.data)
                         var list = res.data.data.list;
                          this.serverlist = [];
                             for (let index = 0; index < list.length; index++) {
@@ -270,7 +270,7 @@ function service_error_page_getdata(i,that) { // //根据页数获取售后服�
         }; 
        // that.current_page = i;
         //console.log(data_temp)
-       console.log(sessionStorage.getItem("token"))
+       //console.log(sessionStorage.getItem("token"))
         that.$axios.post("/admin/ServiceInfList",data_temp,{
                     headers:{
                         'token':sessionStorage.getItem("token")
@@ -309,7 +309,7 @@ function service_error_page_getdata(i,that) { // //根据页数获取售后服�
  .function{
 
      position: relative;
-     top: -260px;
+     top: -320px;
      left: 600px;
      width: 900px;
      

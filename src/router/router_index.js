@@ -23,6 +23,7 @@ import AccssTable from '../components/AccssTable.vue'
 import FaqTable from "../components/FaqTable.vue"
 import SWTable from "../components/SWTable.vue"
 import AddUserForm from '../components/AddUserForm.vue'
+import Search from '../components/Search.vue'
 const routes = [
     {
         path: '/server',
@@ -228,7 +229,26 @@ const routes = [
                 },
 
                 component: AddUserForm
-            }, {
+            },{
+                path:"Search",
+                name: "Search",
+                meta: {
+                      title: "管理员",
+                      role: ["Admin"] //课访问改组件的角色
+                }, beforeEnter: (to, from, next) => {
+                    if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                        next();
+
+                    } else {
+                        alert("你没有权限访问改页面！");
+
+                        next(false)
+                    }
+
+                },
+                component: Search
+            }
+            , {
                path: '',
                redirect: 'ServiceTable',
            }

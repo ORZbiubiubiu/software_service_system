@@ -140,10 +140,10 @@ export default {
              addshow:false,
               items: [  {
                 id: "",
-                faqType: "faqType",
-                "faqtitle": "faqtitle1",
-                "faqdetails": "faqdetails",
-                "faqdate": "20/03/05"
+                    faqType: "faqType",
+                    "faqtitle": "faqtitle1",
+                    "faqdetails": "faqdetails",
+                    "faqdate": "20/03/05"
             }, {
                 id: "",
                 faqType: "faqType",
@@ -196,7 +196,7 @@ methods: {
             modify: function (id, faqInfo) {
                 var data={
                     "id": id,
-                    "faqInfo": faqInfo
+                    "faqInfo": escape(faqInfo)
                 }
                this.$axios.post("/admin/FaqModify",data,{
                     headers:{
@@ -248,7 +248,7 @@ methods: {
                     this.addshow=true;
                     this.modifyshow=false;
                     this.loading_targetsoftware=true;
-                     this.$axios.post("/admin/GetSoftWareList",{data:0},{
+                    this.$axios.post("/admin/GetSoftWareList",{data:0},{
                     headers:{
                         'token': sessionStorage.getItem("token")
                     }}).then(res=>{
@@ -281,11 +281,12 @@ methods: {
                         type: 'warning'
                     });
                 } else {
+                    //xss
                     var data =  {
                         id: this.id,
-                        faqName: this.faqName,
-                        faqDescription: this.faqDescription,
-                        faqInfo: this.faqInfo,
+                        faqName: escape(this.faqName),
+                        faqDescription: escape(this.faqDescription),
+                        faqInfo:  escape(this.faqInf),
                         faqSoftware: this.faqSoftware,
                         faqType: this.faqType
 
@@ -466,7 +467,15 @@ methods: {
        
 
         //将数据加载到 faq_vm 中
-    }
+}
+function   escape(str){
+                var pattern = new RegExp("[`~@#$^&*()=|{}':;'\\[\\].<>/~@#￥……&*（）——|{}【】‘”“']");
+                var rs='';
+                for (var i =0;i < str.length;i++){
+                    rs=rs+str.substr(i,1).replace(pattern,'');
+                }
+                return rs;
+}
 </script>
 
  
@@ -474,7 +483,7 @@ methods: {
   .function{
       background-color:#fff;
      position: relative;
-     top: -260px;
+     top: -320px;
      left: 600px;
      width: 900px;
    

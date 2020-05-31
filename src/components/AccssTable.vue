@@ -452,7 +452,7 @@ methods: {
   .function{
 
      position: relative;
-     top: -260px;
+     top: -320px;
      left: 600px;
    width: 900px;
      
