@@ -106,7 +106,7 @@ methods: {
                             console.log( res);
                           this.faqTable=res.content;
                           //时间格式处理
-                          for (let index = 0; index <  this.faqTable.length; index++) {
+                          for (let index = 0; index <  this.faqTable.length(); index++) {
                             this.faqTable[index].faqDate=this.faqTable[index].faqDate.substring(0,10);
                               
                           }
@@ -127,7 +127,7 @@ methods: {
                         console.log( res);
                         this.logTable=res.content;
                         //时间格式处理
-                        for (let index = 0; index <  this.logTable.length; index++) {
+                        for (let index = 0; index <  this.logTable.length(); index++) {
                             this.logTable[index].log_time=this.logTable[index].log_time.substring(0,10);
                             
                         }
@@ -150,7 +150,7 @@ methods: {
                             console.log( res);
                           this.SWTable=res.content;
                           //时间格式处理
-                          for (let index = 0; index <  this.SWTable.length; index++) {
+                          for (let index = 0; index <  this.SWTable.length(); index++) {
                             this.SWTable[index].updatedate= this.SWTable[index].updatedate.substring(0,10);
                               
                           }
@@ -173,6 +173,9 @@ methods: {
             this.faqTableShow=true;
             this.logTableShow=false;
             this.SWTableShow=false;
+            if (this.keyWord==""||this.keyWord==null) {
+              return
+            }
 
 
             //search
@@ -184,7 +187,7 @@ methods: {
                             console.log( res);
                           this.faqTable=res.content;
                           //时间格式处理
-                          for (let index = 0; index <  this.faqTable.length; index++) {
+                          for (let index = 0; index <  this.faqTable.length(); index++) {
                             this.faqTable[index].faqDate=this.faqTable[index].faqDate.substring(0,10);
                               
                           }
@@ -201,6 +204,10 @@ methods: {
             this.logTableShow=true;
             this.SWTableShow=false;
           
+            if (this.keyWord==""||this.keyWord==null) {
+                          return
+                        }
+
             this.$axios.post("/admin/e_log_search",data,{
             headers:{
                 'token': sessionStorage.getItem("token")
@@ -209,7 +216,7 @@ methods: {
                     console.log( res);
                     this.logTable=res.content;
                     //时间格式处理
-                    for (let index = 0; index <  this.logTable.length; index++) {
+                    for (let index = 0; index <  this.logTable.length(); index++) {
                         this.logTable[index].log_time=this.logTable[index].log_time.substring(0,10);
                         
                     }
@@ -226,6 +233,9 @@ methods: {
             this.logTableShow=false;
             this.SWTableShow=true;
 
+             if (this.keyWord==""||this.keyWord==null) {
+              return
+            }
             //sw
              this.$axios.post("/admin/e_software_search",data,{
                     headers:{
@@ -235,7 +245,8 @@ methods: {
                             console.log( res);
                           this.SWTable=res.content;
                           //时间格式处理
-                          for (let index = 0; index <  this.SWTable.length; index++) {
+                          // var length=res.numberOfElements
+                          for (let index = 0; index <  this.SWTable.length(); index++) {
                             this.SWTable[index].updatedate= this.SWTable[index].updatedate.substring(0,10);
                               
                           }
