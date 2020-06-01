@@ -104,7 +104,7 @@ methods: {
                     }}).then(res=>{
                           console.log("faq搜索结果" );
                             console.log( res);
-                          this.faqTable=res.content;
+                          this.faqTable=res.data.content;
                           //时间格式处理
                           for (let index = 0; index <  this.faqTable.length(); index++) {
                             this.faqTable[index].faqDate=this.faqTable[index].faqDate.substring(0,10);
@@ -125,7 +125,7 @@ methods: {
                 }}).then(res=>{
                         console.log("log搜索结果:" );
                         console.log( res);
-                        this.logTable=res.content;
+                        this.logTable=res.data.content;
                         //时间格式处理
                         for (let index = 0; index <  this.logTable.length(); index++) {
                             this.logTable[index].log_time=this.logTable[index].log_time.substring(0,10);
@@ -148,7 +148,7 @@ methods: {
                     }}).then(res=>{
                           console.log("软件搜索结果" );
                             console.log( res);
-                          this.SWTable=res.content;
+                          this.SWTable=res.data.content;
                           //时间格式处理
                           for (let index = 0; index <  this.SWTable.length(); index++) {
                             this.SWTable[index].updatedate= this.SWTable[index].updatedate.substring(0,10);
@@ -174,6 +174,7 @@ methods: {
             this.logTableShow=false;
             this.SWTableShow=false;
             if (this.keyWord==""||this.keyWord==null) {
+                this.faqTableLoading=false;
               return
             }
 
@@ -185,7 +186,7 @@ methods: {
                     }}).then(res=>{
                           console.log("faq搜索结果" );
                             console.log( res);
-                          this.faqTable=res.content;
+                          this.faqTable=res.data.content;
                           //时间格式处理
                           for (let index = 0; index <  this.faqTable.length(); index++) {
                             this.faqTable[index].faqDate=this.faqTable[index].faqDate.substring(0,10);
@@ -205,6 +206,7 @@ methods: {
             this.SWTableShow=false;
           
             if (this.keyWord==""||this.keyWord==null) {
+                this.logTableLoading=false;
                           return
                         }
 
@@ -214,7 +216,7 @@ methods: {
             }}).then(res=>{
                     console.log("log搜索结果:" );
                     console.log( res);
-                    this.logTable=res.content;
+                    this.logTable=res.data.content;
                     //时间格式处理
                     for (let index = 0; index <  this.logTable.length(); index++) {
                         this.logTable[index].log_time=this.logTable[index].log_time.substring(0,10);
@@ -234,6 +236,7 @@ methods: {
             this.SWTableShow=true;
 
              if (this.keyWord==""||this.keyWord==null) {
+                this.SWTableLoading=false;
               return
             }
             //sw
@@ -243,7 +246,7 @@ methods: {
                     }}).then(res=>{
                           console.log("软件搜索结果" );
                             console.log( res);
-                          this.SWTable=res.content;
+                          this.SWTable=res.data.content;
                           //时间格式处理
                           // var length=res.numberOfElements
                           for (let index = 0; index <  this.SWTable.length(); index++) {
