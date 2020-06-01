@@ -8,6 +8,9 @@ import com.example.software_service_system.service.ServerService.send_server_mes
 import com.example.software_service_system.service.ServerService.update_service_state;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.example.software_service_system.service.ActionServer.ActionService;
+
+import java.text.ParseException;
 
 
 @RestController    //相当于@Controller+@RequestBody
@@ -24,9 +27,12 @@ public class server_search_controller {
     private send_server_message send_server_message;
 
 
+    @Autowired
+    private ActionService actionService;
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     @ResponseBody
-    public String search_server(@RequestBody JSONObject jsonParam) {
+    public String search_server(@RequestBody JSONObject jsonParam) throws ParseException {
+       actionService.updateAction("我的售后");
         String servername = (String)jsonParam.get("servername");
         //System.out.println(servername);
         String return_json_string = JSONObject.toJSONString(ServerService.server_search_service(servername));
@@ -36,7 +42,8 @@ public class server_search_controller {
 
     @RequestMapping(value = "/update_state",method = RequestMethod.POST)
     @ResponseBody
-    public String update_service(@RequestBody JSONObject jsonParam) {
+    public String update_service(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("售后管理");
         String return_json_string;
         String serverName = (String)jsonParam.get("servername");
         String serverstate = (String)jsonParam.get("serverstate");
@@ -49,7 +56,8 @@ public class server_search_controller {
 
     @RequestMapping(value = "/show_messages",method = RequestMethod.POST)
     @ResponseBody
-    public String get_message(@RequestBody JSONObject jsonParam) {
+    public String get_message(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("售后提醒");
         String getname = (String)jsonParam.get("getName");
         //System.out.println(getname);
         String return_json_string = JSONObject.toJSONString(get_server_message._get_server_message(getname));
@@ -58,7 +66,8 @@ public class server_search_controller {
 
     @RequestMapping(value = "/send_server_message", method = RequestMethod.POST)
     @ResponseBody
-    public String send_message(@RequestBody JSONObject jsonParam) {
+    public String send_message(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("用户交互");
         System.out.println(jsonParam.toJSONString());
         String getName = (String)jsonParam.get("getName");
         String sendName = (String)jsonParam.get("sendName");

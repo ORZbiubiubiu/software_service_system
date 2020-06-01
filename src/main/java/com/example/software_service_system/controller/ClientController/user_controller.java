@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.example.software_service_system.service.ActionServer.ActionService;
+
+import java.text.ParseException;
 
 @RestController
 public class user_controller {
@@ -26,9 +29,13 @@ public class user_controller {
     @Autowired
     private type_find_faq type_find_faq;
 
+    @Autowired
+    private ActionService actionService;
+
     @RequestMapping(value = "/client/user_show_software")
     @ResponseBody
-    public String user_show_software(@RequestBody JSONObject jsonParam){
+    public String user_show_software(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("购买过的产品");
         String userName=(String)jsonParam.get("serverName");
         //System.out.println(userName);
         String return_json_string = JSONObject.toJSONString(user_show_software._user_show_software(userName));
@@ -38,7 +45,8 @@ public class user_controller {
 
     @RequestMapping(value = "/client/apply_service")
     @ResponseBody
-    public String user_apply_service(@RequestBody JSONObject jsonParam){
+    public String user_apply_service(@RequestBody JSONObject jsonParam)throws ParseException {
+        actionService.updateAction("申请售后服务");
         String userName=(String)jsonParam.get("userName");
         String softwareName=(String)jsonParam.get("softwareName");
         String serviceKind=(String)jsonParam.get("serviceKind");
@@ -53,7 +61,8 @@ public class user_controller {
 
     @RequestMapping(value = "/client/user_search")
     @ResponseBody
-    public String search_user(@RequestBody JSONObject jsonParam) {
+    public String search_user(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("已申请售后的产品");
         String userName = (String)jsonParam.get("userName");
         //System.out.println(userName);
         String return_json_string = JSONObject.toJSONString(user_search_service._user_search_service(userName));
@@ -63,7 +72,8 @@ public class user_controller {
 
     @RequestMapping(value = "/client/send_user_message")
     @ResponseBody
-    public String user_send_message(@RequestBody JSONObject jsonParam) {
+    public String user_send_message(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("用户发送信息");
         System.out.println(jsonParam.toJSONString());
         String getName = (String)jsonParam.get("getName");
         String sendName = (String)jsonParam.get("sendName");
@@ -80,7 +90,8 @@ public class user_controller {
 
     @RequestMapping(value = "/client/show_user_messages")
     @ResponseBody
-    public String user_get_message(@RequestBody JSONObject jsonParam) {
+    public String user_get_message(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("我的消息");
         String getname = (String)jsonParam.get("getName");
         //System.out.println(getname);
         String return_json_string = JSONObject.toJSONString(get_message._get_message(getname));
@@ -90,7 +101,8 @@ public class user_controller {
 
     @RequestMapping(value = "/client/user_search_faq")
     @ResponseBody
-    public String search_faq(@RequestBody JSONObject jsonParam) {
+    public String search_faq(@RequestBody JSONObject jsonParam) throws ParseException {
+        //actionService.updateAction("user_search_faq");
         String faqInfo = (String)jsonParam.get("faqInfo");
         //System.out.println(faqInfo);
         String return_json_string = JSONObject.toJSONString(search_faq._search_faq(faqInfo));
@@ -100,7 +112,8 @@ public class user_controller {
 
     @RequestMapping(value = "/client/show_update_info")
     @ResponseBody
-    public String show_update_info(@RequestBody JSONObject jsonParam) {
+    public String show_update_info(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("软件更新信息");
         String softwareName = (String)jsonParam.get("softwareName");
         //System.out.println(softwareName);
         String return_json_string = JSONObject.toJSONString(show_update_info._show_update_info(softwareName));
@@ -110,7 +123,8 @@ public class user_controller {
 
     @RequestMapping(value = "/client/type_faq")
     @ResponseBody
-    public String show_stype_faq(@RequestBody JSONObject jsonParam){
+    public String show_stype_faq(@RequestBody JSONObject jsonParam) throws ParseException {
+        actionService.updateAction("faq搜索");
         String faqType = (String)jsonParam.get("faqType");
         String faqInfo = (String)jsonParam.get("faqInfo");
         //System.out.println(faqType+"/"+faqInfo);

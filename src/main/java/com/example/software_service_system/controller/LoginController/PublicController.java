@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.example.software_service_system.service.ActionServer.ActionService;
 @Slf4j
 @RestController
 @RequestMapping("/")
@@ -23,7 +25,8 @@ public class PublicController {
 
 @Autowired
 private UserService userService;
-
+@Autowired
+private ActionService actionService;
 //    @RequestMapping("login_hello")
 //    public JsonData needLogin(){
 //        return JsonData.buildSuccess("请先登录",-2);
@@ -34,7 +37,8 @@ private UserService userService;
     }
 
     @PostMapping("login")
-    public JsonData login(@RequestBody UserQuery userQuery, HttpServletRequest request, HttpServletResponse response){
+    public JsonData login(@RequestBody UserQuery userQuery, HttpServletRequest request, HttpServletResponse response) throws ParseException {
+        actionService.updateAction("登录");
         Subject subject = SecurityUtils.getSubject();
         Map<String,Object> info = new HashMap<>();
 
