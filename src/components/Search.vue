@@ -128,7 +128,7 @@ methods: {
                         this.logTable=res.data.content;
                         //时间格式处理
                         for (let index = 0; index <  this.logTable.length; index++) {
-                            this.logTable[index].log_time=this.logTable[index].log_time.substring(0,10);
+                            this.logTable[index].log_time=this.logTable[index].log_time.substring(0,19);
                             
                         }
                         this.logTableLoading=false;
@@ -217,9 +217,10 @@ methods: {
                     console.log("log搜索结果:" );
                     console.log( res);
                     this.logTable=res.data.content;
+                    
                     //时间格式处理
                     for (let index = 0; index <  this.logTable.length; index++) {
-                        this.logTable[index].log_time=this.logTable[index].log_time.substring(0,10);
+                        this.logTable[index].log_time=this.logTable[index].log_time.substring(0,19);
                         
                     }
                     this.logTableLoading=false;
