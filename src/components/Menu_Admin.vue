@@ -55,6 +55,9 @@ export default {
                     },{
                         fncname: "搜索",
                         index: "Search"
+                    },{
+                        fncname: "用户行为",
+                        index: "UserAction"
                     }
                 ]
         }
