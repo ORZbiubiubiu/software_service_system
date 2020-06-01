@@ -106,7 +106,7 @@ methods: {
                             console.log( res);
                           this.faqTable=res.data.content;
                           //时间格式处理
-                          for (let index = 0; index <  this.faqTable.length(); index++) {
+                          for (let index = 0; index <  this.faqTable.length; index++) {
                             this.faqTable[index].faqDate=this.faqTable[index].faqDate.substring(0,10);
                               
                           }
@@ -127,7 +127,7 @@ methods: {
                         console.log( res);
                         this.logTable=res.data.content;
                         //时间格式处理
-                        for (let index = 0; index <  this.logTable.length(); index++) {
+                        for (let index = 0; index <  this.logTable.length; index++) {
                             this.logTable[index].log_time=this.logTable[index].log_time.substring(0,10);
                             
                         }
@@ -150,7 +150,7 @@ methods: {
                             console.log( res);
                           this.SWTable=res.data.content;
                           //时间格式处理
-                          for (let index = 0; index <  this.SWTable.length(); index++) {
+                          for (let index = 0; index <  this.SWTable.length; index++) {
                             this.SWTable[index].updatedate= this.SWTable[index].updatedate.substring(0,10);
                               
                           }
@@ -188,7 +188,7 @@ methods: {
                             console.log( res);
                           this.faqTable=res.data.content;
                           //时间格式处理
-                          for (let index = 0; index <  this.faqTable.length(); index++) {
+                          for (let index = 0; index <  this.faqTable.length; index++) {
                             this.faqTable[index].faqDate=this.faqTable[index].faqDate.substring(0,10);
                               
                           }
@@ -218,7 +218,7 @@ methods: {
                     console.log( res);
                     this.logTable=res.data.content;
                     //时间格式处理
-                    for (let index = 0; index <  this.logTable.length(); index++) {
+                    for (let index = 0; index <  this.logTable.length; index++) {
                         this.logTable[index].log_time=this.logTable[index].log_time.substring(0,10);
                         
                     }
@@ -249,7 +249,7 @@ methods: {
                           this.SWTable=res.data.content;
                           //时间格式处理
                           // var length=res.numberOfElements
-                          for (let index = 0; index <  this.SWTable.length(); index++) {
+                          for (let index = 0; index <  this.SWTable.length; index++) {
                             this.SWTable[index].updatedate= this.SWTable[index].updatedate.substring(0,10);
                               
                           }
