@@ -94,7 +94,7 @@ export default {
 methods: {
     search:function(keyword){
          var data;
-        if (this.faqTableShow) {
+        if (this.faqTableShow==true) {
             console.log("faq搜索:"+this.keyWord);
             this.faqTableLoading=true;
               data={   faq_search: this.keyWord  };
@@ -114,12 +114,12 @@ methods: {
 
                     
                 });
-        }else if (this.logTableShow) {
+        }else if (this.logTableShow==true) {
             console.log("log搜索:"+this.keyWord);
-               data={   log_search: this.keyWord  };
+              data={   log_search: this.keyWord  };
             
           this.logTableLoading=true;
-            this.$axios.post("/admin/e_faq_search",data,{
+            this.$axios.post("/admin/e_log_search",data,{
                 headers:{
                     'token': sessionStorage.getItem("token")
                 }}).then(res=>{
@@ -211,9 +211,9 @@ methods: {
                         }
 
             this.$axios.post("/admin/e_log_search",data,{
-            headers:{
-                'token': sessionStorage.getItem("token")
-            }}).then(res=>{
+              headers:{
+                  'token': sessionStorage.getItem("token")
+              }}).then(res=>{
                     console.log("log搜索结果:" );
                     console.log( res);
                     this.logTable=res.data.content;
@@ -225,7 +225,7 @@ methods: {
                     this.logTableLoading=false;
                     
             
-        });
+              });
             //log
         } else if (index=="3") {
             this.SWTableLoading=true;
