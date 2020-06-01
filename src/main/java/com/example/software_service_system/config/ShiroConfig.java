@@ -21,9 +21,10 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //需要登录的没登录的接口
         shiroFilterFactoryBean.setLoginUrl("/login");
+
         //无权限跳转的url
        // shiroFilterFactoryBean.setUnauthorizedUrl("/not_permit");
-        //拦截器路径
+
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 
 
@@ -32,7 +33,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/logout","anno");
+       // filterChainDefinitionMap.put("/logout","anon");
 //        filterChainDefinitionMap.put("/client/**","roles[client]");
 //        filterChainDefinitionMap.put("/faq/**","roles[client]");
 //        filterChainDefinitionMap.put("/admin/**","roles[admin]");
