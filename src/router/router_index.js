@@ -296,10 +296,57 @@ router.beforeEach((to, from, next) => {
 
     // 1.如果访问的是登录页面（无需权限），直接放行
     if (to.path === '/login') return next()
-        // 2.如果访问的是有登录权限的页面，先要获取token
+    // 2.如果访问的是有登录权限的页面，先要获取token
     const tokenStr = window.sessionStorage.getItem('token')
-        // 2.1如果token为空，强制跳转到登录页面；否则，直接放行
-        if (!tokenStr) return next('/login') 
+    // 2.1如果token为空，强制跳转到登录页面；否则，直接放行
+    if (!tokenStr) return next('/login') 
+    var ip = localStorage.getItem("ip");
+    var token = sessionStorage.getItem("token");
+    var api_name = "";
+    if(to.path==='/client/purchased'){
+        api_name = "购买过的产品";
+        window.axios.post("/burypoint", {
+            user_type:"客户",
+            api_name:api_name,
+            ip:ip,
+            token:token,
+            },{
+                 headers:{
+                           'token':token
+                 },
+                 withCredentials : true
+            })
+            .then((response) => {
+                console.log("ip为"+ip+"的用户访问了一次"+api_name+"页面");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    if(to.path==='/server/myService'){
+        
+        
+        api_name = "我的售后";
+        window.axios.post("/burypoint", {
+            user_type:"维护人员",
+            api_name:api_name,
+            ip:ip,
+            token:token,
+            },{
+                 headers:{
+                           'token':token
+                 },
+                 withCredentials : true
+            })
+            .then((response) => {
+                console.log("ip为"+ip+"的用户访问了一次"+api_name+"页面");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
 
     console.log("to.meta.title:" + to.meta.title);
     if (to.meta.title == null) { //改网页标题

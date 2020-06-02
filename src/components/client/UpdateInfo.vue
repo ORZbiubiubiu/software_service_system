@@ -46,12 +46,6 @@ export default {
             activeName:0
         }
     },
-    mounted:function(){
-        var ip = localStorage.getItem("ip")
-        var url = this.$route.path;
-        var token = this.token;
-        this.log(url,ip,token);
-    },
     computed:{
         username(){
             return this.$store.state.username
