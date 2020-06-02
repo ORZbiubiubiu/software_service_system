@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import com.example.software_service_system.Entity.AdminEntity.action;
 import com.example.software_service_system.Entity.AdminEntity.action_e;
+import com.example.software_service_system.Entity.AdminEntity.action_cli;
+import com.example.software_service_system.Entity.AdminEntity.action_type;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -31,5 +33,16 @@ public interface actionMapper {
     @Select("select *from action_every where Aname=#{Aname}")
     List<action_e>GetAction(String Aname);
 
+    @Update("update action_client set SoftCount = SoftCount+1 where SoftName=#{SoftName}")
+    int rds(String SoftName);
 
+    @Select("select *from action_client ")
+    List<action_cli>GetCliAction();
+
+
+    @Update("update action_type set count = count+1 where type=#{type}")
+    int rdss(String type);
+
+    @Select("select *from action_type ")
+    List<action_type>GetCliTypeAction();
 }
