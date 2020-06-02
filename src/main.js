@@ -18,8 +18,8 @@ import myheader from './components/Header.vue'
 Vue.config.productionTip = false
 
 
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
+// import echarts from 'echarts'
+// Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 
@@ -33,33 +33,33 @@ new Vue({
 Vue.directive('statistic', {
     bind: function (el, binding) {
       var s = JSON.stringify
-      console.log("in log:")
+      var ip = localStorage.getItem("ip");
+      var token = sessionStorage.getItem("token");
+      var api_name = s(binding.value).replace(/"/g,'');
+      var role = sessionStorage.getItem("role");
+      var user_type = role==="Client"?"客户":"维护人员";
         el.addEventListener('click', ()=>{
-
             console.log(s(binding.value))
-            console.log(s(binding.expression))
+            window.axios.post("/burypoint", {
+                user_type:user_type,
+                api_name:api_name,
+                ip:ip,
+                token:token,
+                },{
+                     headers:{
+                               'token':token
+                     },
+                     withCredentials : true
+                })
+                .then((response) => {
+                    console.log("ip为"+ip+"的用户访问了一次"+api_name+"页面");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         })
     }
   })
 
  
-Vue.prototype.log = function (url,ip,token){//log是函数名,对访问页面进行统计
-    console.log(url + "    " +ip + "    "+token);
-    this.$axios.post("/burypoint", {
-        url:url,
-        ip:ip,
-        token:token,
-        },{
-             headers:{
-                       'token':token
-             },
-             withCredentials : true
-        })
-        .then((response) => {
-            console.log("ip为"+ip+"的用户访问了一次"+url+"页面");
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-  }
 
