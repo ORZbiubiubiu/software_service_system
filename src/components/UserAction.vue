@@ -5,7 +5,7 @@
                         @select="handleSelect">
                         <el-menu-item index="1">用户进入功能模块次数</el-menu-item>
                         <el-menu-item index="2">用户流量</el-menu-item>
-                        <el-menu-item index="3">用户请求数据</el-menu-item>
+                        
                          <el-menu-item index="4">客户申请售后服务记录</el-menu-item>
         </el-menu>
          
@@ -185,7 +185,7 @@ methods: {
                         const chart2 =  this.$refs.S_EnterCount;
                         const chart1 =  this.$refs.C_EnterCount;
                         console.log("getburypoint");
-                        var list = res.data.data.list;  
+                        var list = res.data.data;  
                                        console.log(res.data);
                       
                      for (let index = 0; index < list.length; index++) {
