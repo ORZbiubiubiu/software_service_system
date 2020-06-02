@@ -2,6 +2,7 @@ package com.example.software_service_system.service.ActionServer;
 
 import com.example.software_service_system.Entity.AdminEntity.action;
 import com.example.software_service_system.Entity.AdminEntity.action_e;
+import com.example.software_service_system.Entity.AdminEntity.action_cli;
 import com.example.software_service_system.mapper.ActionMapper.actionMapper;
 import com.example.software_service_system.Entity.AdminEntity.return_json;
 import com.example.software_service_system.Entity.AdminEntity.return_data;
@@ -137,4 +138,35 @@ public class ActionService {
         rs.setData(rt);
         return  rs;
     }
+
+    public return_json percentActionService_client(){
+        List<action_cli> list = actionMapper.GetCliAction();
+        int num=0;
+
+        for (int j=0;j<=3;j++){
+            num = num+list.get(j).getSoftCount();
+        }
+
+        List<Map<String,Object>> maps = new ArrayList<Map<String,Object>>();
+        for(int j=0;j<=3;j++){
+            double p =  (double)list.get(j).getSoftCount()/num;
+            p=p*100;
+            //DecimalFormat df = new DecimalFormat(".00");
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("SoftName", list.get(j).getSoftName());
+            map.put("percent",p);
+            maps.add(map);
+        }
+        return_data<Map<String,Object>> rt = new return_data<Map<String, Object>>();
+        rt.setList(maps);
+        rt.setMessage("client_software");
+        return_json rs = new return_json();
+        rs.setData(rt);
+        return  rs;
+    }
+
+    public void Ins(String Softname){
+        actionMapper.rds(Softname);
+    }
+
 }
