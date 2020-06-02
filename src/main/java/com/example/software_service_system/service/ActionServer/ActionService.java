@@ -97,7 +97,8 @@ public class ActionService {
 
         List<Map<String,Object>> maps = new ArrayList<Map<String,Object>>();
         for(int j=0;j<=6;j++){
-            double p =  (double)(list.get(j).getAcount()*100/num);
+            double p =  (double)list.get(j).getAcount()/num;
+            p=p*100;
             //DecimalFormat df = new DecimalFormat(".00");
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("Aname", list.get(j).getAction());
@@ -119,16 +120,17 @@ public class ActionService {
         for (int j=8;j<list.size();j++){
             num = num+list.get(j).getAcount();
         }
-        List<Map<String,String>> maps = new ArrayList<Map<String,String>>();
+        List<Map<String,Object>> maps = new ArrayList<Map<String,Object>>();
         for(int j=8;j<list.size();j++){
-            double p = (double)(list.get(j).getAcount()*100/num);
-            DecimalFormat df = new DecimalFormat(".00");
-            Map<String, String> map = new HashMap<String, String>();
+
+            double p =  (double)list.get(j).getAcount()/num;
+            p=p*100;
+            //DecimalFormat df = new DecimalFormat(".00");
+            Map<String, Object> map = new HashMap<String, Object>();
             map.put("Aname", list.get(j).getAction());
-            map.put("percent",df.format(p));
-            maps.add(map);
+            map.put("percent",p);
         }
-        return_data<Map<String,String>> rt = new return_data<Map<String, String>>();
+        return_data<Map<String,Object>> rt = new return_data<Map<String, Object>>();
         rt.setList(maps);
         rt.setMessage("server");
         return_json rs = new return_json();
