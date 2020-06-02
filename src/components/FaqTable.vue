@@ -481,7 +481,7 @@ function   escape(str){
  
 <style scoped>
   .function{
-      background-color:#fff;
+    background-color:#fff;
      position: relative;
      top: -320px;
      left: 600px;
