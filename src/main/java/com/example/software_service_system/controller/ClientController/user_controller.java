@@ -52,6 +52,7 @@ public class user_controller {
         String serviceKind=(String)jsonParam.get("serviceKind");
         String serviceInfo=(String)jsonParam.get("serviceInfo");
         actionService.Ins(softwareName);
+        actionService.Inss(serviceKind);
         //System.out.println(userName);
         //System.out.println(softwareName);
         //System.out.println(serviceInfo);

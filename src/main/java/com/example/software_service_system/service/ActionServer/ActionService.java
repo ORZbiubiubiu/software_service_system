@@ -3,6 +3,7 @@ package com.example.software_service_system.service.ActionServer;
 import com.example.software_service_system.Entity.AdminEntity.action;
 import com.example.software_service_system.Entity.AdminEntity.action_e;
 import com.example.software_service_system.Entity.AdminEntity.action_cli;
+import com.example.software_service_system.Entity.AdminEntity.action_type;
 import com.example.software_service_system.mapper.ActionMapper.actionMapper;
 import com.example.software_service_system.Entity.AdminEntity.return_json;
 import com.example.software_service_system.Entity.AdminEntity.return_data;
@@ -167,6 +168,27 @@ public class ActionService {
 
     public void Ins(String Softname){
         actionMapper.rds(Softname);
+    }
+
+    public return_json percentActionServiceType_client(){
+        List<action_type> list = actionMapper.GetCliTypeAction();
+        List<Map<String,Object>> maps = new ArrayList<Map<String,Object>>();
+        for(int j=0;j<=3;j++){
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("type", list.get(j).getType());
+            map.put("percent",list.get(j).getCount());
+            maps.add(map);
+        }
+        return_data<Map<String,Object>> rt = new return_data<Map<String, Object>>();
+        rt.setList(maps);
+        rt.setMessage("client_softwareType");
+        return_json rs = new return_json();
+        rs.setData(rt);
+        return  rs;
+    }
+
+    public void Inss(String type){
+        actionMapper.rds(type);
     }
 
 }
