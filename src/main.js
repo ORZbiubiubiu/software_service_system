@@ -37,7 +37,7 @@ Vue.directive('statistic', {
       var token = sessionStorage.getItem("token");
       var api_name = s(binding.value).replace(/"/g,'');
       var role = sessionStorage.getItem("role");
-      var user_type = role==="client"?"客户":"维护人员";
+      var user_type = role==="Client"?"客户":"维护人员";
         el.addEventListener('click', ()=>{
             console.log(s(binding.value))
             window.axios.post("/burypoint", {
