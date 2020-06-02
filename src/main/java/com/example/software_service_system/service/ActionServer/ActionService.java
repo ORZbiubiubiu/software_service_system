@@ -96,7 +96,7 @@ public class ActionService {
         }
         List<Map<String,String>> maps = new ArrayList<Map<String,String>>();
         for(int j=0;j<=6;j++){
-            double p =  (double)list.get(j).getAcount()/num;
+            double p =  (double)(list.get(j).getAcount()/num)*100;
             DecimalFormat df = new DecimalFormat(".00");
             Map<String, String> map = new HashMap<String, String>();
             map.put("Aname", list.get(j).getAction());
@@ -120,7 +120,7 @@ public class ActionService {
         }
         List<Map<String,String>> maps = new ArrayList<Map<String,String>>();
         for(int j=8;j<list.size();j++){
-            double p = (double)list.get(j).getAcount()/num;
+            double p = (double)(list.get(j).getAcount()/num)*100;
             DecimalFormat df = new DecimalFormat(".00");
             Map<String, String> map = new HashMap<String, String>();
             map.put("Aname", list.get(j).getAction());

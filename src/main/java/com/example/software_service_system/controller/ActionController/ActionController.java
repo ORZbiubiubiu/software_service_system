@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("action")
+@RequestMapping("admin")
 public class ActionController {
     @Autowired
     private com.example.software_service_system.service.ActionServer.ActionService actionService;
