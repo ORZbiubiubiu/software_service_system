@@ -52,6 +52,12 @@ export default {
                     }, {
                         fncname: "添加用户",
                         index: "AddUserForm"
+                    },{
+                        fncname: "搜索",
+                        index: "Search"
+                    },{
+                        fncname: "用户行为",
+                        index: "UserAction"
                     }
                 ]
         }

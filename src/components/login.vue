@@ -1,10 +1,12 @@
 
 <template>
-  <div>
-    
+  <div id="loginBox">
+    <div id="title">
+        软件售后服务系统
+    </div>
    <el-form     label-width="80px" id="loginform">
             <el-form-item label="">
-                <el-input v-model="userName" placeholder="请输入用户名" maxlength="18"></el-input>
+                <el-input v-model="userName" placeholder="请输入用户名" maxlength="180"></el-input>
             </el-form-item>
             <el-form-item label="">
                 <el-input v-model="passWord" show-password placeholder="请输入密码" maxlength="18"></el-input>
@@ -53,7 +55,14 @@ export default {
 
     methods: {
         onSubmit: function () {
-                    this.message ="";
+
+
+                                           /*  sessionStorage.setItem("name", this.userName);
+                                            sessionStorage.setItem("token", "session");
+                                            sessionStorage.setItem("role", "Admin");
+                                            this.$router.push(  {name:'ServiceTable',params:{name:this.userName}}) */
+
+           this.message ="";
                     
                     if (this.userName == "" || this.passWord == "") {
 
@@ -79,6 +88,7 @@ export default {
 
                         } else {
                                 //
+                               
                         }
                     } else {
                         for (const iterator of this.userName) {
@@ -108,28 +118,39 @@ export default {
                                         });
                             this.message="请选择用户登录类型！"
                         }
+                        if (escape(this.userName)!=this.userName) {
+                             this.$message({
+                                            message: "用户名不可包含敏感字符",
+                                            type: 'error'
+                                        });
+                            this.message="用户名不可包含敏感字符"
+                        }
                         if (this.message=="") {
                             
-                            // location.href = "administrator.html?" + "username=" + this.userName;
+                            
                             var pwd = this.passWord;
-                             console.log(pwd)
+                           
                               pwd = hex_md5(pwd);
                               pwd = hex_md5(pwd);
 
                                 //console.log(pwd)
+                                
                             // xss 处理
-                           // this.userName=this.$xss( this.userName)
+                           // 
+                           
+                             //
+                            // console.log(pwd+"  :  xxx")
                             var tmp = {
                                 "name": this.userName,
                                 "pwd":pwd,
 
                             };
 
-                        this.$axios.post("/login",tmp,{
+                         this.$axios.post("/login",tmp,{
                     headers:{
                          
                     }}).then(res=>{
-                        console.log(res)
+                       // console.log(res)
                           if (res.data.msg == "success"&&res.data.data != null || res.data.msg== null    ) {
                                        
                                         
@@ -174,82 +195,26 @@ export default {
                                         
                                     }
                     
-                })
-
-                            // 假设登录成功 用户为管理员
-                           
-                           
- 
-                            //sessionStorage.setItem("role", "Client");
-                            //this.$router.push(  {name:'admin',params:{name:this.userName}})
+                })  
 
                             
-                           // this.$router.push("/client");
-                            
-                           
-                         
-                             //this.$router.push('/admin') 
-                             
-                            //console.log(pwd)
-                            
-                        /*  $.ajax({
-                                type: "POST",
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-                                url: "/login",
-                                data: tmp,
-                                success: function (response) {
-                                    console.log(response);
-                                    if (response.data != null || response.msg== null && response.data.msg == "success" ) {
-                                        this.$message({
-                                            message: "登录成功！！",
-                                            type: 'success'
-                                        });
-                                    
-                                        var type = response.data.role;
-                                        session = response.data.session_id;
-                                        //console.log(type + "    " + session)
-                                        if (type=="1") {
-                                            sessionStorage.setItem("name", this.userName);
-                                            sessionStorage.setItem("token", session);
-                                            window.location.href = "client";
-                                        } else if (type =="2") {
-                                            sessionStorage.setItem("name", this.userName);
-                                            sessionStorage.setItem("token", session);
-                                            window.location.href = "server";
-                                        } else if (type == "3"){
-                                            sessionStorage.setItem("name", this.userName);
-                                            sessionStorage.setItem("token", session);
-                                            window.location.href = "admin";
-                                        }
-
-                                    } else {
-                                        if (response.msg == "账号已冻结") {
-                                            this.$message({
-                                                message: "账号已冻结",
-                                                type: 'error'
-                                            });
-                                             
-                                        } else if (response.msg == "账户或者密码错误") {
-                                            this.$message({
-                                                message: "账户或密码错误",
-                                                type: 'error'
-                                            });
-                                            this.message = "账户或密码错误！"
-                                        }
-                                        
-                                    }
-                                }
-                            });   */
 
                         }
                         
-                    }
+                    }  
                 }
 }
   
 }
 
+function   escape(str){
+                var pattern = new RegExp("[`~@#$^&*()=|{}':;'\\[\\].<>/~@#￥……&*（）——|{}【】‘”“']");
+                var rs='';
+                for (var i =0;i < str.length;i++){
+                    rs=rs+str.substr(i,1).replace(pattern,'');
+                }
+                return rs;
+}
 </script>
 
  
@@ -262,5 +227,19 @@ export default {
     width: 500px;
     left: 35%;
     color:#fff;
+}
+#loginBox{
+    background-color:rgb(84, 92, 100); 
+    height: 100%;
+ 
+    font-family: "Helvetica Neue";
+    color: #fff;
+    font-size: 30px;
+}
+#title{
+    position: relative;
+      left: 42%;
+      top: 180px;
+      width: 500px;
 }
 </style>

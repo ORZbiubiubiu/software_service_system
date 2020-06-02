@@ -11,12 +11,17 @@ import store from './store'
 
 
 import Menu_Admin from './components/Menu_Admin.vue'
-import login  from './components/login.vue'
+import login from './components/login.vue'
 import myheader from './components/Header.vue'
 
 
 Vue.config.productionTip = false
 
+
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
+Vue.config.productionTip = false
 
 new Vue({
     router: router,
@@ -57,3 +62,4 @@ Vue.prototype.log = function (url,ip,token){//log是函数名,对访问页面进
             console.log(error);
         });
   }
+

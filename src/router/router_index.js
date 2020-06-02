@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import '../plugins/axios'
 Vue.use(VueRouter)
- 
+
 import login from "../components/login.vue"
 import Menu_Admin from "../components/Menu_Admin.vue"
 import ServiceTable from "../components/ServiceTable.vue"
@@ -24,8 +24,9 @@ import AccssTable from '../components/AccssTable.vue'
 import FaqTable from "../components/FaqTable.vue"
 import SWTable from "../components/SWTable.vue"
 import AddUserForm from '../components/AddUserForm.vue'
-const routes = [
-    {
+import Search from '../components/Search.vue'
+import UserAction from "../components/UserAction.vue";
+const routes = [{
         path: '/server',
         name: 'server',
         meta: {
@@ -40,15 +41,15 @@ const routes = [
             },
             
             {
-                path:"getMsg",
+                path: "getMsg",
                 component: GetMsg
             },
             {
-                path:"management",
+                path: "management",
                 component: Management
             },
             {
-                path:"sendMsg",
+                path: "sendMsg",
                 component: Server_SendMsg
             }
         ]
@@ -56,9 +57,9 @@ const routes = [
     {
         path: '/client',
         meta: {
-                 title: "客户"
-             },
-        name:"client",
+            title: "客户"
+        },
+        name: "client",
         component: Client,
          children:[
             {
@@ -74,199 +75,241 @@ const routes = [
                 component:Service
             },
             {
-                path:"apply",
-                component:Apply
+                path: "apply",
+                component: Apply
             },
             {
-                path:"sendMsg",
-                component:SendMsg
+                path: "sendMsg",
+                component: SendMsg
             },
             {
-                path:"receiveMsg",
-                component:ReceiveMsg
+                path: "receiveMsg",
+                component: ReceiveMsg
             },
             {
-                path:"updateInfo",
-                component:UpdateInfo
+                path: "updateInfo",
+                component: UpdateInfo
             },
             {
-                path:"faq",
-                component:FAQ
+                path: "faq",
+                component: FAQ
             }
-         ]
+        ]
     },
     {
         path: '/admin',
-        meta:{
-            title:"管理员"
-        } ,
+        meta: {
+            title: "管理员"
+        },
         //name: "Admin",
-         beforeEnter:function   (to, from, next)   {
+        beforeEnter: function(to, from, next) {
             console.log("beforeEnter-Admin ")
-           
-           if (sessionStorage.getItem("role") == "Admin") {
-               next();  
 
-           } else {
-               alert("你没有权限访问改页面！，即将跳转到登录界面！");
-               
-              next({
-                  name: 'Login'
-              })
-           }
-            
+            if (sessionStorage.getItem("role") == "Admin") {
+                next();
 
-         },
-         afterEach: (to, from) =>{
+            } else {
+                alert("你没有权限访问改页面！，即将跳转到登录界面！");
 
-         } ,
+                next({
+                    name: 'Login'
+                })
+            }
+
+
+        },
+        afterEach: (to, from) => {
+
+        },
         component: Menu_Admin,
-         children:[
-           {
-                path: 'ServiceTable',
-                name: "ServiceTable",
-                 meta: {
-                     title: "管理员",
-                    role: ["Admin"] //课访问改组件的角色
-                 }, beforeEnter: (to, from, next) => {
-                      if (to.meta.role.includes(sessionStorage.getItem("role"))) {
-                         next();
-                     } else {
-                         alert("你没有权限访问改页面！");
-                        next(false)
-                     }
-                    
+        children: [{
+            path: 'ServiceTable',
+            name: "ServiceTable",
+            meta: {
+                title: "管理员",
+                role: ["Admin"] //课访问改组件的角色
+            },
+            beforeEnter: (to, from, next) => {
+                if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                    next();
+                } else {
+                    alert("你没有权限访问改页面！");
+                    next(false)
+                }
 
-                 },
-                 
-                component: ServiceTable
-           }, {
-                path: 'AccssTable',
-                name: "AccssTable",
-                meta: {
-                    title: "管理员",
-                     role: ["Admin"] //课访问改组件的角色
-                   
-                }, beforeEnter: function  (to, from, next)   {
-                     if (to.meta.role.includes(sessionStorage.getItem("role"))) {
-                       next();
 
-                   } else {
-                       alert("你没有权限访问改页面！");
+            },
 
-                       next(false)
-                   }
+            component: ServiceTable
+        }, {
+            path: 'AccssTable',
+            name: "AccssTable",
+            meta: {
+                title: "管理员",
+                role: ["Admin"] //课访问改组件的角色
 
-                },
+            },
+            beforeEnter: function(to, from, next) {
+                if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                    next();
 
-                component: AccssTable
-            } ,{
-                path: 'FaqTable',
-                name: "FaqTable",
-                meta: {
-                    title: "管理员",
-                    role: ["Admin"] //课访问改组件的角色
-                }, 
-                 beforeEnter: (to, from, next) => {
-                    if (to.meta.role.includes(sessionStorage.getItem("role"))) {
-                        next();
+                } else {
+                    alert("你没有权限访问改页面！");
 
-                    } else {
-                         alert("你没有权限访问改页面！");
+                    next(false)
+                }
 
-                         next(false)
-                    }
+            },
 
-                },
+            component: AccssTable
+        }, {
+            path: 'FaqTable',
+            name: "FaqTable",
+            meta: {
+                title: "管理员",
+                role: ["Admin"] //课访问改组件的角色
+            },
+            beforeEnter: (to, from, next) => {
+                if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                    next();
 
-                component: FaqTable
-            }, {
-                path: 'SWTable',
-                name: "SWTable",
-                meta: {
-                    title: "管理员",
-                    role:["Admin"] //课访问改组件的角色
-                }, beforeEnter: (to, from, next) => {
-                   
-                    if (to.meta.role.includes(sessionStorage.getItem("role"))) {
-                        next();
+                } else {
+                    alert("你没有权限访问改页面！");
 
-                    } else {
-                        alert("你没有权限访问改页面！");
+                    next(false)
+                }
 
-                        next(false)
-                    }
+            },
 
-                },
+            component: FaqTable
+        }, {
+            path: 'SWTable',
+            name: "SWTable",
+            meta: {
+                title: "管理员",
+                role: ["Admin"] //课访问改组件的角色
+            },
+            beforeEnter: (to, from, next) => {
 
-                component: SWTable
-            }, {
-                path: 'AddUserForm',
-                name: "AddUserForm",
-                meta: {
-                    title: "管理员",
-                     role: ["Admin"] //课访问改组件的角色
-                }, beforeEnter: (to, from, next) => {
-                     if (to.meta.role.includes(sessionStorage.getItem("role"))) {
-                        next();
+                if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                    next();
 
-                    } else {
-                        alert("你没有权限访问改页面！");
+                } else {
+                    alert("你没有权限访问改页面！");
 
-                        next(false)
-                    }
+                    next(false)
+                }
 
-                },
+            },
 
-                component: AddUserForm
-            }, {
-               path: '',
-               redirect: 'ServiceTable',
-           }
-         ]
+            component: SWTable
+        }, {
+            path: 'AddUserForm',
+            name: "AddUserForm",
+            meta: {
+                title: "管理员",
+                role: ["Admin"] //课访问改组件的角色
+            },
+            beforeEnter: (to, from, next) => {
+                if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                    next();
 
-    } , 
+                } else {
+                    alert("你没有权限访问改页面！");
+
+                    next(false)
+                }
+
+            },
+
+            component: AddUserForm
+        }, {
+            path: "Search",
+            name: "Search",
+            meta: {
+                title: "管理员",
+                role: ["Admin"] //课访问改组件的角色
+            },
+            beforeEnter: (to, from, next) => {
+                if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                    next();
+
+                } else {
+                    alert("你没有权限访问改页面！");
+
+                    next(false)
+                }
+
+            },
+            component: Search
+        }, {
+            path: 'UserAction',
+            name: "UserAction",
+            meta: {
+                title: "管理员",
+                role: ["Admin"] //课访问改组件的角色
+            },
+            beforeEnter: (to, from, next) => {
+
+                if (to.meta.role.includes(sessionStorage.getItem("role"))) {
+                    next();
+
+                } else {
+                    alert("你没有权限访问改页面！");
+
+                    next(false)
+                }
+
+            },
+
+            component: UserAction
+        }, {
+            path: '',
+            redirect: 'ServiceTable',
+        }]
+
+    },
     {
-        path: '',  //默认值
+        path: '', //默认值
         redirect: '/login',
-    }, 
+    },
     {
         path: '/login', //默认值
-        name:"Login",
+        name: "Login",
         meta: {
             title: "登录"
         },
-        
+
         component: login,
-    }  
+    }
 ]
 
- 
+
 
 const router = new VueRouter({
     routes, // (缩写) 相当于 routes: routes
-    mode:"history"
+    mode: "history"
 })
 
 
 router.beforeEach((to, from, next) => {
-    
-        // 1.如果访问的是登录页面（无需权限），直接放行
-        if (to.path === '/login') return next()
+
+    // 1.如果访问的是登录页面（无需权限），直接放行
+    if (to.path === '/login') return next()
         // 2.如果访问的是有登录权限的页面，先要获取token
-        const tokenStr = window.sessionStorage.getItem('token')
+    const tokenStr = window.sessionStorage.getItem('token')
         // 2.1如果token为空，强制跳转到登录页面；否则，直接放行
         if (!tokenStr) return next('/login') 
 
     console.log("to.meta.title:" + to.meta.title);
-    if (to.meta.title==null) {  //改网页标题
-         document.title="登录"
-    }else{
+    if (to.meta.title == null) { //改网页标题
+        document.title = "登录"
+    } else {
         document.title = to.meta.title;
-       
-        
+
+
     }
-    
+
     next();
 })
 
