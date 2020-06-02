@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import '../plugins/axios'
 Vue.use(VueRouter)
  
 import login from "../components/login.vue"
@@ -34,13 +35,10 @@ const routes = [
         children: [ 
             {
                 path:"myService",
-                component: MyService
-            },
-            {
-                path:"",
                 name:"myService",
                 component: MyService
             },
+            
             {
                 path:"getMsg",
                 component: GetMsg
@@ -65,18 +63,11 @@ const routes = [
          children:[
             {
                 path:"purchased",
+                name:"purchased",
                 component:Purchased,
                 meta: {
                     title: "客户"
                 },
-            },
-            {
-                path:"",
-                name:"purchased",
-                 meta: {
-                     title: "客户"
-                 },
-                component:Purchased
             },
             {
                 path:"service",
@@ -256,6 +247,8 @@ const router = new VueRouter({
     routes, // (缩写) 相当于 routes: routes
     mode:"history"
 })
+
+
 router.beforeEach((to, from, next) => {
     
         // 1.如果访问的是登录页面（无需权限），直接放行
@@ -263,8 +256,7 @@ router.beforeEach((to, from, next) => {
         // 2.如果访问的是有登录权限的页面，先要获取token
         const tokenStr = window.sessionStorage.getItem('token')
         // 2.1如果token为空，强制跳转到登录页面；否则，直接放行
-        if (!tokenStr) return next('/login')
-
+        if (!tokenStr) return next('/login') 
 
     console.log("to.meta.title:" + to.meta.title);
     if (to.meta.title==null) {  //改网页标题
@@ -277,5 +269,6 @@ router.beforeEach((to, from, next) => {
     
     next();
 })
+
 
 export default router

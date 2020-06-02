@@ -13,7 +13,6 @@ export default new Vuex.Store({
     username:'',
     token:'',
     serviceItems:[]
-
   },
   mutations: {
     setOrder(state,data){

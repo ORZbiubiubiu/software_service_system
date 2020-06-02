@@ -63,10 +63,17 @@ export default {
         var token = sessionStorage.getItem("token");
         this.$store.commit("setUsername",username);
         this.$store.commit("setToken",token);
+        
     },
     mounted:function(){
         
+        var ip = localStorage.getItem("ip")
+        var url = this.$route.path;
+        var token = this.token;
+        this.log(url,ip,token);
+
         this.getOrder();
+        
     },
     methods:{
         getOrder(){
@@ -106,8 +113,6 @@ export default {
                              softwareNames.push({"value":this.orderData[i].softwareName});//动态获取没有申请售后的软件名称
                         }
                     }
-
-                    console.log(softwareNames);
                     this.$store.commit("setSoftwareNames",softwareNames);
                 })
                 .catch(function (error) {

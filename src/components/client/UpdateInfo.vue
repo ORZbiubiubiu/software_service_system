@@ -27,7 +27,7 @@
                                 layout="prev, pager, next,jumper"
                                 @current-change="handleCurrentChange"
                                 :current-page="currentPage"
-                                :page-size=pagesize
+                                :page-size="pagesize"
                                 :total="orderData.length">
                         </el-pagination>
                     </div>
@@ -42,8 +42,15 @@ export default {
         return{
             updateData:[],
             currentPage: 1,
-            pagesize:5
+            pagesize:5,
+            activeName:0
         }
+    },
+    mounted:function(){
+        var ip = localStorage.getItem("ip")
+        var url = this.$route.path;
+        var token = this.token;
+        this.log(url,ip,token);
     },
     computed:{
         username(){

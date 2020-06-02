@@ -6,10 +6,9 @@
                 <el-col :span="24">
                     <el-menu default-active="0" class="el-menu-vertical-demo" @select="handleSelect"
                              background-color="#545c64" text-color="#fff" active-text-color="#dddddd">
-                        <el-menu-item v-for="item in funcs" v-bind:index="item.index" :key="item.id">
+                        <el-menu-item v-for="item in funcs" v-bind:index="item.index" :key="item.id" v-statistic="item.fncname">
                             <i class="el-icon-menu"></i>
                             <span slot="title">{{item.fncname}}</span>
-                            
                         </el-menu-item>
                     </el-menu>
                 </el-col>

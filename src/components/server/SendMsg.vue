@@ -68,6 +68,10 @@ export default {
         }
     },
     mounted:function(){
+        var ip = localStorage.getItem("ip")
+        var url = this.$route.path;
+        var token = this.token;
+        this.log(url,ip,token);
         adress = this.receivers;
     },
     computed:{
