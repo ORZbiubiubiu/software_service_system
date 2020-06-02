@@ -133,6 +133,6 @@ methods: {
 }
 #adminarea{
     background-color: rgb(84, 92, 100); 
-    height: 1000px;
+    height: 100%;
 }
 </style>
