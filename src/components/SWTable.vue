@@ -2,17 +2,17 @@
 <template>
   <div class="function">
     
-    <el-table :data="tableData" height="750" style="width: 100%"  v-loading="loading"
+    <el-table :data="tableData" height="650" style="width: 100%"  v-loading="loading"
             element-loading-text="拼命加载中"
             element-loading-spinner="el-icon-loading"
             element-loading-background="rgba(0, 0, 0, 0.8)">
         <el-table-column prop="id" label="软件ID" width="180">
         </el-table-column>
-        <el-table-column prop="softwareName" label="软件名" width="180">
+        <el-table-column prop="softwareName" label="软件名" width="180" sortable  >
         </el-table-column>
         <el-table-column prop="softwareInfo" label="软件描述">
         </el-table-column>
-        <el-table-column prop="updateDate" label="更新日期">
+        <el-table-column prop="updateDate" label="更新日期" sortable>
         </el-table-column>
     </el-table>
   </div>

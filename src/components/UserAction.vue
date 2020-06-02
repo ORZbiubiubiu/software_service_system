@@ -4,7 +4,7 @@
        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
                         @select="handleSelect">
                         <el-menu-item index="1">用户进入功能模块次数</el-menu-item>
-                        <el-menu-item index="2">用户在功能模块停留时间</el-menu-item>
+                        <el-menu-item index="2">用户流量</el-menu-item>
                         <el-menu-item index="3">用户请求数据</el-menu-item>
                          <el-menu-item index="4">客户申请售后服务记录</el-menu-item>
         </el-menu>
@@ -13,9 +13,9 @@
                 <div class="chart" id="C_EnterCount" ref="C_EnterCount"> </div>
                 <div class="chart" id="S_EnterCount" ref="S_EnterCount"> </div>
         </div>
-        <div id="clientLogHolder">
+       <!--  <div id="clientLogHolder">
             <div class="chart" id="clientLog" ref="clientLog"> </div>
-        </div>
+        </div> -->
     
   </div>
 </template>
@@ -47,6 +47,7 @@ methods: {
             this.getEnterCount();
             
         }else if (index=="2") {
+            this.getPV();
             //用户进入功能模块次数
         }else if (index=="3") {
             //
@@ -56,14 +57,14 @@ methods: {
         }
         
 
-    },
-    getEnterCount: function  () { 
+    },getEnterCount: function  () { 
         var option =  option_pie ;
         this.$axios.post("/admin/getActions_c",{},{
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(res=>{                     
-                        var list = res.data.data.list;                                                                   
+                        var list = res.data.data.list;   
+                                                                     
                       option.series[0].data=[];
                      for (let index = 0; index < list.length; index++) {
                          const element = list[index];
@@ -74,7 +75,9 @@ methods: {
                      }
                      option.title.text="client"
                      const chart1 = this.$refs.C_EnterCount;      
-                    if (chart1) {                      
+                    if (chart1) {     
+                         document.getElementById('C_EnterCount').innerHTML = "";     
+                        document.getElementById("C_EnterCount").removeAttribute("_echarts_instance_");                 
                         const myChart = this.$echarts.init(chart1 ); 
                         myChart.setOption( option);
                         window.addEventListener("resize1", function() {
@@ -98,10 +101,12 @@ methods: {
                               value:element.count
                           })          
                         }
-                           option.title.text="srver"
+                           option.title.text="server"
                                         //S_EnterCount
                         const chart2 = this.$refs.S_EnterCount;
                         if (chart2) {
+                             document.getElementById('S_EnterCount').innerHTML = "";
+                            document.getElementById("S_EnterCount").removeAttribute("_echarts_instance_");
                             const myChart2 = this.$echarts.init(chart2 ); 
                             myChart2.setOption( option);
                             window.addEventListener("resize", function() {
@@ -112,6 +117,7 @@ methods: {
     },getclientLog:function () { 
       
         //getActions_clientServeceType
+        
          this.$axios.post("/admin/getActions_clientServeice",{},{
                     headers:{
                         'token':sessionStorage.getItem("token")
@@ -124,12 +130,14 @@ methods: {
                          const element = list[index];
                          option.series[0].data.push({
                               name:element.SoftName,
-                              value:element.percent
+                              value:element.count
                           })           
                      }
                      option.title.text="申请售后软件"
                      const chart1 = this.$refs.C_EnterCount;      
-                    if (chart1) {                      
+                    if (chart1) {        
+                        document.getElementById('C_EnterCount').innerHTML = "";     
+                        document.getElementById("C_EnterCount").removeAttribute("_echarts_instance_");         
                         const myChart = this.$echarts.init(chart1 ); 
                         myChart.setOption( option);
                         window.addEventListener("resize1", function() {
@@ -156,6 +164,8 @@ methods: {
                                         //S_EnterCount
                         const chart2 = this.$refs.S_EnterCount;
                         if (chart2) {
+                            document.getElementById('S_EnterCount').innerHTML = "";
+                            document.getElementById("S_EnterCount").removeAttribute("_echarts_instance_");
                             const myChart2 = this.$echarts.init(chart2 ); 
                             myChart2.setOption( option);
                             window.addEventListener("resize", function() {
@@ -163,9 +173,73 @@ methods: {
                             });
                         }     
         })
-        }
+    },getPV:function () {  
+        this.$axios.post("/admin/getburypoint",{},{
+                    headers:{
+                        'token':sessionStorage.getItem("token")
+                    }}).then(res=>{   
+                        var option1=option_column;
+                        var option2=option_column;
+                        option1.title.text="客户";                               
+                        option2.title.text="售后服务人员";
+                        const chart2 =  this.$refs.S_EnterCount;
+                        const chart1 =  this.$refs.C_EnterCount;
+                        console.log("getburypoint");
+                        var list = res.data.data.list;  
+                                       console.log(res.data);
+                      
+                     for (let index = 0; index < list.length; index++) {
+                         
+                         const element = list[index];
+                         if (element.user_type!="客户") {
+                                option2.dataset.source[0].push(element.api_name);
+                                option2.dataset.source[1].push(element.pv);
+                                option2.dataset.source[2].push(element.uv);
+                                option2.dataset.source[3].push(element.ip_count);
+                         }else{
+                                option1.dataset.source[0].push(element.api_name);
+                                option1.dataset.source[1].push(element.pv);
+                                option1.dataset.source[2].push(element.uv);
+                                option1.dataset.source[3].push(element.ip_count);
+                         }
+
+                                 
+                     }
+                        
+                    if (chart1) {
+                        document.getElementById('C_EnterCount').innerHTML = "";
+                        document.getElementById("C_EnterCount").removeAttribute("_echarts_instance_");
+                        const myChart = this.$echarts.init(chart1 ); 
+                        myChart.setOption(option1);
+                        window.addEventListener("resize1", function() {
+                        myChart.resize();
+                        });
+                    }
+                      if (chart2) {
+                        document.getElementById('S_EnterCount').innerHTML = "";
+                        document.getElementById("S_EnterCount").removeAttribute("_echarts_instance_");
+                        const myChart2 = this.$echarts.init(chart2 ); 
+                        myChart2.setOption(option2);
+                        window.addEventListener("resize1", function() {
+                        myChart2.resize();
+                        });
+                    }
+                                        
+                })
+        
+      
+        
+
+        //
+         
+                  
+
+
+
+
           
     
+    }
 }
   
 }
@@ -277,7 +351,54 @@ var option_pie={
                         }
                 }]
 };
- 
+
+var option_column= {
+    title: {
+                text: "客户",  //主标题
+                subtext: '页面浏览',  //副标题
+                x: 'center',
+                y: 'center',
+                textStyle : {
+                    color : 'rgba(0,0,0,0.6)',
+                    fontSize : 16,
+                    fontWeight : 'bolder'
+                },
+                formatter: function(val){
+                    return "200"
+                }
+    },
+    legend: {},
+    tooltip: {},
+    dataset: {
+        source: [
+            ['product'/* , '2012', '2013', '2014', '2015', '2016', '2017', '2018' */],
+            ['页面浏览量'/* , 41.1, 30.4, 65.1, 53.3,48.6,70.2,39.6 */],
+            ['用户浏览量'/* , 86.5, 92.1, 85.7, 83.1,79.6,83.4,90.5 */],
+            ['不同ip浏览量'/* , 24.1, 67.2, 79.5, 86.4,83.1,79.6,83.4  */]
+        ]
+    },
+    xAxis: [
+        {type: 'category', gridIndex: 0},       // 坐标系1
+         // 坐标系2
+    ],
+    yAxis: [
+        {gridIndex: 0},             // 坐标系1
+          // 坐标系2
+    ],
+    grid: [
+        {bottom: '55%'},         // 坐标系1 距离底部距离
+        {top: '55%'}               // 坐标系2 距离顶部距离
+    ],
+    series: [
+        // 这几个系列会在第一个直角坐标系中，每个系列对应到 dataset 的每一行，即将 source 中的行作为 x 轴。
+        {type: 'bar', seriesLayoutBy: 'row'},
+        {type: 'bar', seriesLayoutBy: 'row'},
+        {type: 'bar', seriesLayoutBy: 'row'},
+        // 这几个系列会在第二个直角坐标系中，每个系列对应到 dataset 的每一列。
+         
+    ]
+};
+    
 </script>
 
 <style scoped>
@@ -286,13 +407,14 @@ var option_pie={
     height: 600px;
     display:inline-block;
     margin-left: 50px;
+      
     
 }
  .function{
     background-color:#fff;
      position: relative;
      top: -380px;
-     left: 500px;
+     left: 400px;
      width: 1400px;
    
      

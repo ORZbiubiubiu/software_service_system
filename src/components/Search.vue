@@ -28,11 +28,11 @@
                     element-loading-text="拼命加载中"
                     element-loading-spinner="el-icon-loading"
                     element-loading-background="rgba(0, 0, 0, 0.8)">
-                    <el-table-column  prop="log_level"   label="level"  width="100">  </el-table-column>
+                    <el-table-column  prop="log_level"   label="level"  width="100" sortable>  </el-table-column>
                     <el-table-column  prop="logdetail"  label="详细信息"   >  </el-table-column>
-                   <el-table-column   prop="java_class"  label="java类"   width="180">  </el-table-column>
+                   <el-table-column   prop="java_class"  label="java类"   width="180" sortable>  </el-table-column>
                       <el-table-column  prop="thread"  label="线程" width="180">  </el-table-column>
-                    <el-table-column  prop="log_time"  label="时间" width="180">  </el-table-column>
+                    <el-table-column  prop="log_time"  label="时间" width="180" sortable>  </el-table-column>
                 </el-table>
                  
                  <el-table :data="SWTable"  height="462"  border  style="width: 100%" id="SWtable" v-if="SWTableShow" v-loading="SWTableLoading"

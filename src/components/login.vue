@@ -166,11 +166,17 @@ export default {
                                             sessionStorage.setItem("name", this.userName);
                                             sessionStorage.setItem("token", session);
                                             sessionStorage.setItem("role", "Server")
+                                           if (type =="2") {
+                                                sessionStorage.setItem("isHeigher", false)
+                                           }else{
+                                                sessionStorage.setItem("isHeigher", true)
+                                           }
                                             this.$router.push(  {name:'myService',params:{name:this.userName}})
                                         } else if (type == "3"){
                                             sessionStorage.setItem("name", this.userName);
                                             sessionStorage.setItem("token", session);
                                             sessionStorage.setItem("role", "Admin");
+                                            //进入不同功能组件
                                             this.$router.push(  {name:'ServiceTable',params:{name:this.userName}})
                                         }   
                                          this.$message({
