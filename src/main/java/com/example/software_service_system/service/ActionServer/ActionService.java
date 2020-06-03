@@ -160,6 +160,7 @@ public class ActionService {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("SoftName", list.get(j).getSoftName());
             map.put("percent",p);
+            map.put("count",list.get(j).getSoftCount());
             maps.add(map);
         }
         return_data<Map<String,Object>> rt = new return_data<Map<String, Object>>();
