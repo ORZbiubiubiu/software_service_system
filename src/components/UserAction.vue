@@ -178,25 +178,29 @@ methods: {
                     headers:{
                         'token':sessionStorage.getItem("token")
                     }}).then(res=>{   
-                        var option1=option_column;
-                        var option2=option_column;
+                        var option1=option_column1;
+                        var option2=option_column2;
                         option1.title.text="客户";                               
                         option2.title.text="售后服务人员";
                         const chart2 =  this.$refs.S_EnterCount;
                         const chart1 =  this.$refs.C_EnterCount;
                         console.log("getburypoint");
                         var list = res.data.data;  
-                                       console.log(res.data);
+                                       //console.log(res.data.data);
                       
                      for (let index = 0; index < list.length; index++) {
                          
                          const element = list[index];
+                         console.log(element    );
+                         //api_name: "发送消息", user_type: "客户", pv: 2, uv: 1, ip_count: 1}
                          if (element.user_type!="客户") {
+                              console.log("fw"   );
                                 option2.dataset.source[0].push(element.api_name);
                                 option2.dataset.source[1].push(element.pv);
                                 option2.dataset.source[2].push(element.uv);
                                 option2.dataset.source[3].push(element.ip_count);
                          }else{
+                               console.log("kh"   );
                                 option1.dataset.source[0].push(element.api_name);
                                 option1.dataset.source[1].push(element.pv);
                                 option1.dataset.source[2].push(element.uv);
@@ -206,24 +210,26 @@ methods: {
                                  
                      }
                         
-                    if (chart1) {
-                        document.getElementById('C_EnterCount').innerHTML = "";
-                        document.getElementById("C_EnterCount").removeAttribute("_echarts_instance_");
-                        const myChart = this.$echarts.init(chart1 ); 
-                        myChart.setOption(option1);
-                        window.addEventListener("resize1", function() {
-                        myChart.resize();
-                        });
-                    }
-                      if (chart2) {
-                        document.getElementById('S_EnterCount').innerHTML = "";
-                        document.getElementById("S_EnterCount").removeAttribute("_echarts_instance_");
-                        const myChart2 = this.$echarts.init(chart2 ); 
-                        myChart2.setOption(option2);
-                        window.addEventListener("resize1", function() {
-                        myChart2.resize();
-                        });
-                    }
+                        if (chart1) {
+                              console.log(option1    );
+                            document.getElementById('C_EnterCount').innerHTML = "";
+                            document.getElementById("C_EnterCount").removeAttribute("_echarts_instance_");
+                            const myChart = this.$echarts.init(chart1 ); 
+                            myChart.setOption(option1);
+                            window.addEventListener("resize1", function() {
+                            myChart.resize();
+                            });
+                        }
+                        if (chart2) {
+                               console.log(option2    );
+                            document.getElementById('S_EnterCount').innerHTML = "";
+                            document.getElementById("S_EnterCount").removeAttribute("_echarts_instance_");
+                            const myChart2 = this.$echarts.init(chart2 ); 
+                            myChart2.setOption(option2);
+                            window.addEventListener("resize4", function() {
+                            myChart2.resize();
+                            });
+                        }
                                         
                 })
         
@@ -352,12 +358,12 @@ var option_pie={
                 }]
 };
 
-var option_column= {
+var option_column1= {
     title: {
                 text: "客户",  //主标题
                 subtext: '页面浏览',  //副标题
                 x: 'center',
-                y: 'center',
+                y: 'bottom',
                 textStyle : {
                     color : 'rgba(0,0,0,0.6)',
                     fontSize : 16,
@@ -386,7 +392,7 @@ var option_column= {
           // 坐标系2
     ],
     grid: [
-        {bottom: '55%'},         // 坐标系1 距离底部距离
+        {bottom: '25%'},         // 坐标系1 距离底部距离
         {top: '55%'}               // 坐标系2 距离顶部距离
     ],
     series: [
@@ -398,17 +404,66 @@ var option_column= {
          
     ]
 };
-    
+var option_column2= {
+    title: {
+                text: "客户",  //主标题
+                subtext: '页面浏览',  //副标题
+                x: 'center',
+                 y: 'bottom',
+                textStyle : {
+                    color : 'rgba(0,0,0,0.6)',
+                    fontSize : 16,
+                    fontWeight : 'bolder'
+                },
+                formatter: function(val){
+                    return "200"
+                }
+    },
+    legend: {},
+    tooltip: {},
+    dataset: {
+        source: [
+            ['product'/* , '2012', '2013', '2014', '2015', '2016', '2017', '2018' */],
+            ['页面浏览量'/* , 41.1, 30.4, 65.1, 53.3,48.6,70.2,39.6 */],
+            ['用户浏览量'/* , 86.5, 92.1, 85.7, 83.1,79.6,83.4,90.5 */],
+            ['不同ip浏览量'/* , 24.1, 67.2, 79.5, 86.4,83.1,79.6,83.4  */]
+        ]
+    },
+    xAxis: [
+        {type: 'category', gridIndex: 0},       // 坐标系1
+         // 坐标系2
+    ],
+    yAxis: [
+        {gridIndex: 0},             // 坐标系1
+          // 坐标系2
+    ],
+    grid: [
+        {bottom: '25%'},         // 坐标系1 距离底部距离
+        {top: '55%'}               // 坐标系2 距离顶部距离
+    ],
+    series: [
+        // 这几个系列会在第一个直角坐标系中，每个系列对应到 dataset 的每一行，即将 source 中的行作为 x 轴。
+        {type: 'bar', seriesLayoutBy: 'row'},
+        {type: 'bar', seriesLayoutBy: 'row'},
+        {type: 'bar', seriesLayoutBy: 'row'},
+        // 这几个系列会在第二个直角坐标系中，每个系列对应到 dataset 的每一列。
+         
+    ]
+};  
 </script>
 
 <style scoped>
  .chart{
-    width: 600px;
-    height: 600px;
-    display:inline-block;
-    margin-left: 50px;
+    width:650px;
+    height: 650px;
+     display:inline-block; 
+    margin-left: 50px;   
       
     
+}
+.chart1{
+      width:1300px;
+    height: 650px;
 }
  .function{
     background-color:#fff;
