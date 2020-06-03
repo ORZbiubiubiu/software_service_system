@@ -220,6 +220,7 @@ methods: {
                             myChart.resize();
                             });
                         }
+                        //
                         if (chart2) {
                                console.log(option2    );
                             document.getElementById('S_EnterCount').innerHTML = "";
