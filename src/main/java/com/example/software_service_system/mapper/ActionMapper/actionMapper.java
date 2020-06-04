@@ -24,7 +24,7 @@ public interface actionMapper {
     @Select("select * from action")
     List<action> getActions();
 
-    @Update("update action set Acount = Acount+1 and Ltime = #{Ltime}where Aname=#{Aname}")
+    @Update("update action set Acount = Acount+1 , Ltime = #{Ltime} where Aname=#{Aname}")
     int rd(String Aname, Date Ltime);
 
     @Insert("insert into action_every values(#{Aname},#{time})")
