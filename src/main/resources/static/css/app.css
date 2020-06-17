@@ -1,0 +1,542 @@
+#loginform[data-v-051d301a] {
+    position: relative;
+    top: 200px;
+    width: 500px;
+    left: 35%;
+    color: #fff
+}
+
+#loginBox[data-v-051d301a] {
+    background-color: #545c64;
+    height: 100%;
+    font-family: Helvetica Neue;
+    color: #fff;
+    font-size: 30px
+}
+
+#title[data-v-051d301a] {
+    position: relative;
+    left: 42%;
+    top: 180px;
+    width: 500px
+}
+
+.header_top[data-v-1c262fd6] {
+    width: 100%;
+    height: 83px;
+    position: relative;
+    top: 0;
+    background-color: #276e51
+}
+
+#title[data-v-1c262fd6] {
+    float: left;
+    margin-left: 50px;
+    color: #fff
+}
+
+#userHead[data-v-1c262fd6] {
+    float: right;
+    margin-top: 30px;
+    margin-right: 50px;
+    height: 60px;
+    color: #fff
+}
+
+#logout[data-v-1c262fd6], #userName[data-v-1c262fd6] {
+    display: inline
+}
+
+#logout[data-v-1c262fd6]:hover {
+    color: #ffd04b;
+    cursor: pointer
+}
+
+#head_icon[data-v-1c262fd6], #userName[data-v-1c262fd6] {
+    margin-right: 10px
+}
+
+#el_funcmenu[data-v-1ee02ebe] {
+    display: block;
+    border: 0;
+    width: 300px;
+    top: 0;
+    border-right: 1px solid #fff
+}
+
+#adminarea[data-v-1ee02ebe] {
+    background-color: #545c64;
+    height: 940px;
+    padding-bottom: 220px
+}
+
+.function[data-v-3f6f655a] {
+    position: relative;
+    top: -320px;
+    left: 600px;
+    width: 900px
+}
+
+#service_page[data-v-3f6f655a] {
+    position: relative;
+    left: 350px
+}
+
+.header[data-v-449f865e] {
+    margin: 0;
+    position: relative;
+    background-color: #276e51;
+    height: 100px
+}
+
+.el-link.el-link--default[data-v-449f865e] {
+    color: #fff;
+    font-size: 16px
+}
+
+#title[data-v-449f865e] {
+    margin: 0;
+    left: 3%;
+    color: #fff
+}
+
+#userinfo[data-v-449f865e] {
+    right: 3%
+}
+
+#username[data-v-449f865e] {
+    color: #fff
+}
+
+#avatar[data-v-449f865e] {
+    display: inline-block;
+    font-size: 40px;
+    padding: 5px;
+    color: #fff
+}
+
+#logout[data-v-449f865e] {
+    display: inline-block;
+    margin-left: 20px
+}
+
+#content[data-v-413398b5] {
+    width: 100%;
+    height: 100%
+}
+
+#menu[data-v-413398b5] {
+    float: left;
+    height: 90%;
+    width: 15%;
+    margin: 0;
+    background-color: #545c64
+}
+
+#nav[data-v-413398b5] {
+    float: left;
+    width: 100%;
+    height: 90%;
+    margin-top: 50px
+}
+
+#main[data-v-413398b5] {
+    float: right;
+    width: 85%;
+    height: 90%;
+    margin: 0
+}
+
+#content[data-v-2f5824c5] {
+    width: 100%;
+    height: 100%
+}
+
+#menu[data-v-2f5824c5] {
+    float: left;
+    height: 90%;
+    width: 15%;
+    margin: 0;
+    background-color: #545c64
+}
+
+#nav[data-v-2f5824c5] {
+    width: 100%;
+    height: 90%;
+    margin-top: 50px
+}
+
+#main[data-v-2f5824c5] {
+    float: right;
+    width: 85%;
+    height: 90%;
+    margin: 0
+}
+
+#purchased {
+    position: relative
+}
+
+.el-header {
+    background-color: #b3c0d1;
+    color: #fff;
+    font-size: 24px;
+    line-height: 60px
+}
+
+#service {
+    position: relative
+}
+
+#apply-form[data-v-5b9c3f29] {
+    width: 600px;
+    padding-left: 400px
+}
+
+#card[data-v-5b9c3f29] {
+    width: 100%;
+    height: 300px;
+    position: relative
+}
+
+.box-card[data-v-5b9c3f29] {
+    width: 700px;
+    margin-top: 50px;
+    margin-left: 300px
+}
+
+#btn-commit[data-v-5b9c3f29], #btn-reset[data-v-5b9c3f29] {
+    margin-left: 50px
+}
+
+#sendMsg {
+    width: 500px;
+    position: relative;
+    top: 200px;
+    left: 500px
+}
+
+#btn-commit, #btn-reset {
+    margin-left: 50px
+}
+
+#receiveMsg {
+    position: relative;
+    width: 1200px;
+    margin-left: 100px;
+    margin-top: 100px;
+    padding: 10px
+}
+
+#emails {
+    position: relative;
+    width: 1000px;
+    margin: 100px;
+    padding-left: 200px
+}
+
+.demo-table-expand {
+    font-size: 0
+}
+
+.demo-table-expand label {
+    width: 90px;
+    color: #99a9bf
+}
+
+.demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%
+}
+
+.el-tooltip__popper {
+    display: none
+}
+
+#software-update-info {
+    position: relative
+}
+
+.headline {
+    height: 60px;
+    font-size: 24px;
+    line-height: 60px;
+    color: #fff;
+    background-color: #b3c0d1
+}
+
+.title {
+    padding: 0 20px
+}
+
+#collapse {
+    padding: 10px;
+    position: relative
+}
+
+.updateDate {
+    margin-right: 20px
+}
+
+.updateDetail {
+    margin-top: 30px
+}
+
+.updateInfo {
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, 微软雅黑, Arial, sans-serif;
+    color: #909399
+}
+
+.page {
+    margin-top: 20px
+}
+
+.update-data-error {
+    color: #909399;
+    margin: 20px 20px;
+    font-size: 18px
+}
+
+.nodata {
+    margin: 20px 0
+}
+
+#server-cards {
+    margin-top: 50px;
+    padding-left: 300px;
+    position: relative
+}
+
+.box-card {
+    margin-bottom: 10px;
+    font-size: 18px
+}
+
+#search {
+    display: none;
+    margin: 0;
+    padding-top: 1px;
+    min-height: 90%;
+    position: relative
+}
+
+#search-bar-content {
+    margin-left: 500px;
+    width: 500px;
+    margin-top: 49px
+}
+
+#type-nav {
+    margin-top: 20px
+}
+
+.nav-center {
+    padding-left: 500px
+}
+
+#result {
+    margin-left: 150px;
+    color: #909399;
+    margin-bottom: 20px;
+    font-size: 30px
+}
+
+.nodata {
+    color: #909399;
+    margin: 50px 0 0 150px;
+    font-size: 24px
+}
+
+#posts {
+    padding: 30px;
+    margin: 20px 100px;
+    width: 1200px;
+    background-color: #fff
+}
+
+.post {
+    margin-left: 200px;
+    margin-bottom: 10px
+}
+
+.box-card {
+    width: 900px;
+    height: 200px;
+    margin-bottom: 20px
+}
+
+.date, .sname {
+    float: right;
+    padding: 3px 0
+}
+
+.sname {
+    margin-right: 10px
+}
+
+#service-management {
+    position: relative
+}
+
+.function[data-v-4204221e] {
+    position: relative;
+    top: -320px;
+    left: 600px;
+    width: 900px
+}
+
+#access_page[data-v-4204221e] {
+    position: relative;
+    left: 400px
+}
+
+#accessBtn[data-v-4204221e] {
+    margin-left: 15px
+}
+
+.function[data-v-76e92930] {
+    background-color: #fff;
+    position: relative;
+    top: -320px;
+    left: 600px;
+    width: 900px
+}
+
+#search[data-v-76e92930] {
+    position: absolute;
+    top: 30px;
+    width: 550px;
+    left: 300px
+}
+
+#faq_page[data-v-76e92930] {
+    position: relative;
+    left: 350px
+}
+
+#search-bar[data-v-76e92930] {
+    bottom: 5px;
+    border-radius: 10px;
+    padding-left: 10px;
+    height: 27px;
+    width: 100px
+}
+
+#btnSearch[data-v-76e92930] {
+    float: right;
+    width: 100px;
+    margin-right: 120px;
+    border: 0;
+    border-radius: 10px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #409eff;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer
+}
+
+#faqForm[data-v-76e92930] {
+    margin-top: 20px
+}
+
+#addarea[data-v-76e92930] {
+    padding-bottom: 50px
+}
+
+.function[data-v-3aa64a38], .function[data-v-30be1c46] {
+    position: relative;
+    top: -320px;
+    left: 600px;
+    width: 900px
+}
+
+.function[data-v-3aa64a38] {
+    padding-top: 70px;
+    background-color: #fff;
+    padding-bottom: 50px
+}
+
+#user_add_form[data-v-3aa64a38] {
+    padding-right: 50px
+}
+
+.function[data-v-3c02a46b] {
+    position: relative;
+    top: -320px;
+    left: 600px;
+    width: 1100px;
+    background-color: #fff
+}
+
+.chart[data-v-1bdf7e49] {
+    width: 650px;
+    height: 650px;
+    display: inline-block;
+    margin-left: 50px
+}
+
+.chart1[data-v-1bdf7e49] {
+    width: 1300px;
+    height: 650px
+}
+
+.function[data-v-1bdf7e49] {
+    background-color: #fff;
+    position: relative;
+    top: -380px;
+    left: 400px;
+    width: 1400px
+}
+
+#app, .title[data-v-1bdf7e49] {
+    position: relative
+}
+
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    height: 100%
+}
+
+.el-menu {
+    border-right: 0
+}
+
+.el-menu-item {
+    text-align: left
+}
+
+.v-center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.h-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+.clearfix {
+    *zoom: 1
+}
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%
+}

@@ -1,66 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang=en>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/login.css">
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <script src="../static/js/jquery-1.12.4.js"></script>
-
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="../static/js/login.js"></script>
-    <script src="../static/js/md5.js"></script>
-
+    <meta charset=utf-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>var ip = returnCitySN["cip"];
+    localStorage.setItem("ip", ip);</script>
+    <title>login</title>
+    <link href=/static/css/app.css rel=preload as=style>
+    <link href=/static/css/chunk-vendors.css rel=preload as=style>
+    <link href=/static/js/app.js rel=preload as=script>
+    <link href=/static/js/chunk-vendors.js rel=preload as=script>
+    <link href=/static/css/chunk-vendors.css rel=stylesheet>
+    <link href=/static/css/app.css rel=stylesheet>
 </head>
-
 <body>
-<div class="header">
-    <div class="header_top">
-        <h1 id="title">
-            软件售后服务系统
-        </h1>
-
-    </div>
-
-</div>
-<div class="center">
-    <div id="loginblock">
-        <el-form     label-width="80px" id="loginform">
-            <el-form-item label="用户名">
-                <el-input v-model="userName"></el-input>
-            </el-form-item>
-            <el-form-item label="用户密码">
-                <el-input v-model="passWord" show-password></el-input>
-            </el-form-item>
-            <el-form-item label="用户类型">
-                <el-select v-model="Character" placeholder="请选择" clearable>
-                    <el-option v-for="item in type" :key="item.key" :label="item.key" :value="item.key">
-                    </el-option>
-                </el-select>
-            </el-form-item>
-            <el-button type="primary" @click="onSubmit" id="login_btn">登录</el-button>
-            <span id="message">{{message}}</span>
-        </el-form>
-
-
-
-
-
-    </div>
-</div>
-<div class="footer">
-        
-    <span class="details">咨询电话:8888-8888</span>
-    <span class="details">技术说明</span>
-    <pspan class="details">帮助中心</pspan>
-    <span class="details">关于我们</span>
-
-
-
-</div>
+<div id=app></div>
+<script src=/static/js/chunk-vendors.js></script>
+<script src=/static/js/app.js></script>
 </body>
-
+<style></style>
 </html>
